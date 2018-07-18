@@ -1,83 +1,132 @@
-\documentclass{article}
+\documentclass[twoside,11pt]{article}
 
+% Any additional packages needed should be included after jmlr2e.
+% Note that jmlr2e.sty includes epsfig, amssymb, natbib and graphicx,
+% and defines many common macros, such as 'proof' and 'example'.
+%
+% It also sets the bibliographystyle to plainnat; for more information on
+% natbib citation styles, see the natbib documentation, a copy of which
+% is archived at http://www.jmlr.org/format/natbib.pdf
+
+\usepackage{jmlr2e}
 \input{packages}
-
 \include{commands}
+
+% Heading arguments are {volume}{year}{pages}{date submitted}{date published}{paper id}{author-full-names}
+
+\jmlrheading{1}{2000}{1-48}{4/00}{10/00}{meila00a}{Guillaume Gautier and R\'emi Bardenet}
+
+% Short headings should be running head and authors last names
+
+\ShortHeadings{DPPy paper}{Gautier and Bardenet}
+\firstpageno{1}
 
 \begin{document}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% TITLE
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \title{DPPy paper}
 
-\author{Guillaume GAUTIER - R\'emi BARDENET}
+\author{\name Guillaume Gautier \email guillaume.gga@gmail.com \\
+       \addr Department of Statistics\\
+       University of Washington\\
+       Seattle, WA 98195-4322, USA
+       \AND
+       \name R\'emi Bardenet \email remi.bardenet@gmail.com \\
+       \addr Division of Computer Science and Department of Statistics\\
+       University of California\\
+       Berkeley, CA 94720-1776, USA}
 
-
-\date{
-   Last compilation \today
-      }
-
-% \affil{SequeL/SigMA}
+\editor{}
 
 \maketitle
 
-\listoftodos 
+\begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
 
-\todo{Make a cake \ldots} ezrezr\\
+  \begin{itemize}
+    \item \href{http://www.jmlr.org/mloss/mloss-info.html}{MLOSS website}
+    \item \href{http://jmlr.csail.mit.edu/author-info.html}{JMLR author info}
+    \item \href{http://www.jmlr.org/format/authors-guide.html}{JMLR author guide} 
+  \end{itemize}
 
-\todo[caption={Short note}, color=green]{Write the draft\ldots} which renders like \\
+  \begin{itemize}
+    \item Companion paper of \href{https://github.com/guilgautier/DPPy}{DPPy \faGithub}.
+    \item The documentation can be found on \href{https://dppy.readthedocs.io/en/latest/?badge=latest}{Read the Docs}.
+    \item Continuous integration can be found on \href{https://travis-ci.com/guilgautier/DPPy}{Travis}.
+  \end{itemize}
+  
+\end{abstract}
 
-\missingfigure[figwidth=6cm]{Figure}
+\begin{keywords}
+  Determinatal Point Processes, Sampling
+\end{keywords}
 
-\abstract{
-Companion paper of \href{https://github.com/guilgautier/DPPy}{DPPy \faGithub}.
+\section{Intro} % (fold)
+\label{sec:intro}
 
-The documentation can be found on \href{https://dppy.readthedocs.io/en/latest/?badge=latest}{Read the Docs}.
+  \begin{itemize}
+    \item Plot of citations (Macchi, Sosh, HKPV...)
+    \item image/text subsampling depiction
+    \item remark Misc/Exotics
+    \item RSK, Random matrices, Spanning trees
+  \end{itemize}
 
-Continuous integration can be found on \href{https://travis-ci.com/guilgautier/DPPy}{Travis}.
-}
+% Acknowledgements should go at the end, before appendices and references
+
+\acks{We would like to acknowledge support for this project
+from the XXXXX. }
+
+% section intro (end)
+
+
+\section{Definition} % (fold)
+\label{sec:definition}
+
+  \begin{itemize}
+    \item DPP, k-DPPs
+    \item Discrete
+    \item Continuous (RMat for now)
+    \item Sampling scheme
+    \item pseudo code
+  \end{itemize}
+
+% section definition (end)
+
+
+\section{Basic example} % (fold)
+\label{sec:basic_example}
+
+  \begin{itemize}
+    \item Instanciate a DPP as DPP(mu, kernel)
+    \item DPP.sample()
+    \item Approximate sampling, basis exchange ...
+  \end{itemize}
+
+% section basic_example (end)
+
+\section{Conclusion} % (fold)
+\label{sec:conclusion}
+
+% section conclusion (end)
+
+
+
+% Manual newpage inserted to improve layout of sample file - not
+% needed in general before appendices/bibliography.
 
 \newpage
 
-Draft structure of the paper\\
+\appendix
+\section*{Appendix A.}
+\label{app:theorem}
 
-Intro
-\begin{itemize}
-	\item Plot of citations (Macchi, Sosh, HKPV...)
-	\item image/text subsampling depiction
-	\item remark Misc/Exotics
-	\item RSK, Random matrices, Spanning trees
-\end{itemize}
+% Note: in this sample, the section number is hard-coded in. Following
+% proper LaTeX conventions, it should properly be coded as a reference:
 
+%In this appendix we prove the following theorem from
+%Section~\ref{sec:textree-generalization}:
 
-Definition
-\begin{itemize}
-	\item DPP, k-DPPs
-	\item Discrete
-	\item Continuous (RMat for now)
-	\item Sampling scheme
-	\item pseudo code
-\end{itemize}
-
-
-Basic example
-\begin{itemize}
-	\item Instanciate a DPP as DPP(mu, kernel)
-	\item DPP.sample()
-\end{itemize}
-
-
-Approximate sampling
-basis exchange ...
-
-Conclusion
-
-
-\newpage
-% \printbibliography
-% \bibliographystyle{icml2017}
-% \bibliography{biblio}
+\vskip 0.2in
+\cite{HKPV06}
+\bibliographystyle{icml2017}
+\bibliography{biblio}
 
 \end{document}
