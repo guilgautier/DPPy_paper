@@ -8,7 +8,6 @@ tlmgr install fontawesome 	% For GitHub icon
 tlmgr install graphicx
 
 tlmgr install ucs
-tlmgr install inputenc
 tlmgr install layout
 tlmgr install pgffor
 tlmgr install todonotes
