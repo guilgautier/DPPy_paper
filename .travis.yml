@@ -14,7 +14,8 @@ deploy:
   skip_cleanup: true
   provider: releases
   api_key:
-    secure: aDz5kO0fZI/07xkaV6HRuZGSFBnq4Bo/O7junkcco4RB95SmI29KHVv3o8xt7Zw/XIDn3b+wGLBx8kfNr334z7at3oCXXgWPKPZdl/EzljkPIHGPRTQ8AN0LbU3B4htRRIfq09JXoW1QlDzKDf3P8t4YcpiVoJAZKkpdbmn7Mt+nPG8dhAOmwhxbc+o7LQkLDVge9UhJqkQmNbfZRCRcQHWc+2sswXUfEz37zzZMq05cdzC6tDWZnLsmrqbq1S8NKVA96/JrK3QUh0+1qjjpiiw0YunyLiyAoBgYZZ2StYUo3LyIEkvygltG4Ai3s0nKzGCSOX8IAg5//XhTUTcM9qoP62ASASKjgVLYkAA+rKIY4fRRALM8InXneunjPDdWbkGjQrg2hBGMPScAYWfw3xENKVzGgD+UdEiAVEd4TGNjO/kieUVGon/xJ4DAAj/naiSAxhk8huOUDUz9QgK6FWuKoACKQDxcbsrtIkr9vbFw3n2RsfFt9hFbWnfNmtAWVnVAg9ziVMVOdH/l3ZYXlOfihNFm/6tWrYHRtqwJ+oTYfClOuAAHeL/fUOkA9D3VpX38Ad4XMDOIYPpjz/JPHll7/5uIX9L+2mgTemUar4dG97sRyZxBiLmwLLjTHm9tC7SueuRbe/8I7Scm3mhxqBhZqr/A9gscqtuwzJth9CA=
+    secure: ####
   file: tex/draft.pdf
   on:
     repo: guilgautier/DPPy_paper
+    tags: true
