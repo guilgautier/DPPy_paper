@@ -1,10 +1,9 @@
 # Install packages
 
-tlmgr install amsmath
 tlmgr install array
 tlmgr install bm
 tlmgr install dirtytalk
-tlmgr install dsfont
+tlmgr install doublestroke
 tlmgr install fontawesome 	% For GitHub icon
 tlmgr install graphicx
 
