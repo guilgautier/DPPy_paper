@@ -8,14 +8,14 @@ install:
 - "./scripts/ensure_book_dependencies.sh"
 script:
 - cd tex
-- pdflatex draft.tex
+- pdflatex dppy_paper.tex
 - cd ..
 deploy:
   skip_cleanup: true
   provider: releases
   api_key:
     secure: ####
-  file: tex/draft.pdf
+  file: tex/dppy_paper.pdf
   on:
     repo: guilgautier/DPPy_paper
     tags: true
