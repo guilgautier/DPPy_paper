@@ -1,12 +1,24 @@
 %% This BibTeX bibliography file was created using BibDesk.
 %% http://bibdesk.sourceforge.net/
 
-%% Created for Guillaume Gautier at 2018-08-02 10:32:48 +0200 
+%% Created for Guillaume Gautier at 2018-08-03 18:40:56 +0200 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
 
 
+
+@article{PrWi98,
+	Author = {Propp, J G and Wilson, D B},
+	Date-Added = {2018-08-03 16:40:52 +0000},
+	Date-Modified = {2018-08-03 16:40:56 +0000},
+	Journal = {Journal of Algorithms},
+	Number = {2},
+	Pages = {170--217},
+	Publisher = {Elsevier},
+	Title = {{How to get a perfectly random sample from a generic Markov chain and generate a random spanning tree of a directed graph}},
+	Volume = {27},
+	Year = {1998}}
 
 @article{DuBa16,
 	Abstract = {We propose a new class of determinantal point processes (DPPs) which can be manipulated for inference and parameter learning in potentially sublinear time in the number of items. This class, based on a specific low-rank factorization of the marginal kernel, is particularly suited to a subclass of continuous DPPs and DPPs defined on exponentially many items. We apply this new class to modelling text documents as sampling a DPP of sentences, and propose a conditional maximum likelihood formulation to model topic proportions, which is made possible with no approximation for our class of DPPs. We present an application to document summarization with a DPP on {\$}2{\^{}}{\{}500{\}}{\$} items.},
@@ -52,16 +64,17 @@
 	Bdsk-Url-1 = {http://arxiv.org/abs/1611.04088}}
 
 @book{PaBe11,
-	Author = {R.K. Pathria and P.D. Beale},
-	title = {Statistical Mechanics},
-	Year = {2011},
-	Publisher = {Academic Press},
 	Address = {Boston},
-	Edition = {Third},
+	Author = {R.K. Pathria and P.D. Beale},
 	Doi = {10.1016/B978-0-12-382188-1.00020-7},
+	Edition = {Third},
 	Isbn = {978-0-12-382188-1},
+	Publisher = {Academic Press},
+	Title = {Statistical Mechanics},
 	Url = {http://www.sciencedirect.com/science/article/pii/B9780123821881000207},
-}
+	Year = {2011},
+	Bdsk-Url-1 = {http://www.sciencedirect.com/science/article/pii/B9780123821881000207},
+	Bdsk-Url-2 = {https://doi.org/10.1016/B978-0-12-382188-1.00020-7}}
 
 @inproceedings{AnGhRe16,
 	Arxivid = {1602.05242},
@@ -389,17 +402,17 @@
 	Bdsk-Url-1 = {https://doi.org/10.1201/9780203496930}}
 
 @article{RuSa96,
-	author = "Rudnick, Z. and Sarnak, P.",
-	doi = "10.1215/S0012-7094-96-08115-6",
-	fjournal = "Duke Mathematical Journal",
-	journal = "Duke Math. J.",
-	number = "2",
-	pages = "269--322",
-	publisher = "Duke University Press",
-	title = "Zeros of principal L-functions and random matrix theory",
-	volume = "81",
-	year = "1996"
-}
+	Author = {Rudnick, Z. and Sarnak, P.},
+	Doi = {10.1215/S0012-7094-96-08115-6},
+	Fjournal = {Duke Mathematical Journal},
+	Journal = {Duke Math. J.},
+	Number = {2},
+	Pages = {269--322},
+	Publisher = {Duke University Press},
+	Title = {Zeros of principal L-functions and random matrix theory},
+	Volume = {81},
+	Year = {1996},
+	Bdsk-Url-1 = {https://doi.org/10.1215/S0012-7094-96-08115-6}}
 
 @article{Sos00,
 	Abstract = {This paper contains an exposition of both recent and rather old results on determinantal random point fields. We begin with some general theorems includ- ing proofs of necessary and sufficient conditions for the existence of a determinantal random point field with Hermitian kernel and of a criterion for weak convergence of its distribution. In the second section we proceed with examples of determinantal random fields in quantum mechanics, statistical mechanics, random matrix theory, probability theory, representation theory, and ergodic theory. In connection with the theory of renewal processes, we characterize all Hermitian determinantal random point fields on R1 and Z1 with independent identically distributed spacings. In the third section we study translation-invariant determinantal random point fields and prove the mixing property for arbitrary multiplicity and the absolute continuity of the spectra. In the last section we discuss proofs of the central limit theorem for the number of particles in a growing box and of the functional central limit theorem for the empirical distribution function of spacings.},
@@ -422,7 +435,7 @@
 	Abstract = {We present a new random sampling strategy for k-bandlimited signals defined on graphs, based on determinantal point processes (DPP). For small graphs, ie, in cases where the spectrum of the graph is accessible, we exhibit a DPP sampling scheme that enables perfect recovery of bandlimited signals. For large graphs, ie, in cases where the graph's spectrum is not accessible, we investigate, both theoretically and empirically, a sub-optimal but much faster DPP based on loop-erased random walks on the graph. Preliminary experiments show promising results especially in cases where the number of measurements should stay as small as possible and for graphs that have a strong community structure. Our sampling scheme is efficient and can be applied to graphs with up to {\$}10{\^{}}6{\$} nodes.},
 	Archiveprefix = {arXiv},
 	Arxivid = {1703.01594},
-	Author = {Tremblay, N. and Amblard, P. O. and Barthelmé, S.},
+	Author = {Tremblay, N. and Amblard, P. O. and Barthelm{\'e}, S.},
 	Eprint = {1703.01594},
 	Journal = {ArXiv e-prints},
 	Title = {{Graph sampling with determinantal processes}},
@@ -432,27 +445,27 @@
 	Abstract = {R{\'e}sum{\'e} -- Nous consid{\'e}rons l echantillonnage de signaux sur graph{\`e} a bande limit{\'e}e k , i . e . , les combinaisons lin{\'e}aires des k premiers modes de Fourier du graphe . Il existe k noeuds du graphe qui permettent leur reconstruction parfaite , les trouver n{\'e}cessite cependant une diagonalisation partielle de la matrice laplacienne , trop co{\^{u}}teus{\`e} a grande dimension . Nous proposons une nouvelle m{\'e}thode rapide d echantillonnage bas{\'e}e sur des processus d{\'e}terminantaux qui permet la reconstructio a partir d ' un nombre d echantillons de l ' ordre de k . Abstract -- We consider the problem of sampling k - bandlimited graph signals , i . e . , linear combinations of the first k graph Fourier modes . We know that a set of k nodes embedding all k - bandlimited signals always exists , thereby enabling their perfect reconstruction after sampling . Unfortunately , to exhibit such a set , one needs to partially diagonalize the graph Laplacian , which becomes prohibitive at large scale . We propose a novel strategy based on determinantal point processes that side - steps partial diagonalisation and enables reconstruction with only O (k) samples .},
 	Archiveprefix = {arXiv},
 	Arxivid = {1704.02239},
-	Author = {Tremblay, N. and Barthelmé, S. and Amblard, P. O.},
+	Author = {Tremblay, N. and Barthelm{\'e}, S. and Amblard, P. O.},
 	Booktitle = {GRETSI},
 	Eprint = {1704.02239},
 	Title = {{{\'{E}}chantillonnage de signaux sur graphes via des processus d{\'e}terminantaux}},
 	Url = {https://hal.archives-ouvertes.fr/hal-01503736},
-	Year = {2017}
-	}
+	Year = {2017},
+	Bdsk-Url-1 = {https://hal.archives-ouvertes.fr/hal-01503736}}
 
-@ARTICLE{TrBaAm18,
-   author = {{Tremblay}, N. and {Barthelme}, S. and {Amblard}, P.-O.},
-    title = "{Optimized Algorithms to Sample Determinantal Point Processes}",
-  journal = {ArXiv e-prints},
-archivePrefix = "arXiv",
-   eprint = {1802.08471},
- primaryClass = "stat.CO",
- keywords = {Statistics - Computation, Computer Science - Learning, Statistics - Machine Learning},
-     year = 2018,
-    month = feb,
-   url = {https://arxiv.org/abs/1802.08471},
-  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
-}
+@article{TrBaAm18,
+	Adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+	Archiveprefix = {arXiv},
+	Author = {{Tremblay}, N. and {Barthelme}, S. and {Amblard}, P.-O.},
+	Eprint = {1802.08471},
+	Journal = {ArXiv e-prints},
+	Keywords = {Statistics - Computation, Computer Science - Learning, Statistics - Machine Learning},
+	Month = feb,
+	Primaryclass = {stat.CO},
+	Title = {{Optimized Algorithms to Sample Determinantal Point Processes}},
+	Url = {https://arxiv.org/abs/1802.08471},
+	Year = 2018,
+	Bdsk-Url-1 = {https://arxiv.org/abs/1802.08471}}
 
 @article{Wig67,
 	Author = {Wigner, E.},
@@ -464,5 +477,5 @@ archivePrefix = "arXiv",
 	Title = {Random Matrices in Physics},
 	Url = {https://doi.org/10.1137/1009001},
 	Volume = {9},
-	Year = {1967}
-	}
+	Year = {1967},
+	Bdsk-Url-1 = {https://doi.org/10.1137/1009001}}

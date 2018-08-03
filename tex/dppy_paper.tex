@@ -57,7 +57,7 @@
   In machine learning, DPPs over finite sets have been used as a model of diverse sets of items, where the kernel function takes the form of a finite matrix $\bfK$, see \citet{KuTa12} for a comprehensive survey. 
   Applications of DPPs in machine learning (ML) also include recommendation tasks \citep{KaDeKo16, GaPaKo16}, text summarization \citep{DuBa16} and many others.\\
 
-  In the finite case, common exact probabilistic inference tasks such as normalization, marginalization and sampling have complexity roughly $\calO(N^3)$ (where $N$ denotes the size of the ground set), becoming intractable for large $N$, see \citet{Gil14}.
+  In the finite case, common exact probabilistic inference tasks such as normalization, marginalization and sampling have complexity roughly $\calO(M^3)$ (where $M$ denotes the size of the ground set), becoming intractable for large $M$, see \citet{Gil14}.
   More particularly, for generic kernel matrices, exact sampling requires its the eigendecomposition.
   This prohibitive cost has triggered an effort towards efficient approximate samplers ranging from random approximation of the kernel \citep{AfKuFo13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.\\
 
@@ -76,25 +76,25 @@
   \subsection{Definition} % (fold)
   \label{sub:definition}
   
-    A point process $\calX$ on $\bbX$, can be roughly viewed as a random subset of point $\lrcb{X_1, \dots, X_N} \subset \bbX$, with $N<\infty$ but apriori random.
+    A point process $\calX$ on $\bbX$, can be roughly viewed as a random subset of point $\lrcb{X_1, \dots, X_N} \subset \bbX$, with $N<\infty$ but a priori random.
     To understand the interaction between the points $\lrcb{X_1, \dots, X_N}$, one focuses on the interaction of each cloud of $k$ points (for all $k$). 
     The corresponding $k$-correlation functions characterize the underlying point process.
-    Considering $\mu$ as the reference measure, the $k$-correlation functions are defined as
-    \begin{equation}
-    \label{eq:k-correlation_function}
-      \Espe{ \sum_{  
-        \substack{
-          (X_1,\dots,X_k) \\ 
-          X_1 \neq \dots \neq X_k} } 
-        f(X_1,\dots,X_k) 
-        }
-        = \int_{\bbX^k} 
-          f(x_1,\dots,x_k) \rho_k(x_1,\dots,x_k) 
-          \prod_{i=1}^k \mu(dx_i),
-    \end{equation}
+    % Considering $\mu$ as the reference measure, the $k$-correlation functions are defined as
+    % \begin{equation}
+    % \label{eq:k-correlation_function}
+    %   \Expe{ \sum_{  
+    %     \substack{
+    %       (X_1,\dots,X_k) \\ 
+    %       X_1 \neq \dots \neq X_k} } 
+    %     f(X_1,\dots,X_k) 
+    %     }
+    %     = \int_{\bbX^k} 
+    %       f(x_1,\dots,x_k) \rho_k(x_1,\dots,x_k) 
+    %       \prod_{i=1}^k \mu(dx_i),
+    % \end{equation}
 
-    for all bounded measurable functions $f:\bbX^k\to \bbC$ and the sum ranges over $k$-tuples of distinct points of $\calX$. 
-    A point process parametrized by a kernel $K$ associated to the reference measure $\mu$ is said to be determinantal if its $k$-correlation functions read
+    % for all bounded measurable functions $f:\bbX^k\to \bbC$ and the sum ranges over $k$-tuples of distinct points of $\calX$. 
+    A point process parametrized by a kernel $K$ associated to the reference measure $\mu$ is said to be determinantal and noted $\DPP(K)$ if its $k$-correlation functions read
     \begin{equation}
     \label{eq:k-correlation_function_DPP}
       \rho_k(x_1,\dots,x_k) 
@@ -102,13 +102,19 @@
       \quad \forall k\geq 1.
     \end{equation}
 
-    To guarantee existence of the DPP as described by \Eqref{eq:k-correlation_function_DPP}, the kernel $K$ must have $[0,1]$-valued eigenvalues and it is commonly assumed to be Hermitian symmetric, see \citep[Theorem 2; Theorem 3]{HKPV06, Sos00}.
-    The latter assumption is only sufficient, there exist DPPs with non symmetric kernels, see \citep{BoDiFu09}.\\
+    The finite case, when $\bbX = \lrcb{1,\dots,M}$ with $\mu=\sum_{i=1}^M \delta_i$, corresponds to most common use case of DPPs in ML \citep{KuTa12}.
+    In this context, the kernel function becomes a $M\times M$ matrix $\bfK$ encoding the similarity between items, and the correlation functions refer simply to inclusion probabilities.
+    We say that $\calX\sim \DPP(\bfK)$ if
+    \begin{equation}
+    \label{eq:inclusion_proba_finite}
+      \Proba{S \subset \calX} = \det \bfK_S, 
+        \quad\forall S\subset \bbX,
+    \end{equation}
 
-    The finite case, when for $\bbX = \lrcb{1,\dots,M}$ with $\mu=\sum_{i=1}^M \delta_i$, corresponds to 
-    In this setting the kernel function becomes a $M\times M$ matrix $\bfK$ and the correlation functions $\rho_k$ refer simply to inclusion probabilities.
-    A DPP
+    where $\bfK_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$.
 
+    To guarantee existence of the DPP as described by Equations~\ref{eq:k-correlation_function_DPP} and~\ref{eq:inclusion_proba_finite} the underlying kernel must have $[0,1]$-valued eigenvalues and it is commonly assumed to be Hermitian symmetric, see \citep[Theorem 3]{Sos00}.
+    The latter assumption is only sufficient, there exist DPPs with non symmetric kernels, see \citep{BoDiFu09}.
   % subsection definition (end)
 
   \subsection{Sampling} % (fold)
@@ -118,33 +124,44 @@
     \label{ssub:exact_sampling}
 
       The determinantal feature confer DPPs many appealing properties, among which closed form expression for XXX, moments of linear statistics \etc
-      For our sampling purposes, there is one crucial property, namely generic DPPs are mixtures of \textit{projection} DPPs i.e. DPPs parametrized by an orthogonal projection kernel.
-      This fundamental property suggests the following two steps algorithm.
-      Given the spectral decomposition of the kernel 
+      For our sampling purposes there is one crucial property: generic DPPs are mixtures of \textit{projection} DPPs i.e. DPPs parametrized by an orthogonal projection kernel.
+      Namely, given the spectral decomposition of the kernel 
       \begin{equation}
       \label{eq:eigdec_kernel}
-        K(x,y)=\suml_{i=0}^{\infty} \lambda_i \phi_i(x) \overline{\phi_i(y)},
+        K(x,y)=\suml_{i=1}^{\infty} \lambda_i \phi_i(x) \overline{\phi_i(y)},
         \quad \text{with }
-        \int \phi_i(x) \overline{\phi_j(x)} \mu(\diff x) = \delta_{ij}
+        \int \phi_i(x) \overline{\phi_j(x)} \mu(\diff x) = \delta_{ij},
       \end{equation}
 
+      define the random orthogonal projection kernel
+      $
+        K^B(x,y) 
+          = \suml_{i=1}^{\infty} B_i \phi_i(x) \overline{\phi_i(y)}
+      $, with independent $B_i\sim\Ber(\lambda_i)$.
+      \citet[Theorem 7]{HKPV06} give 
+      \begin{equation}
+        \DPP(K) \sim \DPP(K^B),
+      \end{equation} 
+      suggesting the following two steps algorithm to sample from $\DPP(K)$:
       \begin{enumerate}
-        \item Select eigenfunctions $\phi_n$ with independent Bernoulli variables $B_n \sim \Ber(\lambda_n)$.
-        \item Sample from the \textit{projection} DPP with kernel $\tilde{K}(x,y) = \suml_{n: B_n=1}\phi_n(x) \overline{\phi_n(y)}$.
+        \item Draw $B_i\sim\Ber(\lambda_i)$ independently and note $\lrcb{i_1,\dots,i_{N}} = \lrcb{i~;~B_i=1}$.
+        \item Sample from the \textit{projection} DPP with kernel $\tilde{K}(x,y) = \sum_{n=1}^{N}\phi_{i_n}(x) \overline{\phi_{i_n}(y)}$.
       \end{enumerate}
 
-      The question of sampling from \textit{projection} DPPs is addressed by \citet{HKPV06}[Algorithm 18], it based on the chain rule and the fact that a \textit{projection} DPP with kernel 
-      $K(x,y)=\suml_{n=0}^{N-1} \phi_n(x) \overline{\phi_n(y)}$ generates configuration of $N=\Tr K$ points almost surely.
+      The remaining question of sampling from \textit{projection} DPPs is addressed by \citet{HKPV06}[Algorithm 18].
+      It based on the chain rule and the fact that \textit{projection} $\DPP(\tilde{K})$ generates configurations of $N=\Tr \tilde{K}$ points almost surely.
+      In the first phase each point $x\in \bbX$ is associated to the random feature vector $\Phi(x)=\lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$, therefore $\tilde{K}(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
       % $N\overset{\text{a.s.}}{=}\Tr K$ points.
-      Noting $\Phi(x)=\lrp{\phi_0(x), \dots, \phi_{N-1}(x)}$, the kernel $K$ can be expressed as $K(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
-      In this setting, the joint distribution of $(X_1,\dots,X_N)$ takes the form
+      In this setting, the joint distribution of $(X_1,\dots,X_N)$ reads
       \begin{equation}
+      \label{eq:joint_distribution}
         \frac{1}{N!} \det \lrb{K(x_m,x_n)}_{m,n=1}^N \prod_{n=1}^N\mu(\diff x_n)
           = \frac{1}{N!} \Vol^2\lrcb{\Phi(x_1),\dots,\Phi(x_n)} \prod_{n=1}^N\mu(\diff x_n),
       \end{equation}
 
       so that the conditional densities appearing in the chain rule take the following form
       \begin{equation}
+      \label{eq:conditionals_densities}
         g_1(x) 
           = \frac{1}{N} \lrnorm{\phi(x)}^2 
           \quad\text{and}\quad
@@ -159,19 +176,47 @@
       %                    &= \frac{1}{N-(n-1)} 
       %                       \lrb{K(x,x) - \overline{K(x,x_{1:n-1})} \lrb{K(x_k,x_l)}_{k,l=1}^{n-1} K(x_{1:n-1},x)}
       % \end{align*}
-      where $\Pi_{H_{n-1}}$ is the orthogonal projection onto sur 
-      $H_{n-1} = \Span\lrcb{\phi(X_1), \dots, \phi(X_{n-1}) }$.
-      Thus the exact sampling scheme has a strong Gram-Schmidt flavor and favors configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume.\\
+      where $\Pi_{H_{n-1}}$ is the orthogonal projection onto 
+      $H_{n-1} = \Span\lrcb{\phi(x_1), \dots, \phi(x_{n-1}) }$.
+      The exact sampling procedure has a strong Gram-Schmidt flavor, and the product of the conditional densities in \Eqref{eq:conditionals_densities} refers to the base$\times$height formula.
+      In the end, DPPs favors configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume.\\
+
+      The previous sampling scheme is exact and generic but requires the eigendecomposition of the underlying kernel.
+      In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has average cost $\calO(M\lrb{\Tr \bfK}^2)$, see \citep{TrBaAm18}.
+      However, this may still be problematic for large $M$.
+      On the other hand, sampling from the conditionals in \Eqref{eq:conditionals_densities} can be cumbersome in the infinite case, since it may require tailored proposal distributions.\\
+      
+      These issues have motivated work on approximate sampling procedures with two main directions: kernel approximation and MCMC samplers.
+      It is worth mentioning that some specific DPPs admit special exact samplers, \eg uniform spanning trees \citep{PrWi98} or eigenvalues of some random matrices \citep{DuEd02}.
     
     % subsubsection exact_sampling (end)
 
     \subsubsection{Random matrices} % (fold)
     \label{ssub:random_matrices}
+
+      Originally, continuous DPPs emerged in quantum mechanics and mathematical physics with the pioneering work of \citet{Wig67} relating eigenvalues of random matrices to energy levels of heavy atoms.
+      That is to say, diagonalizing a properly randomized $N\times N$ matrix is a way to generate exact samples of continuous DPPs at cost $\calO(N^3)$.
+      More generally, $\beta$-Ensembles for which the case $\beta=2$ refers to a specific class of \textit{projection} DPPs \citep{Kon05} have joint probability distribution
+      \begin{equation}
+        \frac{1}{Z_{N,\beta}}
+        \lrabs{\Delta(x_1,\dots,x_N)}^{\beta}
+        \prod_{i= 1}^N 
+          \mu(d x_i),
+      \end{equation}
+
+      where $\lrabs{\Delta(x_1,\dots,x_N)}$ denotes the Vandermonde determinant.
+
+      The cases $\beta=1, 2$ and $4$ have received special attention by the random matrix community, since they correspond to the distribution of some random matrix models.
+      \citet{DuEd02,KiNe04} unlocked generic $\beta>0$ with equivalent tridiagonal models with the consequence to reduce the cost of sampling to sampling to $\calO(N^Z)$.
     
     % subsubsection random_matrices (end)
 
     \subsubsection{Approximate sampling} % (fold)
     \label{ssub:approximate_sampling}
+
+      Kernel approximation
+
+      MCMC
     
     % subsubsection approximate_sampling (end)
 
@@ -182,7 +227,7 @@
 \section{\DPPy\ in practice} % (fold)
 \label{sec:dppy_in_practice}
 
-  
+  \DPPy\ has with various parametrizations of discrete DPPs
 
 % section dppy_in_practice (end)
 
