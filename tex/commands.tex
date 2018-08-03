@@ -1,3 +1,11 @@
+% Specific to this .tex
+\newcommand{\DPPy}{\textsf{DPPy}}
+
+\makeatletter
+\@addtoreset{footnote}{page}
+\makeatother
+\renewcommand{\thefootnote}{\ifcase\value{footnote}\or\color{black}{\faGithub}\or\color{black}{\faBook}\fi} % For fancy footnotes
+
 % Referencing
 \newcommand*{\Chapref}[1]{Chapter~\ref{#1}}
 \newcommand*{\Secref}[1]{Section~\ref{#1}}
@@ -7,6 +15,10 @@
 \newcommand*{\Lemref}[1]{Lemma~\ref{#1}}
 \newcommand*{\Eqref}[1]{Equation~\ref{#1}}
 \newcommand*{\Figref}[1]{Figure~\ref{#1}}
+
+% Proof ends with filled box 
+% \newcommand{\BlackBox}{\rule{1.5ex}{1.5ex}}  % end of proof
+% \newenvironment{proof}{\par\noindent{\bf Proof\ }}{\hfill\BlackBox\\[2mm]}
 
 %%%%%%%%%
 % MATHS %
@@ -26,6 +38,7 @@
 \def\minsub#1{\minl_{\substack{#1}}}
 \newcommand{\maxl}{\max \limits}
 \def\maxsub#1{\maxl_{\substack{#1}}}
+
 \newcommand{\argmin}{\operatornamewithlimits{argmin}}
 \newcommand{\argmax}{\operatornamewithlimits{argmax}}
 
@@ -46,15 +59,15 @@
 %%% bold, cal and bb Uppercase letters A..Z
 \foreach \x in {A,...,Z}
 	{%
-	\expandafter\xdef\csname b\x \endcsname{\noexpand\ensuremath{\noexpand\bm{\x}}}
-	\expandafter\xdef\csname c\x \endcsname{\noexpand\ensuremath{\noexpand\mathcal{\x}}}
+	\expandafter\xdef\csname bf\x \endcsname{\noexpand\ensuremath{\noexpand\bm{\x}}}
+	\expandafter\xdef\csname cal\x \endcsname{\noexpand\ensuremath{\noexpand\mathcal{\x}}}
 	\expandafter\xdef\csname bb\x \endcsname{\noexpand\ensuremath{\noexpand\mathbb{\x}}}
 }
 
 %%% bold greek letters
 \foreach \x/\y  in {alpha/\alpha, beta/\beta, gamma/\gamma, delta/\delta, epsilon/\epsilon, zeta/\zeta, eta/\eta, theta/\theta, iota/\iota, kappa/\kappa, lambda/\lambda, mu/\mu, nu/\nu, pi/\pi, rho/\rho, sigma/\sigma, tau/\tau, upsilon/\upsilon, phi/\phi, chi/\chi, psi/\psi, omega/\omega }
 	{%
-\expandafter\xdef\csname b\x \endcsname{\noexpand\ensuremath{\noexpand\bm{\y}}}
+\expandafter\xdef\csname bf\x \endcsname{\noexpand\ensuremath{\noexpand\bm{\y}}}
 }
 
 %% Equal = with limits
@@ -62,7 +75,7 @@
 %% Equiv
 \def\xequiv#1#2{\operatornamewithlimits{\Longleftrightarrow}_{\substack{#1}}^{\substack{#2}}}
 
-%% dots
+%% SW--NE dots
 \newcommand\rddots{\reflectbox{$\ddots$}}
 
 % DPPs
@@ -81,7 +94,7 @@
 % Volume
 \newcommand\Vol{\operatorname{Vol}}
 % Zonotope
-\newcommand\Zon{\cZ}
+\newcommand\Zon{\calZ}
 % Empirical measure
 \newcommand\hmu{\hat{\mu}}
 % z tilde
@@ -98,6 +111,7 @@
 \newcommand\ie{\text{i.e.\ }}
 \newcommand\eg{\text{e.g.\ }}
 \newcommand\wrt{\text{w.r.t.\ }}
+\newcommand\etc{\text{etc.\ }}
 \newcommand\resp{\text{resp.\ }}
 \newcommand\iid{\text{i.i.d.\ }}
 
@@ -156,17 +170,17 @@
 % Indicator function
 \newcommand\indic{\mathds{1}}
 % Bernoulli
-\newcommand\Ber{\operatorname{\cB er}\!}
+\newcommand\Ber{\operatorname{\calB er}\!}
 % Beta
 \newcommand\Beta{\operatorname{Beta}}
 % Beta
 \newcommand\Dir{\operatorname{Dir}\!}
 % Uniform
-\newcommand\Unif{\operatorname{\cU}\!}
+\newcommand\Unif{\operatorname{\calU}\!}
 % Poisson
-\newcommand\Poiss{\operatorname{\cP oiss}\!}
+\newcommand\Poiss{\operatorname{\calP oiss}\!}
 % Gaussian
-\newcommand\Norm{\operatorname{\cN}\!}
+\newcommand\Norm{\operatorname{\calN}\!}
 %Chi 2
 \newcommand{\ChiTwo}[1]{\mbox{\large$\chi_{#1}^2$}}
 
@@ -198,7 +212,7 @@
 \newcommand\Span{\operatorname{Span}}
 
 \newcommand\Tr{\operatorname{Tr}}
-\newcommand\rank{\operatorname{rk}}
+\newcommand\rank{\operatorname{rank}}
 \newcommand\diag{\operatorname{diag}}
 \newcommand\Sp{\operatorname{Sp}}
 

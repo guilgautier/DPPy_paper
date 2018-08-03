@@ -14,16 +14,16 @@
 
 % Heading arguments are {volume}{year}{pages}{date submitted}{date published}{paper id}{author-full-names}
 
-\jmlrheading{1}{2000}{1-48}{4/00}{10/00}{meila00a}{Guillaume Gautier and R\'emi Bardenet}
+\jmlrheading{xx}{2018}{xx-xx}{8/18}{xx/xx}{gaba18}{Guillaume Gautier and R\'emi Bardenet}
 
 % Short headings should be running head and authors last names
 
-\ShortHeadings{DPPy paper}{Gautier and Bardenet}
+\ShortHeadings{\DPPy}{Gautier and Bardenet}
 \firstpageno{1}
 
 \begin{document}
 
-\title{DPPy paper}
+\title{\DPPy: a Python Toolbox for Sampling Determinantal Point Processes}
 
 \author{\name Guillaume Gautier \email guillaume.gga@gmail.com \\
        \addr Department of Statistics\\
@@ -40,74 +40,162 @@
 \maketitle
 
 \begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
-
-  \begin{itemize}
-    \item \href{http://www.jmlr.org/mloss/mloss-info.html}{MLOSS website}
-    \item \href{http://jmlr.csail.mit.edu/author-info.html}{JMLR author info}
-    \item \href{http://www.jmlr.org/format/authors-guide.html}{JMLR author guide} 
-  \end{itemize}
-
-  \begin{itemize}
-    \item Companion paper of \href{https://github.com/guilgautier/DPPy}{DPPy \faGithub}.
-    \item The documentation can be found on \href{https://dppy.readthedocs.io/en/latest/?badge=latest}{Read the Docs}.
-    \item Continuous integration can be found on \href{https://travis-ci.com/guilgautier/DPPy}{Travis}.
-  \end{itemize}
-
+  Determinantal point processes (DPPs) are specific probability distributions over clouds of points that have been popular as models or computational tools across physics, probability, statistics, and more recently of booming interest in machine learning. 
+  Sampling from DPPs is a nontrivial matter, and many approaches have been proposed. \DPPy\ is a Python toolbox that puts together exact and approximate sampling algorithms for DPPs.
+  The source code is available on GitHub\footnote{\url{https://github.com/guilgautier/DPPy}} along with an extensive documentation\footnote{\url{https://dppy.readthedocs.io}} taking the form a short survey of DPPs and relating each mathematical property with its implementation in \DPPy.
 \end{abstract}
 
 \begin{keywords}
-  Determinatal Point Processes, Sampling
+  Determinantal Point Processes, Sampling Schemes.
 \end{keywords}
 
-\section{Intro} % (fold)
-\label{sec:intro}
+\section{Introduction} % (fold)
+\label{sec:introduction}
 
-  \begin{itemize}
-    \item Plot of citations (Macchi, Sosh, HKPV...)
-    \item image/text subsampling depiction
-    \item remark Misc/Exotics
-    \item RSK, Random matrices, Spanning trees
-  \end{itemize}
+  Determinantal point processes (DPPs) are distributions over configurations of points that encode diversity through a kernel function $K$ and a reference measure $\mu$.
+  There were introduced by \citet{Mac75} and have then found applications in fields as diverse as probability \citep{Sos00, Kon05, HKPV06}, number theory \citep{RuSa96}, statistical physics \citep{PaBe11}, Monte Carlo methods \citep{BaHa16}, and spatial statistics \citep{LaMoRu15}. 
+  In machine learning, DPPs over finite sets have been used as a model of diverse sets of items, where the kernel function takes the form of a finite matrix $\bfK$, see \citet{KuTa12} for a comprehensive survey. 
+  Applications of DPPs in machine learning (ML) also include recommendation tasks \citep{KaDeKo16, GaPaKo16}, text summarization \citep{DuBa16} and many others.\\
 
-% Acknowledgements should go at the end, before appendices and references
+  In the finite case, common exact probabilistic inference tasks such as normalization, marginalization and sampling have complexity roughly $\calO(N^3)$ (where $N$ denotes the size of the ground set), becoming intractable for large $N$, see \citet{Gil14}.
+  More particularly, for generic kernel matrices, exact sampling requires its the eigendecomposition.
+  This prohibitive cost has triggered an effort towards efficient approximate samplers ranging from random approximation of the kernel \citep{AfKuFo13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.\\
 
-\acks{We would like to acknowledge support for this project
-from the XXXXX. }
+  \DPPy\ is the first toolbox which provides turnkey implementation of the DPP model and its corresponding sampling schemes.
+  To the best of our knowledge, there is scarcely any reproducible papers involving DPPs; sampling schemes mostly remain in pseudo code form with no clean implementation.
+  Only recently \citet{TrBaAm18} first attempted to collect the main exact sampling schemes, but without related code.
+  Moreover, \DPPy\ is supported by an extensive documentation providing the essential mathematical background and illustrates some properties of DPPs through \DPPy\ objects and associated methods.
 
-% section intro (end)
+% section introduction (end)
 
+\section{Determinantal Point Processes} % (fold)
+\label{sec:determinantal_point_processes}
 
-\section{Definition} % (fold)
-\label{sec:definition}
+  Something to say that technicalities and subtleties are avoided on purpose...
 
-  \begin{itemize}
-    \item DPP, k-DPPs
-    \item Discrete
-    \item Continuous (RMat for now)
-    \item Sampling scheme
-    \item pseudo code
-  \end{itemize}
+  \subsection{Definition} % (fold)
+  \label{sub:definition}
+  
+    A point process $\calX$ on $\bbX$, can be roughly viewed as a random subset of point $\lrcb{X_1, \dots, X_N} \subset \bbX$, with $N<\infty$ but apriori random.
+    To understand the interaction between the points $\lrcb{X_1, \dots, X_N}$, one focuses on the interaction of each cloud of $k$ points (for all $k$). 
+    The corresponding $k$-correlation functions characterize the underlying point process.
+    Considering $\mu$ as the reference measure, the $k$-correlation functions are defined as
+    \begin{equation}
+    \label{eq:k-correlation_function}
+      \Espe{ \sum_{  
+        \substack{
+          (X_1,\dots,X_k) \\ 
+          X_1 \neq \dots \neq X_k} } 
+        f(X_1,\dots,X_k) 
+        }
+        = \int_{\bbX^k} 
+          f(x_1,\dots,x_k) \rho_k(x_1,\dots,x_k) 
+          \prod_{i=1}^k \mu(dx_i),
+    \end{equation}
 
-% section definition (end)
+    for all bounded measurable functions $f:\bbX^k\to \bbC$ and the sum ranges over $k$-tuples of distinct points of $\calX$. 
+    A point process parametrized by a kernel $K$ associated to the reference measure $\mu$ is said to be determinantal if its $k$-correlation functions read
+    \begin{equation}
+    \label{eq:k-correlation_function_DPP}
+      \rho_k(x_1,\dots,x_k) 
+        = \det [K(x_i, x_j)]_{i,j=1}^k,
+      \quad \forall k\geq 1.
+    \end{equation}
 
+    To guarantee existence of the DPP as described by \Eqref{eq:k-correlation_function_DPP}, the kernel $K$ must have $[0,1]$-valued eigenvalues and it is commonly assumed to be Hermitian symmetric, see \citep[Theorem 2; Theorem 3]{HKPV06, Sos00}.
+    The latter assumption is only sufficient, there exist DPPs with non symmetric kernels, see \citep{BoDiFu09}.\\
 
-\section{Basic example} % (fold)
-\label{sec:basic_example}
+    The finite case, when for $\bbX = \lrcb{1,\dots,M}$ with $\mu=\sum_{i=1}^M \delta_i$, corresponds to 
+    In this setting the kernel function becomes a $M\times M$ matrix $\bfK$ and the correlation functions $\rho_k$ refer simply to inclusion probabilities.
+    A DPP
 
-  \begin{itemize}
-    \item Instanciate a DPP as DPP(mu, kernel)
-    \item DPP.sample()
-    \item Approximate sampling, basis exchange ...
-  \end{itemize}
+  % subsection definition (end)
 
-% section basic_example (end)
+  \subsection{Sampling} % (fold)
+  \label{sub:sampling}
+  
+    \subsubsection{Exact sampling} % (fold)
+    \label{ssub:exact_sampling}
+
+      The determinantal feature confer DPPs many appealing properties, among which closed form expression for XXX, moments of linear statistics \etc
+      For our sampling purposes, there is one crucial property, namely generic DPPs are mixtures of \textit{projection} DPPs i.e. DPPs parametrized by an orthogonal projection kernel.
+      This fundamental property suggests the following two steps algorithm.
+      Given the spectral decomposition of the kernel 
+      \begin{equation}
+      \label{eq:eigdec_kernel}
+        K(x,y)=\suml_{i=0}^{\infty} \lambda_i \phi_i(x) \overline{\phi_i(y)},
+        \quad \text{with }
+        \int \phi_i(x) \overline{\phi_j(x)} \mu(\diff x) = \delta_{ij}
+      \end{equation}
+
+      \begin{enumerate}
+        \item Select eigenfunctions $\phi_n$ with independent Bernoulli variables $B_n \sim \Ber(\lambda_n)$.
+        \item Sample from the \textit{projection} DPP with kernel $\tilde{K}(x,y) = \suml_{n: B_n=1}\phi_n(x) \overline{\phi_n(y)}$.
+      \end{enumerate}
+
+      The question of sampling from \textit{projection} DPPs is addressed by \citet{HKPV06}[Algorithm 18], it based on the chain rule and the fact that a \textit{projection} DPP with kernel 
+      $K(x,y)=\suml_{n=0}^{N-1} \phi_n(x) \overline{\phi_n(y)}$ generates configuration of $N=\Tr K$ points almost surely.
+      % $N\overset{\text{a.s.}}{=}\Tr K$ points.
+      Noting $\Phi(x)=\lrp{\phi_0(x), \dots, \phi_{N-1}(x)}$, the kernel $K$ can be expressed as $K(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
+      In this setting, the joint distribution of $(X_1,\dots,X_N)$ takes the form
+      \begin{equation}
+        \frac{1}{N!} \det \lrb{K(x_m,x_n)}_{m,n=1}^N \prod_{n=1}^N\mu(\diff x_n)
+          = \frac{1}{N!} \Vol^2\lrcb{\Phi(x_1),\dots,\Phi(x_n)} \prod_{n=1}^N\mu(\diff x_n),
+      \end{equation}
+
+      so that the conditional densities appearing in the chain rule take the following form
+      \begin{equation}
+        g_1(x) 
+          = \frac{1}{N} \lrnorm{\phi(x)}^2 
+          \quad\text{and}\quad
+        g_{n | 1:n-1}(x) 
+          = \frac{1}{N-(n-1)} \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x)}^2,
+      \end{equation}
+      % \begin{align*}
+      %   g_1(x)           &= \frac{1}{N} \lrnorm{\phi(x)}^2 
+      %                    &= \frac{1}{N} K(x,x) \\
+      %   g_{n | 1:n-1}(x) &= \frac{1}{N-(n-1)} 
+      %                       \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x)}^2 \\
+      %                    &= \frac{1}{N-(n-1)} 
+      %                       \lrb{K(x,x) - \overline{K(x,x_{1:n-1})} \lrb{K(x_k,x_l)}_{k,l=1}^{n-1} K(x_{1:n-1},x)}
+      % \end{align*}
+      where $\Pi_{H_{n-1}}$ is the orthogonal projection onto sur 
+      $H_{n-1} = \Span\lrcb{\phi(X_1), \dots, \phi(X_{n-1}) }$.
+      Thus the exact sampling scheme has a strong Gram-Schmidt flavor and favors configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume.\\
+    
+    % subsubsection exact_sampling (end)
+
+    \subsubsection{Random matrices} % (fold)
+    \label{ssub:random_matrices}
+    
+    % subsubsection random_matrices (end)
+
+    \subsubsection{Approximate sampling} % (fold)
+    \label{ssub:approximate_sampling}
+    
+    % subsubsection approximate_sampling (end)
+
+  % subsection sampling (end)
+
+% section determinantal_point_processes (end)
+
+\section{\DPPy\ in practice} % (fold)
+\label{sec:dppy_in_practice}
+
+  
+
+% section dppy_in_practice (end)
+
 
 \section{Conclusion} % (fold)
 \label{sec:conclusion}
 
 % section conclusion (end)
 
+% Acknowledgements should go at the end, before appendices and references
 
+\acks{We would like to acknowledge support for this project
+from the XXXXX.}
 
 % Manual newpage inserted to improve layout of sample file - not
 % needed in general before appendices/bibliography.
@@ -124,8 +212,24 @@ from the XXXXX. }
 %In this appendix we prove the following theorem from
 %Section~\ref{sec:textree-generalization}:
 
-\vskip 0.2in
-\cite{HKPV06}
+% \vskip 0.2in
+
+\newpage
+
+  \begin{itemize}
+    \item \href{http://www.jmlr.org/mloss/mloss-info.html}{MLOSS website}
+    \item \href{http://jmlr.csail.mit.edu/author-info.html}{JMLR author info}
+    \item \href{http://www.jmlr.org/format/authors-guide.html}{JMLR author guide} 
+  \end{itemize}
+
+  \begin{itemize}
+    \item Companion paper of \href{https://github.com/guilgautier/DPPy}{\DPPy\ \faGithub}.
+    \item The documentation can be found on \href{https://dppy.readthedocs.io/en/latest/?badge=latest}{Read the Docs}.
+    \item Continuous integration can be found on \href{https://travis-ci.com/guilgautier/DPPy}{Travis}.
+  \end{itemize}
+
+\newpage
+
 \bibliographystyle{icml2017}
 \bibliography{biblio}
 
