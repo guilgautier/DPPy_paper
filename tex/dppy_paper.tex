@@ -182,8 +182,8 @@
       In the end, DPPs favors configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume.\\
 
       The previous sampling scheme is exact and generic but requires the eigendecomposition of the underlying kernel.
-      In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has average cost $\calO(M\lrb{\Tr \bfK}^2)$, see \citep{TrBaAm18}.
-      However, this may still be problematic for large $M$.
+      In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has average cost $\calO(M\lrb{\Tr \bfK}^2)$, which may still be problematic for large $M$, see \citep{TrBaAm18}.
+
       On the other hand, sampling from the conditionals in \Eqref{eq:conditionals_densities} can be cumbersome in the infinite case, since it may require tailored proposal distributions.\\
       
       These issues have motivated work on approximate sampling procedures with two main directions: kernel approximation and MCMC samplers.
@@ -204,10 +204,9 @@
           \mu(d x_i),
       \end{equation}
 
-      where $\lrabs{\Delta(x_1,\dots,x_N)}$ denotes the Vandermonde determinant.
-
-      The cases $\beta=1, 2$ and $4$ have received special attention by the random matrix community, since they correspond to the distribution of some random matrix models.
-      \citet{DuEd02,KiNe04} unlocked generic $\beta>0$ with equivalent tridiagonal models with the consequence to reduce the cost of sampling to sampling to $\calO(N^Z)$.
+      where $\lrabs{\Delta(x_1,\dots,x_N)}$ denotes the Vandermonde determinant, and $\beta$ plays the role of an inverse temperature controlling the strength of the repulsive interaction between the points.
+      The cases $\beta=1, 2$ and $4$ together with Gaussian, Gamma and Beta reference measure $\mu$ received special attention, since they correspond to the distribution of some random matrix models.
+      \citet{DuEd02} unlocked generic $\beta>0$ parameters through equivalent tridiagonal models, thus reducing the sampling cost to $\calO(N^2)$.
     
     % subsubsection random_matrices (end)
 
@@ -226,8 +225,16 @@
 
 \section{\DPPy\ in practice} % (fold)
 \label{sec:dppy_in_practice}
+  
+  \DPPy\ strives to handle objects that natural definitions.
+  For example the \DPPy object corresponding to the finite $\DPP(\bfK)$ can be instantiated as
 
-  \DPPy\ has with various parametrizations of discrete DPPs
+  \mintinline{python}{Finite_DPP(kernel_type="inclusion", projection=False, **{'K':K})} 
+  % and has two main sampling methods .sample_exact() and .sample_mcmc()
+  % has an object Finite_DPP which can instantiated through various  parametrizations of the underlying kernel.
+  The main method one of 
+  
+  
 
 % section dppy_in_practice (end)
 
