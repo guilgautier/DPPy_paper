@@ -1,19 +1,18 @@
 language: generic
 
-sudo: require
+sudo: enabled
 
 matrix:
   include:
   - os: linux
-    python: 3.4
+    python: 3.6
 
 install:
   # For LaTeX
   - ". ./scripts/ensure_latex.sh"
   - "./scripts/ensure_book_dependencies.sh"
   # To use minted package, install pygments toolbox
-  - python -m pip install -U pip
-  - python -m easy_install -U setuptools
+  - pip install --upgrade pip
   - pip install .
 
 script:

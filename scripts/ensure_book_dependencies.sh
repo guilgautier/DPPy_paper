@@ -10,4 +10,5 @@ tlmgr install graphicx
 tlmgr install ucs
 tlmgr install layout
 tlmgr install pgffor
-tlmgr install todonotes
+#tlmgr install todonotes
+tlmgr install minted # highlight code

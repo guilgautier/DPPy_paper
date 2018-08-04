@@ -228,31 +228,25 @@
   \DPPy\ strives to handle objects that fit the natural definition of the different DPPs models:
   \begin{itemize}
 	  \item The \DPPy\ object corresponding to the finite $\DPP(\bfK)$ can be instantiated as
-
 	  \begin{nscenter}
 	  	\mintinline{python}{Finite_DPP(kernel_type="inclusion", projection=False, **{"K":K})}.
 	  \end{nscenter}
-
 		It has two main sampling methods namely \mintinline{python}{.sample_exact()} and \mintinline{python}{.sample_mcmc()} implementing different variants of the exact sampling scheme and current state of the art MCMC samplers.
 		
 		\item The \DPPy\ object corresponding to $\beta$-Ensembles can be instantiated as
-
 		\begin{nscenter}
 			\mintinline{python}{Beta_Ensemble(ensemble_name="laguerre", beta=3.14)},
 		\end{nscenter}
-		
 		when $\mu$ is Gamma (parametrized using the \mintinline{python}{numpy} style).
 		It has one sampling method 
-
 		\begin{nscenter}
 			\mintinline{python}{.sample(sampling_mode="banded", **{"shape":10, "scale":2.0, "size":50})} 
 		\end{nscenter}
-
 		and two methods for display; \mintinline{python}{.plot()} to plot the last realisation and \mintinline{python}{.hist()} to construct the empirical distribution.
 
   \end{itemize}
   
-  	For more information, please refer to the documentation\footnoteref{fn:docs} and corresponding notebooks that showcase the use \DPPy\ objects.
+  For more information, please refer to the documentation\footnoteref{fn:docs} and corresponding notebooks that showcase the use \DPPy\ objects.
   
 
 % section the_dppy_toolbox (end)
