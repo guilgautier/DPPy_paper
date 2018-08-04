@@ -18,7 +18,7 @@ install:
 
 script:
 - cd tex
-- pdflatex --shell-escape dppy_paper.tex
+- pdflatex --shell-escape dppy_paper.tex # --shell-escape option for minted pkg
 - cd ..
 deploy:
   skip_cleanup: true

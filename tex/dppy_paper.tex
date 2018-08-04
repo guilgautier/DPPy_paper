@@ -225,14 +225,15 @@
 
 \section{\DPPy\ in practice} % (fold)
 \label{sec:dppy_in_practice}
-  
-  \DPPy\ strives to handle objects that natural definitions.
+
+  \DPPy\ strives to handle objects that fit the natural definitions.
   For example the \DPPy object corresponding to the finite $\DPP(\bfK)$ can be instantiated as
 
-  \mintinline{python}{Finite_DPP(kernel_type="inclusion", projection=False, **{'K':K})} 
-  % and has two main sampling methods .sample_exact() and .sample_mcmc()
-  % has an object Finite_DPP which can instantiated through various  parametrizations of the underlying kernel.
-  The main method one of 
+	\mintinline{python}{Finite_DPP(kernel_type="inclusion", projection=False, **{"K":K})}. 
+
+  \noindent It has two main sampling methods namely \mintinline{python}{.sample_exact()} and \mintinline{python}{.sample_mcmc()} and a \mintinline{python}{.plot()} method that displays a heatmap of the kernel.
+
+  
   
   
 
