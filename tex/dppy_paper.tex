@@ -26,24 +26,23 @@
 \title{\DPPy: a Python Toolbox for Sampling Determinantal Point Processes}
 
 \author{\name Guillaume Gautier \email guillaume.gga@gmail.com \\
-       \addr Department of Statistics\\
-       University of Washington\\
-       Seattle, WA 98195-4322, USA
-       \AND
        \name R\'emi Bardenet \email remi.bardenet@gmail.com \\
-       \addr Division of Computer Science and Department of Statistics\\
-       University of California\\
-       Berkeley, CA 94720-1776, USA}
+       \addr CNRS, INRIA Lille, Centrale Lille\\
+       UMR 9189 — CRIStAL}
 
 \editor{}
 
 \maketitle
 
+\setcounter{footnote}{3}
 \begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
+
   Determinantal point processes (DPPs) are specific probability distributions over clouds of points that have been popular as models or computational tools across physics, probability, statistics, and more recently of booming interest in machine learning. 
-  Sampling from DPPs is a nontrivial matter, and many approaches have been proposed. \DPPy\ is a Python toolbox that puts together exact and approximate sampling algorithms for DPPs.
-  The source code is available on GitHub\footnote{\url{https://github.com/guilgautier/DPPy}} along with an extensive documentation\footnote{\url{https://dppy.readthedocs.io}} taking the form a short survey of DPPs and relating each mathematical property with its implementation in \DPPy.
+  Sampling from DPPs is a nontrivial matter, \DPPy\ is a Python toolbox that puts together exact and approximate sampling algorithms.
+  The project is hosted on GitHub\footnote{\url{https://github.com/guilgautier/DPPy}} and comes with an extensive documentation\footnote{\label{fn:docs}\url{https://dppy.readthedocs.io}} taking the form a short survey of DPPs and relating each mathematical property with \DPPy\ objects.
+  
 \end{abstract}
+% \setcounter{footnote}{0}
 
 \begin{keywords}
   Determinantal Point Processes, Sampling Schemes.
@@ -65,6 +64,8 @@
   To the best of our knowledge, there is scarcely any reproducible papers involving DPPs; sampling schemes mostly remain in pseudo code form with no clean implementation.
   Only recently \citet{TrBaAm18} first attempted to collect the main exact sampling schemes, but without related code.
   Moreover, \DPPy\ is supported by an extensive documentation providing the essential mathematical background and illustrates some properties of DPPs through \DPPy\ objects and associated methods.
+  \setcounter{footnote}{5}
+  Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} is used as a continuous integration tool to certify \DPPy\ can be used with Linux and MacOS and to run some unit tests.
 
 % section introduction (end)
 
@@ -120,7 +121,7 @@
   \subsection{Sampling} % (fold)
   \label{sub:sampling}
   
-    \subsubsection{Exact sampling} % (fold)
+    \subsubsection{Exact Sampling} % (fold)
     \label{ssub:exact_sampling}
 
       The determinantal feature confer DPPs many appealing properties, among which closed form expression for XXX, moments of linear statistics \etc
@@ -191,7 +192,7 @@
     
     % subsubsection exact_sampling (end)
 
-    \subsubsection{Random matrices} % (fold)
+    \subsubsection{Random Matrices} % (fold)
     \label{ssub:random_matrices}
 
       Originally, continuous DPPs emerged in quantum mechanics and mathematical physics with the pioneering work of \citet{Wig67} relating eigenvalues of random matrices to energy levels of heavy atoms.
@@ -210,12 +211,10 @@
     
     % subsubsection random_matrices (end)
 
-    \subsubsection{Approximate sampling} % (fold)
+    \subsubsection{Approximate Sampling} % (fold)
     \label{ssub:approximate_sampling}
 
-      Kernel approximation
-
-      MCMC
+      Kernel approximation, MCMC, no room
     
     % subsubsection approximate_sampling (end)
 
@@ -223,32 +222,63 @@
 
 % section determinantal_point_processes (end)
 
-\section{\DPPy\ in practice} % (fold)
-\label{sec:dppy_in_practice}
+\section{The \DPPy\ Toolbox} % (fold)
+\label{sec:the_dppy_toolbox}
 
-  \DPPy\ strives to handle objects that fit the natural definitions.
-  For example the \DPPy object corresponding to the finite $\DPP(\bfK)$ can be instantiated as
+  \DPPy\ strives to handle objects that fit the natural definition of the different DPPs models:
+  \begin{itemize}
+	  \item The \DPPy\ object corresponding to the finite $\DPP(\bfK)$ can be instantiated as
 
-	\mintinline{python}{Finite_DPP(kernel_type="inclusion", projection=False, **{"K":K})}. 
+	  \begin{nscenter}
+	  	\mintinline{python}{Finite_DPP(kernel_type="inclusion", projection=False, **{"K":K})}.
+	  \end{nscenter}
 
-  \noindent It has two main sampling methods namely \mintinline{python}{.sample_exact()} and \mintinline{python}{.sample_mcmc()} and a \mintinline{python}{.plot()} method that displays a heatmap of the kernel.
+		It has two main sampling methods namely \mintinline{python}{.sample_exact()} and \mintinline{python}{.sample_mcmc()} implementing different variants of the exact sampling scheme and current state of the art MCMC samplers.
+		
+		\item The \DPPy\ object corresponding to $\beta$-Ensembles can be instantiated as
 
+		\begin{nscenter}
+			\mintinline{python}{Beta_Ensemble(ensemble_name="laguerre", beta=3.14)},
+		\end{nscenter}
+		
+		when $\mu$ is Gamma (parametrized using the \mintinline{python}{numpy} style).
+		It has one sampling method 
+
+		\begin{nscenter}
+			\mintinline{python}{.sample(sampling_mode="banded", **{"shape":10, "scale":2.0, "size":50})} 
+		\end{nscenter}
+
+		and two methods for display; \mintinline{python}{.plot()} to plot the last realisation and \mintinline{python}{.hist()} to construct the empirical distribution.
+
+  \end{itemize}
   
+  	For more information, please refer to the documentation\footnoteref{fn:docs} and corresponding notebooks that showcase the use \DPPy\ objects.
   
-  
 
-% section dppy_in_practice (end)
+% section the_dppy_toolbox (end)
 
 
-\section{Conclusion} % (fold)
-\label{sec:conclusion}
+\section{Conclusion and Future Work} % (fold)
+\label{sec:conclusion_and_future_work}
 
-% section conclusion (end)
+The release of \DPPy\ marks the first reproducible and fully documented entry point for using DPPs. It is ready to raise contributors' interest to consolidate the existing content and enlarge the scope of \DPPy\ \eg with procedures for learning the kernel from data.
+
+% section conclusion_and_future_work (end)
 
 % Acknowledgements should go at the end, before appendices and references
+\newpage
+\acks{The research presented was supported by French Ministry of Higher Education and Research, CPER Nord-Pas de Calais/FEDER DATA Advanced data science and tech- nologies 2015-2020, and French National Research Agency projects EXTRA-LEARN (n.ANR-14-CE24-0010-01) and BOB (n.ANR-16-CE23-0003).}
 
-\acks{We would like to acknowledge support for this project
-from the XXXXX.}
+
+\section{Links to JMLR } % (fold)
+\label{sec:links_to_jmlr_}
+
+% section links_to_jmlr_ (end)
+  \begin{itemize}
+    \item \href{http://www.jmlr.org/mloss/mloss-info.html}{MLOSS website}
+    \item \href{http://jmlr.csail.mit.edu/author-info.html}{JMLR author info}
+    \item \href{http://www.jmlr.org/format/authors-guide.html}{JMLR author guide} 
+  \end{itemize}
 
 % Manual newpage inserted to improve layout of sample file - not
 % needed in general before appendices/bibliography.
@@ -266,22 +296,6 @@ from the XXXXX.}
 %Section~\ref{sec:textree-generalization}:
 
 % \vskip 0.2in
-
-\newpage
-
-  \begin{itemize}
-    \item \href{http://www.jmlr.org/mloss/mloss-info.html}{MLOSS website}
-    \item \href{http://jmlr.csail.mit.edu/author-info.html}{JMLR author info}
-    \item \href{http://www.jmlr.org/format/authors-guide.html}{JMLR author guide} 
-  \end{itemize}
-
-  \begin{itemize}
-    \item Companion paper of \href{https://github.com/guilgautier/DPPy}{\DPPy\ \faGithub}.
-    \item The documentation can be found on \href{https://dppy.readthedocs.io/en/latest/?badge=latest}{Read the Docs}.
-    \item Continuous integration can be found on \href{https://travis-ci.com/guilgautier/DPPy}{Travis}.
-  \end{itemize}
-
-\newpage
 
 \bibliographystyle{icml2017}
 \bibliography{biblio}
