@@ -1,4 +1,4 @@
-language: generic
+language: python
 
 sudo: enabled
 
@@ -13,6 +13,7 @@ install:
   - "./scripts/ensure_book_dependencies.sh"
   # To use minted package, install pygments toolbox
   # - pip install --upgrade pip
+  - python --version
   - pip install .
 
 script:
