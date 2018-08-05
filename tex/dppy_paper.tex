@@ -18,12 +18,12 @@
 
 % Short headings should be running head and authors last names
 
-\ShortHeadings{\DPPy}{Gautier and Bardenet}
+\ShortHeadings{\DPPy}{Gautier, Bardenet, and Valko}
 \firstpageno{1}
 
 \begin{document}
 
-\title{\DPPy: a Python Toolbox for Sampling Determinantal Point Processes}
+\title{\DPPy: a Python Toolbox for Sampling\\Determinantal Point Processes}
 
 \author{\name Guillaume Gautier \email guillaume.gga@gmail.com \\
        \name R\'emi Bardenet \email remi.bardenet@gmail.com \\
@@ -38,10 +38,10 @@
 \setcounter{footnote}{3}
 \begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
 
-  Determinantal point processes (DPPs) are specific probability distributions over clouds of points that have been popular as models or computational tools across physics, probability, statistics, and more recently of booming interest in machine learning. 
-  Sampling from DPPs is a nontrivial matter, \DPPy\ is a Python toolbox that puts together exact and approximate sampling algorithms.
-  The project is hosted on GitHub\footnote{\url{https://github.com/guilgautier/DPPy}} and comes with an extensive documentation\footnote{\label{fn:docs}\url{https://dppy.readthedocs.io}} taking the form a short survey of DPPs and relating each mathematical property with \DPPy\ objects.
-  
+  Determinantal point processes (DPPs) are specific probability distributions over clouds of points that have been popular as models or computational tools across physics, probability, statistics, and more recently of booming interest in machine learning.
+  Sampling from DPPs is a nontrivial matter. \DPPy\ is a Python toolbox that puts together exact and approximate sampling algorithms from the literature.
+  The project is hosted on GitHub\footnote{\url{https://github.com/guilgautier/DPPy}} and comes with an extensive documentation\footnote{\label{fn:docs}\url{https://dppy.readthedocs.io}}. The documentation takes the form of a short survey of DPPs, and relates each mathematical property with \DPPy\ objects for ease of manipulation.
+
 \end{abstract}
 % \setcounter{footnote}{0}
 
@@ -53,20 +53,16 @@
 \label{sec:introduction}
 
   Determinantal point processes (DPPs) are distributions over configurations of points that encode diversity through a kernel function $K$ and a reference measure $\mu$.
-  There were introduced by \citet{Mac75} and have then found applications in fields as diverse as probability \citep{Sos00, Kon05, HKPV06}, number theory \citep{RuSa96}, statistical physics \citep{PaBe11}, Monte Carlo methods \citep{BaHa16}, and spatial statistics \citep{LaMoRu15}. 
-  In machine learning, DPPs over finite sets have been used as a model of diverse sets of items, where the kernel function takes the form of a finite matrix $\bfK$, see \citet{KuTa12} for a comprehensive survey. 
-  Applications of DPPs in machine learning (ML) also include recommendation tasks \citep{KaDeKo16, GaPaKo16}, text summarization \citep{DuBa16} and many others.\\
+  There were introduced by \citet{Mac75} and have then found applications in fields as diverse as probability \citep{Sos00, Kon05, HKPV06}, number theory \citep{RuSa96}, statistical physics \citep{PaBe11}, Monte Carlo methods \citep{BaHa16}, and spatial statistics \citep{LaMoRu15}.
+  In machine learning, DPPs over finite sets have been used as a model of diverse sets of items, where the kernel function takes the form of a finite matrix $\bfK$, see \citep{KuTa12} for a comprehensive survey.
+  Further applications of DPPs in machine learning (ML) e.g. include recommendation tasks \citep{KaDeKo16, GaPaKo16} or text summarization \citep{DuBa16}.\\
 
-  In the finite case, common exact probabilistic inference tasks such as normalization, marginalization and sampling have complexity roughly $\calO(M^3)$ (where $M$ denotes the size of the ground set), becoming intractable for large $M$, see \citet{Gil14}.
-  More particularly, for generic kernel matrices, exact sampling requires its the eigendecomposition.
-  This prohibitive cost has triggered an effort towards efficient approximate samplers ranging from random approximation of the kernel \citep{AfKuFo13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.\\
+  In the finite case, routine inference tasks such as normalization, marginalization and sampling have complexity roughly $\calO(M^3)$, where $M$ denotes the size of the ground set \citep{KuTa12}. This becomes intractable for large $M$ \citep{Gil14}. In particular, for generic kernel matrices, exact sampling requires the eigendecomposition of the kernel. This prohibitive cost has triggered an effort towards efficient approximate samplers ranging from random approximation \todo{Maybe find a different way of saying it, "random approximation" is too vague} of the kernel \citep{AfKuFo13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.\\
 
-  \DPPy\ is the first toolbox which provides turnkey implementation of the DPP model and its corresponding sampling schemes.
-  To the best of our knowledge, there is scarcely any reproducible papers involving DPPs; sampling schemes mostly remain in pseudo code form with no clean implementation.
-  Only recently \citet{TrBaAm18} first attempted to collect the main exact sampling schemes, but without related code.
-  Moreover, \DPPy\ is supported by an extensive documentation providing the essential mathematical background and illustrates some properties of DPPs through \DPPy\ objects and associated methods.
-  \setcounter{footnote}{5}
-  Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} is used as a continuous integration tool to certify \DPPy\ can be used with Linux and MacOS and to run some unit tests.
+  \DPPy\ is the first toolbox which provides a turnkey implementation of all general algorithms to sample DPPs. \citet{TrBaAm18} also recently surveyed the main exact sampling schemes, but without related code. To the best of our knowledge, there is scarcely any reproducible papers involving DPPs; sampling schemes mostly remain in pseudo-code form with no clean implementation. \todo{"To the best..." Too harsh. Rather say sth like "Packaging together all known sampling algorithms now and in the future will improve reproducibility of papers on DPPs and favour dissemination of results."}  \setcounter{footnote}{5}
+    Relatedly, we use Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} for continuous integration, both to run tests and certify that \DPPy\ can be used with Linux and MacOS. Moreover, \DPPy\ is supported by an extensive documentation providing the essential mathematical background; this illustrates some key properties of DPPs through \DPPy\ objects and associated methods. \DPPy\ can thus also easily serve as tutorial material.
+
+
 
 % section introduction (end)
 
@@ -77,29 +73,29 @@
 
   \subsection{Definition} % (fold)
   \label{sub:definition}
-  
+
     A point process $\calX$ on $\bbX$, can be roughly viewed as a random subset of point $\lrcb{X_1, \dots, X_N} \subset \bbX$, with $N<\infty$ but a priori random.
-    To understand the interaction between the points $\lrcb{X_1, \dots, X_N}$, one focuses on the interaction of each cloud of $k$ points (for all $k$). 
+    To understand the interaction between the points $\lrcb{X_1, \dots, X_N}$, one focuses on the interaction of each cloud of $k$ points (for all $k$).
     The corresponding $k$-correlation functions characterize the underlying point process.
     % Considering $\mu$ as the reference measure, the $k$-correlation functions are defined as
     % \begin{equation}
     % \label{eq:k-correlation_function}
-    %   \Expe{ \sum_{  
+    %   \Expe{ \sum_{
     %     \substack{
-    %       (X_1,\dots,X_k) \\ 
-    %       X_1 \neq \dots \neq X_k} } 
-    %     f(X_1,\dots,X_k) 
+    %       (X_1,\dots,X_k) \\
+    %       X_1 \neq \dots \neq X_k} }
+    %     f(X_1,\dots,X_k)
     %     }
-    %     = \int_{\bbX^k} 
-    %       f(x_1,\dots,x_k) \rho_k(x_1,\dots,x_k) 
+    %     = \int_{\bbX^k}
+    %       f(x_1,\dots,x_k) \rho_k(x_1,\dots,x_k)
     %       \prod_{i=1}^k \mu(dx_i),
     % \end{equation}
 
-    % for all bounded measurable functions $f:\bbX^k\to \bbC$ and the sum ranges over $k$-tuples of distinct points of $\calX$. 
+    % for all bounded measurable functions $f:\bbX^k\to \bbC$ and the sum ranges over $k$-tuples of distinct points of $\calX$.
     A point process parametrized by a kernel $K$ associated to the reference measure $\mu$ is said to be determinantal and noted $\DPP(K)$ if its $k$-correlation functions read
     \begin{equation}
     \label{eq:k-correlation_function_DPP}
-      \rho_k(x_1,\dots,x_k) 
+      \rho_k(x_1,\dots,x_k)
         = \det [K(x_i, x_j)]_{i,j=1}^k,
       \quad \forall k\geq 1.
     \end{equation}
@@ -109,7 +105,7 @@
     We say that $\calX\sim \DPP(\bfK)$ if
     \begin{equation}
     \label{eq:inclusion_proba_finite}
-      \Proba{S \subset \calX} = \det \bfK_S, 
+      \Proba{S \subset \calX} = \det \bfK_S,
         \quad\forall S\subset \bbX,
     \end{equation}
 
@@ -121,13 +117,13 @@
 
   \subsection{Sampling} % (fold)
   \label{sub:sampling}
-  
+
     \subsubsection{Exact Sampling} % (fold)
     \label{ssub:exact_sampling}
 
       The determinantal feature confer DPPs many appealing properties, among which closed form expression for XXX, moments of linear statistics \etc
       For our sampling purposes there is one crucial property: generic DPPs are mixtures of \textit{projection} DPPs i.e. DPPs parametrized by an orthogonal projection kernel.
-      Namely, given the spectral decomposition of the kernel 
+      Namely, given the spectral decomposition of the kernel
       \begin{equation}
       \label{eq:eigdec_kernel}
         K(x,y)=\suml_{i=1}^{\infty} \lambda_i \phi_i(x) \overline{\phi_i(y)},
@@ -137,13 +133,13 @@
 
       define the random orthogonal projection kernel
       $
-        K^B(x,y) 
+        K^B(x,y)
           = \suml_{i=1}^{\infty} B_i \phi_i(x) \overline{\phi_i(y)}
       $, with independent $B_i\sim\Ber(\lambda_i)$.
-      \citet[Theorem 7]{HKPV06} give 
+      \citet[Theorem 7]{HKPV06} give
       \begin{equation}
         \DPP(K) \sim \DPP(K^B),
-      \end{equation} 
+      \end{equation}
       suggesting the following two steps algorithm to sample from $\DPP(K)$:
       \begin{enumerate}
         \item Draw $B_i\sim\Ber(\lambda_i)$ independently and note $\lrcb{i_1,\dots,i_{N}} = \lrcb{i~;~B_i=1}$.
@@ -164,21 +160,21 @@
       so that the conditional densities appearing in the chain rule take the following form
       \begin{equation}
       \label{eq:conditionals_densities}
-        g_1(x) 
-          = \frac{1}{N} \lrnorm{\phi(x)}^2 
+        g_1(x)
+          = \frac{1}{N} \lrnorm{\phi(x)}^2
           \quad\text{and}\quad
-        g_{n | 1:n-1}(x) 
+        g_{n | 1:n-1}(x)
           = \frac{1}{N-(n-1)} \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x)}^2,
       \end{equation}
       % \begin{align*}
-      %   g_1(x)           &= \frac{1}{N} \lrnorm{\phi(x)}^2 
+      %   g_1(x)           &= \frac{1}{N} \lrnorm{\phi(x)}^2
       %                    &= \frac{1}{N} K(x,x) \\
-      %   g_{n | 1:n-1}(x) &= \frac{1}{N-(n-1)} 
+      %   g_{n | 1:n-1}(x) &= \frac{1}{N-(n-1)}
       %                       \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x)}^2 \\
-      %                    &= \frac{1}{N-(n-1)} 
+      %                    &= \frac{1}{N-(n-1)}
       %                       \lrb{K(x,x) - \overline{K(x,x_{1:n-1})} \lrb{K(x_k,x_l)}_{k,l=1}^{n-1} K(x_{1:n-1},x)}
       % \end{align*}
-      where $\Pi_{H_{n-1}}$ is the orthogonal projection onto 
+      where $\Pi_{H_{n-1}}$ is the orthogonal projection onto
       $H_{n-1} = \Span\lrcb{\phi(x_1), \dots, \phi(x_{n-1}) }$.
       The exact sampling procedure has a strong Gram-Schmidt flavor, and the product of the conditional densities in \Eqref{eq:conditionals_densities} refers to the base$\times$height formula.
       In the end, DPPs favors configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume.\\
@@ -187,10 +183,10 @@
       In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has average cost $\calO(M\lrb{\Tr \bfK}^2)$, which may still be problematic for large $M$, see \citep{TrBaAm18}.
 
       On the other hand, sampling from the conditionals in \Eqref{eq:conditionals_densities} can be cumbersome in the infinite case, since it may require tailored proposal distributions.\\
-      
+
       These issues have motivated work on approximate sampling procedures with two main directions: kernel approximation and MCMC samplers.
       It is worth mentioning that some specific DPPs admit special exact samplers, \eg uniform spanning trees \citep{PrWi98} or eigenvalues of some random matrices \citep{DuEd02}.
-    
+
     % subsubsection exact_sampling (end)
 
     \subsubsection{Random Matrices} % (fold)
@@ -202,21 +198,21 @@
       \begin{equation}
         \frac{1}{Z_{N,\beta}}
         \lrabs{\Delta(x_1,\dots,x_N)}^{\beta}
-        \prod_{i= 1}^N 
+        \prod_{i= 1}^N
           \mu(d x_i),
       \end{equation}
 
       where $\lrabs{\Delta(x_1,\dots,x_N)}$ denotes the Vandermonde determinant, and $\beta$ plays the role of an inverse temperature controlling the strength of the repulsive interaction between the points.
       The cases $\beta=1, 2$ and $4$ together with Gaussian, Gamma and Beta reference measure $\mu$ received special attention, since they correspond to the distribution of some random matrix models.
       \citet{DuEd02} unlocked generic $\beta>0$ parameters through equivalent tridiagonal models, thus reducing the sampling cost to $\calO(N^2)$.
-    
+
     % subsubsection random_matrices (end)
 
     \subsubsection{Approximate Sampling} % (fold)
     \label{ssub:approximate_sampling}
 
       Kernel approximation, MCMC, no room
-    
+
     % subsubsection approximate_sampling (end)
 
   % subsection sampling (end)
@@ -233,22 +229,22 @@
 	  	\mintinline{python}{Finite_DPP(kernel_type="inclusion", projection=False, **{"K":K})}.
 	  \end{nscenter}
 		It has two main sampling methods namely \mintinline{python}{.sample_exact()} and \mintinline{python}{.sample_mcmc()} implementing different variants of the exact sampling scheme and current state of the art MCMC samplers.
-		
+
 		\item The \DPPy\ object corresponding to $\beta$-Ensembles can be instantiated as
 		\begin{nscenter}
 			\mintinline{python}{Beta_Ensemble(ensemble_name="laguerre", beta=3.14)},
 		\end{nscenter}
 		when $\mu$ is Gamma (parametrized using the \mintinline{python}{numpy} style).
-		It has one sampling method 
+		It has one sampling method
 		\begin{nscenter}
-			\mintinline{python}{.sample(sampling_mode="banded", **{"shape":10, "scale":2.0, "size":50})} 
+			\mintinline{python}{.sample(sampling_mode="banded", **{"shape":10, "scale":2.0, "size":50})}
 		\end{nscenter}
 		and two methods for display; \mintinline{python}{.plot()} to plot the last realisation and \mintinline{python}{.hist()} to construct the empirical distribution.
 
   \end{itemize}
-  
+
   For more information, please refer to the documentation\footnoteref{fn:docs} and corresponding notebooks that showcase the use \DPPy\ objects.
-  
+
 
 % section the_dppy_toolbox (end)
 
@@ -272,7 +268,7 @@ The release of \DPPy\ marks the first reproducible and fully documented entry po
   \begin{itemize}
     \item \href{http://www.jmlr.org/mloss/mloss-info.html}{MLOSS website}
     \item \href{http://jmlr.csail.mit.edu/author-info.html}{JMLR author info}
-    \item \href{http://www.jmlr.org/format/authors-guide.html}{JMLR author guide} 
+    \item \href{http://www.jmlr.org/format/authors-guide.html}{JMLR author guide}
   \end{itemize}
 
 % Manual newpage inserted to improve layout of sample file - not
