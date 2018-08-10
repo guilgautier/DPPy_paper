@@ -75,8 +75,8 @@
   \label{sub:definition}
 
     For our purposes, a point process $\calX$ on $\bbX$ is a random subset of points $\lrcb{X_1, \dots, X_N} \subset \bbX$, with the number of points $N$ itself random; we further assume here that $N$ is almost surely finite, and that all points in a sample are distinct.
-    To understand the interaction in a point process $\calX$, one focuses on the interaction of each cloud of $k$ points (for all $k$). \todo{Give here a simple definition of $\rho_k$.}
-    The corresponding $k$-correlation functions characterize the underlying point process.
+    To understand the interaction in a point process $\calX$, one focuses on the interaction of each cloud of $k$ points (for all $k$). \todo{Give here a simple definition of $\rho_k$, even heuristic, like $\mathbb{P}$(there is a point in each of the $k$ infinitesimal balls $B(x_i,dx_i)$). This will also force you to introduce the reference measure earlier.}
+    The corresponding $k$-correlation functions characterize the underlying point process. \todo{ref}
     % Considering $\mu$ as the reference measure, the $k$-correlation functions are defined as
     % \begin{equation}
     % \label{eq:k-correlation_function}
@@ -92,7 +92,7 @@
     % \end{equation}
 
     % for all bounded measurable functions $f:\bbX^k\to \bbC$ and the sum ranges over $k$-tuples of distinct points of $\calX$.
-    A point process parametrized by a kernel $K$ associated to the reference measure $\mu$ is said to be determinantal and noted $\DPP(K)$ if its $k$-correlation functions read
+    A point process $\calX$ on $\bbX$ parametrized by a kernel $K:\bbX\times \bbX\rightarrow \mathbb{C}$ and a reference measure $\mu$ on $\bbX$ is said to be determinantal, denoted as $\calX\sim\DPP(K)$, if its $k$-correlation functions read
     \begin{equation}
     \label{eq:k-correlation_function_DPP}
       \rho_k(x_1,\dots,x_k)
@@ -100,7 +100,7 @@
       \quad \forall k\geq 1.
     \end{equation}
 
-    The finite case, when $\bbX = \lrcb{1,\dots,M}$ with $\mu=\sum_{i=1}^M \delta_i$, corresponds to most common use case of DPPs in ML \citep{KuTa12}.
+    The finite case, when $\bbX = \lrcb{1,\dots,M}$ and the reference measure is $\mu=\sum_{i=1}^M \delta_i$, corresponds to most common use cases of DPPs in ML \citep{KuTa12}.
     In this context, the kernel function becomes a $M\times M$ matrix $\bfK$ encoding the similarity between items, and the correlation functions refer simply to inclusion probabilities.
     We say that $\calX\sim \DPP(\bfK)$ if
     \begin{equation}
