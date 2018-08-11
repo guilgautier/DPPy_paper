@@ -63,7 +63,7 @@
   \DPPy\ is the first toolbox which provides turnkey implementation of the DPP model and its corresponding sampling schemes.
   To the best of our knowledge, there is scarcely any reproducible papers involving DPPs; sampling schemes mostly remain in pseudo code form with no clean implementation.
   Only recently \citet{TrBaAm18} first attempted to collect the main exact sampling schemes, but without related code.
-  Moreover, \DPPy\ is supported by an extensive documentation providing the essential mathematical background and illustrates some properties of DPPs through \DPPy\ objects and associated methods.
+  Moreover, \DPPy\ is supported by an extensive documentation\footnoteref{fn:docs} providing the essential mathematical background and illustrates some properties of DPPs through \DPPy\ objects and associated methods.
   \setcounter{footnote}{5}
   Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} is used as a continuous integration tool to certify \DPPy\ can be used with Linux and MacOS and to run some unit tests.
 
@@ -149,7 +149,7 @@
         \item Sample from the \textit{projection} DPP with kernel $\tilde{K}(x,y) = \sum_{n=1}^{N}\phi_{i_n}(x) \overline{\phi_{i_n}(y)}$.
       \end{enumerate}
 
-      The remaining question of sampling from \textit{projection} DPPs is addressed by \citet{HKPV06}[Algorithm 18].
+      The remaining question of sampling from \textit{projection} DPPs is addressed by \citet[Algorithm 18]{HKPV06}.
       It based on the chain rule and the fact that \textit{projection} $\DPP(\tilde{K})$ generates configurations of $N=\Tr \tilde{K}$ points almost surely.
       In the first phase each point $x\in \bbX$ is associated to the random feature vector $\Phi(x)=\lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$, therefore $\tilde{K}(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
       % $N\overset{\text{a.s.}}{=}\Tr K$ points.
@@ -183,7 +183,9 @@
       In the end, DPPs favors configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume.\\
 
       The previous sampling scheme is exact and generic but requires the eigendecomposition of the underlying kernel.
-      In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has average cost $\calO(M\lrb{\Tr \bfK}^2)$, which may still be problematic for large $M$, see \citep{TrBaAm18}.
+      In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has average cost $\calO(M\lrb{\Tr \bfK}^2)$,
+      % which may still be problematic for large $M$, 
+      see \citep{TrBaAm18}.
 
       On the other hand, sampling from the conditionals in \Eqref{eq:conditionals_densities} can be cumbersome in the infinite case, since it may require tailored proposal distributions.\\
       
