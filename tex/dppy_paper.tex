@@ -59,11 +59,11 @@
 
   In the finite case, routine inference tasks such as normalization, marginalization and sampling have complexity roughly $\calO(M^3)$, where $M$ denotes the size of the ground set \citep{KuTa12}. This becomes intractable for large $M$ \citep{Gil14}. In particular, for generic kernel matrices, exact sampling requires the eigendecomposition of the kernel. This prohibitive cost has triggered an effort towards efficient approximate samplers ranging from random approximation \todo{Maybe find a different way of saying it, "random approximation" is too vague} of the kernel \citep{AfKuFo13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.\\
 
-  \DPPy\ is the first toolbox which provides a turnkey implementation of all general algorithms to sample DPPs. \citet{TrBaAm18} also recently surveyed the main exact sampling schemes, but without related code. 
-  To the best of our knowledge, there is scarcely any reproducible papers involving DPPs; sampling schemes mostly remain in pseudo-code form with no clean implementation. 
-  \todo{"To the best..." Too harsh. Rather say sth like "Packaging together all known sampling algorithms now and in the future will improve reproducibility of papers on DPPs and favour dissemination of results."}  
+  \DPPy\ is the first toolbox which provides a turnkey implementation of all general algorithms to sample DPPs. \citet{TrBaAm18} also recently surveyed the main exact sampling schemes, but without related code.
+  To the best of our knowledge, there is scarcely any reproducible papers involving DPPs; sampling schemes mostly remain in pseudo-code form with no clean implementation.
+  \todo{"To the best..." Too harsh. Rather say sth like "Packaging together all known sampling algorithms now and in the future will improve reproducibility of papers on DPPs and favour dissemination of results."}
   \setcounter{footnote}{5}
-  Relatedly, we use Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} for continuous integration, both to run tests and certify that \DPPy\ can be used with Linux and MacOS. 
+  Relatedly, we use Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} for continuous integration, both to run tests and certify that \DPPy\ can be used with Linux and MacOS.
   Moreover, \DPPy\ is supported by an extensive documentation\footnoteref{fn:docs} providing the essential mathematical background; this illustrates some key properties of DPPs through \DPPy\ objects and associated methods. \DPPy\ can thus also easily serve as tutorial material.
 
 % section introduction (end)
@@ -113,7 +113,7 @@
 
     where $\bfK_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$.
 
-    To guarantee existence of the DPP as described by Equations~\ref{eq:k-correlation_function_DPP} and~\ref{eq:inclusion_proba_finite} the underlying kernel must have $[0,1]$-valued eigenvalues and it is commonly assumed to be Hermitian symmetric, see \citep[Theorem 3]{Sos00}.
+    To guarantee existence of the DPP as described by Equations~\ref{eq:k-correlation_function_DPP} and~\ref{eq:inclusion_proba_finite} the underlying kernel must have $[0,1]$-valued eigenvalues\todo{Is that true? In particular, for nonhermitian kernels, you don't have the spectral theorem.} and it is commonly assumed to be Hermitian symmetric, see \citep[Theorem 3]{Sos00}.
     The latter assumption is only sufficient, there exist DPPs with non symmetric kernels, see \citep{BoDiFu09}.
   % subsection definition (end)
 
@@ -183,7 +183,7 @@
 
       The previous sampling scheme is exact and generic but requires the eigendecomposition of the underlying kernel.
       In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has average cost $\calO(M\lrb{\Tr \bfK}^2)$,
-      % which may still be problematic for large $M$, 
+      % which may still be problematic for large $M$,
       see \citep{TrBaAm18}.
 
       On the other hand, sampling from the conditionals in \Eqref{eq:conditionals_densities} can be cumbersome in the infinite case, since it may require tailored proposal distributions.\\
