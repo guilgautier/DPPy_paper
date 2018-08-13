@@ -55,9 +55,11 @@
   Determinantal point processes (DPPs) are distributions over configurations of points that encode diversity through a kernel function $K$ and a reference measure $\mu$.
   There were introduced by \citet{Mac75} and have then found applications in fields as diverse as probability \citep{Sos00, Kon05, HKPV06}, number theory \citep{RuSa96}, statistical physics \citep{PaBe11}, Monte Carlo methods \citep{BaHa16}, and spatial statistics \citep{LaMoRu15}.
   In machine learning, DPPs over finite sets have been used as a model of diverse sets of items, where the kernel function takes the form of a finite matrix $\bfK$, see \citep{KuTa12} for a comprehensive survey.
-  Further applications of DPPs in machine learning (ML) e.g. include recommendation tasks \citep{KaDeKo16, GaPaKo16} or text summarization \citep{DuBa16}.\\
+  Further applications of DPPs in machine learning (ML) e.g. include recommendation tasks \citep{KaDeKo16, GaPaKo16} or text summarization \citep{DuBa18}.\\
 
-  In the finite case, routine inference tasks such as normalization, marginalization and sampling have complexity roughly $\calO(M^3)$, where $M$ denotes the size of the ground set \citep{KuTa12}. This becomes intractable for large $M$ \citep{Gil14}. In particular, for generic kernel matrices, exact sampling requires the eigendecomposition of the kernel. This prohibitive cost has triggered an effort towards efficient approximate samplers ranging from random approximation \todo{Maybe find a different way of saying it, "random approximation" is too vague} of the kernel \citep{AfKuFo13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.\\
+  In the finite case, routine inference tasks such as normalization, marginalization and sampling have complexity roughly $\calO(M^3)$, where $M$ denotes the size of the ground set \citep{KuTa12}. This becomes intractable for large $M$ \citep{Gil14}. 
+  In particular, for generic kernel matrices, exact sampling requires the eigendecomposition of the kernel. 
+  This prohibitive cost has triggered an effort towards efficient approximate samplers ranging from random approximation \todo{Maybe find a different way of saying it, "random approximation" is too vague} of the kernel \citep{AKFT13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.\\
 
   \DPPy\ is the first toolbox which provides a turnkey implementation of all general algorithms to sample DPPs. \citet{TrBaAm18} also recently surveyed the main exact sampling schemes, but without related code. 
   To the best of our knowledge, there is scarcely any reproducible papers involving DPPs; sampling schemes mostly remain in pseudo-code form with no clean implementation. 
@@ -77,8 +79,10 @@
   \label{sub:definition}
 
     For our purposes, a point process $\calX$ on $\bbX$ is a random subset of points $\lrcb{X_1, \dots, X_N} \subset \bbX$, with the number of points $N$ itself random; we further assume here that $N$ is almost surely finite, and that all points in a sample are distinct.
-    To understand the interaction in a point process $\calX$, one focuses on the interaction of each cloud of $k$ points (for all $k$). \todo{Give here a simple definition of $\rho_k$, even heuristic, like $\mathbb{P}$(there is a point in each of the $k$ infinitesimal balls $B(x_i,dx_i)$). This will also force you to introduce the reference measure earlier.}
-    The corresponding $k$-correlation functions characterize the underlying point process. \todo{ref}
+    To understand the interaction in a point process $\calX$, one focuses on the interaction of each cloud of $k$ points (for all $k$). 
+    The corresponding $k$-correlation functions characterize the underlying point process.
+    \todo{Give here a simple definition of $\rho_k$, even heuristic, like $\mathbb{P}$(there is a point in each of the $k$ infinitesimal balls $B(x_i,dx_i)$). This will also force you to introduce the reference measure earlier.}
+    \todo{ref}
     % Considering $\mu$ as the reference measure, the $k$-correlation functions are defined as
     % \begin{equation}
     % \label{eq:k-correlation_function}
@@ -114,7 +118,7 @@
     where $\bfK_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$.
 
     To guarantee existence of the DPP as described by Equations~\ref{eq:k-correlation_function_DPP} and~\ref{eq:inclusion_proba_finite} the underlying kernel must have $[0,1]$-valued eigenvalues and it is commonly assumed to be Hermitian symmetric, see \citep[Theorem 3]{Sos00}.
-    The latter assumption is only sufficient, there exist DPPs with non symmetric kernels, see \citep{BoDiFu09}.
+    The latter assumption is only sufficient, there exist DPPs with non symmetric kernels, see \citep{BoDiFu10}.
   % subsection definition (end)
 
   \subsection{Sampling} % (fold)
@@ -293,6 +297,6 @@ The release of \DPPy\ marks the first reproducible and fully documented entry po
 % \vskip 0.2in
 
 \bibliographystyle{icml2017}
-\bibliography{biblio}
+\bibliography{biblio_new}
 
 \end{document}
