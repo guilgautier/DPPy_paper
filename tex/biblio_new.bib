@@ -11,6 +11,22 @@ url = {http://proceedings.mlr.press/v31/affandi13a},
 volume = {31},
 year = {2013}
 }
+@article{Ald90,
+abstract = {A random walk on a finite graph can be used to construct a uniform random spanning tree. We show how random walk techniques can be applied to the study of several properties of the uniform random spanning tree: the proportion of leaves, the distribution of degrees, and the diameter.},
+annote = {NULL},
+author = {Aldous, David J},
+doi = {10.1137/0403039},
+file = {:Users/ggautier/Documents/Mendeley Desktop/Aldous - 1990 - The Random Walk Construction of Uniform Spanning Trees and Uniform Labelled Trees.pdf:pdf},
+issn = {0895-4801},
+journal = {SIAM Journal on Discrete Mathematics},
+keywords = {05c05,05c80,1990,3,450-465,60c05,60j10,abbreviated title,ams,discrete math,mos,random spanning trees,random tree,random walk on graph,siam j,spanning tree,subject classification},
+number = {4},
+pages = {450--465},
+title = {{The Random Walk Construction of Uniform Spanning Trees and Uniform Labelled Trees}},
+url = {http://link.aip.org/link/SJDMEC/v3/i4/p450/s1{\&}Agg=doi},
+volume = {3},
+year = {1990}
+}
 @inproceedings{AnGhRe16,
 abstract = {Strongly Rayleigh distributions are natural generalizations of product and determinantal probability distributions and satisfy strongest form of negative dependence properties. We show that the "natural" Monte Carlo Markov Chain (MCMC) is rapidly mixing in the support of a {\{}$\backslash$em homogeneous{\}} strongly Rayleigh distribution. As a byproduct, our proof implies Markov chains can be used to efficiently generate approximate samples of a {\$}k{\$}-determinantal point process. This answers an open question raised by Deshpande and Rademacher.},
 address = {New York, USA},
@@ -73,6 +89,20 @@ title = {{On adding a list of numbers (and other one-dependent determinantal pro
 url = {http://www.ams.org/journals/bull/2010-47-04/S0273-0979-2010-01306-9/S0273-0979-2010-01306-9.pdf http://arxiv.org/abs/0904.3740},
 volume = {47},
 year = {2010}
+}
+@book{DaVe03,
+address = {New York, USA},
+author = {Daley, Daryl J. and Vere-Jones, David},
+doi = {10.1007/b97277},
+edition = {2},
+file = {:Users/ggautier/Documents/Mendeley Desktop/Daley, Vere-Jones - 2008 - An introduction to the theory of point processes. Vol I.pdf:pdf},
+isbn = {0-387-95541-0},
+pages = {471},
+publisher = {Springer-Verlag New York},
+series = {Probability and its Applications},
+title = {{An Introduction to the Theory of Point Processes. Volume I: Elementary Theory and Methods}},
+url = {http://link.springer.com/10.1007/b97277},
+year = {2003}
 }
 @article{DFL13,
 abstract = {Determinantal point processes (DPP) serve as a practicable modeling for many applications of repulsive point processes. A known approach for simulation was proposed in $\backslash$cite{\{}Hough(2006){\}}, which generate the desired distribution point wise through rejection sampling. Unfortunately, the size of rejection could be very large. In this paper, we investigate the application of perfect simulation via coupling from the past (CFTP) on DPP. We give a general framework for perfect simulation on DPP model. It is shown that the limiting sequence of the time-to-coalescence of the coupling is bounded by {\$}K|\backslashLambda|\backslashlog K|\backslashLambda|{\$}. An application is given to the stationary models in DPP.},
@@ -166,7 +196,7 @@ url = {http://proceedings.mlr.press/v70/gautier17a https://arxiv.org/abs/1705.10
 year = {2017}
 }
 @phdthesis{Gil14,
-author = {Gillenwater, Jennifer Ann},
+author = {Gillenwater, Jennifer A.},
 booktitle = {Publicly Accessible Penn Dissertations. 1285.},
 school = {University of Pennsylvania},
 title = {{Approximate inference for determinantal point processes}},
@@ -302,21 +332,6 @@ url = {https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/rssb.12096},
 volume = {77},
 year = {2012}
 }
-@inproceedings{LiJeSr16b,
-abstract = {The Nystr{\"{o}}m method has long been popular for scaling up kernel methods. Its theoretical guarantees and empirical performance rely critically on the quality of the landmarks selected. We study landmark selection for Nystr{\"{o}}m using Determinantal Point Processes (DPPs), discrete probability models that allow tractable generation of diverse samples. We prove that landmarks selected via DPPs guarantee bounds on approximation errors; subsequently, we analyze implications for kernel ridge regression. Contrary to prior reservations due to cubic complexity of DPPsampling, we show that (under certain conditions) Markov chain DPP sampling requires only linear time in the size of the data. We present several empirical results that support our theoretical analysis, and demonstrate the superior performance of DPP-based landmark selection compared with existing approaches.},
-address = {New York, USA},
-archivePrefix = {arXiv},
-arxivId = {1603.06052},
-author = {Li, Chengtao and Jegelka, Stefanie and Sra, Suvrit},
-booktitle = {International Conference on Machine Learning (ICML)},
-eprint = {1603.06052},
-file = {:Users/ggautier/Documents/Mendeley Desktop/Li, Jegelka, Sra - Unknown - Fast DPP Sampling for Nystr{\"{o}}m with Application to Kernel Methods.pdf:pdf},
-isbn = {9781510829008},
-pages = {2061--2070},
-title = {{Fast DPP Sampling for Nystr{\"{o}}m with Application to Kernel Methods}},
-url = {http://proceedings.mlr.press/v48/lih16 http://arxiv.org/abs/1603.06052},
-year = {2016}
-}
 @inproceedings{LiJeSr16c,
 abstract = {We study probability measures induced by set functions with constraints. Such measures arise in a variety of real-world settings, where prior knowledge, resource limitations, or other pragmatic considerations impose constraints. We consider the task of rapidly sampling from such constrained measures, and develop fast Markov chain samplers for them. Our first main result is for MCMC sampling from Strongly Rayleigh (SR) measures, for which we present sharp polynomial bounds on the mixing time. As a corollary, this result yields a fast mixing sampler for Determinantal Point Processes (DPPs), yielding (to our knowledge) the first provably fast MCMC sampler for DPPs since their inception over four decades ago. Beyond SR measures, we develop MCMC samplers for probabilistic models with hard constraints and identify sufficient conditions under which their chains mix rapidly. We illustrate our claims by empirically verifying the dependence of mixing times on the key factors governing our theoretical bounds.},
 address = {Barcelona, Spain},
@@ -333,6 +348,36 @@ title = {{Fast Mixing Markov Chains for Strongly Rayleigh Measures, DPPs, and Co
 url = {https://papers.nips.cc/paper/6182-fast-mixing-markov-chains-for-strongly-rayleigh-measures-dpps-and-constrained-sampling http://arxiv.org/abs/1608.01008},
 year = {2016}
 }
+@inproceedings{LiJeSr16b,
+abstract = {The Nystr{\"{o}}m method has long been popular for scaling up kernel methods. Its theoretical guarantees and empirical performance rely critically on the quality of the landmarks selected. We study landmark selection for Nystr{\"{o}}m using Determinantal Point Processes (DPPs), discrete probability models that allow tractable generation of diverse samples. We prove that landmarks selected via DPPs guarantee bounds on approximation errors; subsequently, we analyze implications for kernel ridge regression. Contrary to prior reservations due to cubic complexity of DPPsampling, we show that (under certain conditions) Markov chain DPP sampling requires only linear time in the size of the data. We present several empirical results that support our theoretical analysis, and demonstrate the superior performance of DPP-based landmark selection compared with existing approaches.},
+address = {New York, USA},
+archivePrefix = {arXiv},
+arxivId = {1603.06052},
+author = {Li, Chengtao and Jegelka, Stefanie and Sra, Suvrit},
+booktitle = {International Conference on Machine Learning (ICML)},
+eprint = {1603.06052},
+file = {:Users/ggautier/Documents/Mendeley Desktop/Li, Jegelka, Sra - Unknown - Fast DPP Sampling for Nystr{\"{o}}m with Application to Kernel Methods.pdf:pdf},
+isbn = {9781510829008},
+pages = {2061--2070},
+title = {{Fast DPP Sampling for Nystr{\"{o}}m with Application to Kernel Methods}},
+url = {http://proceedings.mlr.press/v48/lih16 http://arxiv.org/abs/1603.06052},
+year = {2016}
+}
+@inproceedings{LiJeSr16a,
+abstract = {Determinantal Point Processes (DPPs) are elegant probabilistic models of repulsion and diversity over discrete sets of items. But their applicability to large sets is hindered by expensive cubic-complexity matrix operations for basic tasks such as sampling. In light of this, we propose a new method for approximate sampling from discrete {\$}k{\$}-DPPs. Our method takes advantage of the diversity property of subsets sampled from a DPP, and proceeds in two stages: first it constructs coresets for the ground set of items; thereafter, it efficiently samples subsets based on the constructed coresets. As opposed to previous approaches, our algorithm aims to minimize the total variation distance to the original distribution. Experiments on both synthetic and real datasets indicate that our sampling algorithm works efficiently on large data sets, and yields more accurate samples than previous approaches.},
+address = {Cadiz, Spain},
+annote = {NULL},
+archivePrefix = {arXiv},
+arxivId = {1509.01618},
+author = {Li, Chengtao and Jegelka, Stefanie and Sra, Suvrit},
+booktitle = {International Conference on Artificial Intelligence and Statistics (AISTATS)},
+eprint = {1509.01618},
+file = {:Users/ggautier/Documents/Mendeley Desktop/Li, Jegelka, Sra - Unknown - Efficient Sampling for k-Determinantal Point Processes(2).pdf:pdf},
+pages = {1328--1337},
+title = {{Efficient Sampling for k-Determinantal Point Processes}},
+url = {http://proceedings.mlr.press/v51/li16f.html http://arxiv.org/abs/1509.01618},
+year = {2016}
+}
 @article{LiJeSr16d,
 abstract = {In this note we consider sampling from (non-homogeneous) strongly Rayleigh probability measures. As an important corollary, we obtain a fast mixing Markov Chain sampler for Determinantal Point Processes.},
 annote = {NULL},
@@ -342,7 +387,6 @@ author = {Li, Chengtao and Jegelka, Stefanie and Sra, Suvrit},
 eprint = {1607.03559},
 file = {:Users/ggautier/Documents/Mendeley Desktop/Li, Jegelka, Sra - 2016 - Fast Sampling for Strongly Rayleigh Measures with Application to Determinantal Point Processes.pdf:pdf},
 journal = {ArXiv e-prints},
-month = {jul},
 title = {{Fast Sampling for Strongly Rayleigh Measures with Application to Determinantal Point Processes}},
 url = {http://arxiv.org/abs/1607.03559},
 year = {2016}
@@ -421,7 +465,7 @@ abstract = {This classic text, first published in 1972, is designed for graduate
 annote = {From Duplicate 2 (Statistical Mechanics - Pathria, R K; Beale, Paul D.)
 
 NULL},
-author = {Pathria, R. K. and Beale, Paul D.},
+author = {Pathria, Raj K. and Beale, Paul D.},
 booktitle = {Statistical Mechanics},
 doi = {10.1016/B978-0-12-382188-1.00020-7},
 isbn = {0123821894},
@@ -465,13 +509,17 @@ volume = {27},
 year = {1998}
 }
 @article{RuSa96,
-annote = {NULL},
-author = {Rudnick, Z and Sarnak, P},
+annote = {From Duplicate 1 (Zeros of principal L-functions and random matrix theory - Rudnick, Z; Sarnak, P)
+
+NULL},
+author = {Rudnick, Zeev and Sarnak, Peter},
+doi = {10.1215/S0012-7094-96-08115-6},
+issn = {0012-7094},
 journal = {Duke Mathematical Journal},
 number = {2},
 pages = {269--322},
 publisher = {Duke University Press},
-title = {{Zeros of principal {\{}L{\}}-functions and random matrix theory}},
+title = {{Zeros of principal L-functions and random matrix theory}},
 volume = {81},
 year = {1996}
 }

@@ -1,17 +1,20 @@
 % Specific to this .tex
 \newcommand{\DPPy}{\textsf{DPPy}}
 
+% Footnotes 1, 2, 3 and then fancy ones!
 \makeatletter
 \@addtoreset{footnote}{page}
 \makeatother
-\renewcommand{\thefootnote}{\ifcase\value{footnote}\or1\or2\or3\or\color{black}{\faGithub}\or\color{black}{\faBook}\or\color{black}{\faGears}\fi} % 1, 2, 3 and then fancy footnotes!
+\renewcommand{\thefootnote}{\ifcase\value{footnote}\or1\or2\or3\or\color{black}{\faGithub}\or\color{black}{\faBook}\or\color{black}{\faGears}\fi} 
 
+% Cross ref a foonote
 \makeatletter
 \newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
 \makeatother
 
 \addtolength{\skip\footins}{-3pc plus 5pt}
 
+% Center env for minted package to display code
 \newenvironment{nscenter}
  {\parskip=3pt\par\nopagebreak\centering}
  {\parskip=2pt\par\noindent\ignorespacesafterend}
@@ -26,6 +29,7 @@
 \newcommand*{\Eqref}[1]{Equation~\ref{#1}}
 \newcommand*{\Figref}[1]{Figure~\ref{#1}}
 
+% TODO command
 \newcommand*{\todo}[1]{\textcolor{red}{TODO:{#1}}}
 
 % Proof ends with filled box

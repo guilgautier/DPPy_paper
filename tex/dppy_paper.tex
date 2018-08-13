@@ -59,30 +59,41 @@
 
   In the finite case, routine inference tasks such as normalization, marginalization and sampling have complexity roughly $\calO(M^3)$, where $M$ denotes the size of the ground set \citep{KuTa12}. This becomes intractable for large $M$ \citep{Gil14}. 
   In particular, for generic kernel matrices, exact sampling requires the eigendecomposition of the kernel. 
-  This prohibitive cost has triggered an effort towards efficient approximate samplers ranging from random approximation \todo{Maybe find a different way of saying it, "random approximation" is too vague} of the kernel \citep{AKFT13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.\\
+  This prohibitive cost has triggered an effort towards efficient approximate samplers ranging from kernel approximation \citep{AKFT13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.\\
 
   \DPPy\ is the first toolbox which provides a turnkey implementation of all general algorithms to sample DPPs. \citet{TrBaAm18} also recently surveyed the main exact sampling schemes, but without related code. 
-  To the best of our knowledge, there is scarcely any reproducible papers involving DPPs; sampling schemes mostly remain in pseudo-code form with no clean implementation. 
-  \todo{"To the best..." Too harsh. Rather say sth like "Packaging together all known sampling algorithms now and in the future will improve reproducibility of papers on DPPs and favour dissemination of results."}  
+  Packaging together all known sampling algorithms now and in the future will improve reproducibility of papers on DPPs and favour dissemination of results.
   \setcounter{footnote}{5}
   Relatedly, we use Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} for continuous integration, both to run tests and certify that \DPPy\ can be used with Linux and MacOS. 
-  Moreover, \DPPy\ is supported by an extensive documentation\footnoteref{fn:docs} providing the essential mathematical background; this illustrates some key properties of DPPs through \DPPy\ objects and associated methods. \DPPy\ can thus also easily serve as tutorial material.
+  Moreover, \DPPy\ is supported by an extensive documentation\footnoteref{fn:docs} providing the essential mathematical background; this illustrates some key properties of DPPs through \DPPy\ objects and associated methods.
+  \DPPy\ can thus also easily serve as tutorial material.
 
 % section introduction (end)
 
 \section{Determinantal Point Processes} % (fold)
 \label{sec:determinantal_point_processes}
 
-  Something to say that technicalities and subtleties are avoided on purpose... Also add a technical reference for people who want it the hard way, say Daley and Vere-Jones.
+  For our purposes we give only the key ingredients about point process and DPPs, for more details see \citep{DaVe03, HKPV06}.
 
   \subsection{Definition} % (fold)
   \label{sub:definition}
 
-    For our purposes, a point process $\calX$ on $\bbX$ is a random subset of points $\lrcb{X_1, \dots, X_N} \subset \bbX$, with the number of points $N$ itself random; we further assume here that $N$ is almost surely finite, and that all points in a sample are distinct.
+    A point process $\calX$ on $\bbX$ is a random subset of points $\lrcb{X_1, \dots, X_N} \subset \bbX$, with the number of points $N$ itself random; we further assume here that $N$ is almost surely finite, and that all points in a sample are distinct.
     To understand the interaction in a point process $\calX$, one focuses on the interaction of each cloud of $k$ points (for all $k$). 
-    The corresponding $k$-correlation functions characterize the underlying point process.
-    \todo{Give here a simple definition of $\rho_k$, even heuristic, like $\mathbb{P}$(there is a point in each of the $k$ infinitesimal balls $B(x_i,dx_i)$). This will also force you to introduce the reference measure earlier.}
-    \todo{ref}
+    The corresponding $k$-correlation functions characterize the underlying point process, and admits the following intuitive interpretation, see \citep[Section 4]{MoWa04}
+    \begin{equation}
+    	\Proba{
+    		\begin{tabular}{c}
+    			$\exists$ one point of the process in\\
+    			each ball $B(x_i, \diff x_i), \forall i=1\dots k $
+    		\end{tabular}
+    	}
+    	= \rho_k\lrp{x_1,\dots,x_k}
+    		\prod_{i=1}^k \mu(\diff x_i).
+    \end{equation}
+
+    
+    
     % Considering $\mu$ as the reference measure, the $k$-correlation functions are defined as
     % \begin{equation}
     % \label{eq:k-correlation_function}
@@ -182,7 +193,8 @@
       % \end{align*}
       where $\Pi_{H_{n-1}}$ is the orthogonal projection onto
       $H_{n-1} = \Span\lrcb{\phi(x_1), \dots, \phi(x_{n-1}) }$.
-      The exact sampling procedure has a strong Gram-Schmidt flavor, and the product of the conditional densities in \Eqref{eq:conditionals_densities} refers to the base$\times$height formula.
+      The expressions in \Eqref{eq:conditionals_densities} can be expressed as a ratio of two determinants and further expanded with Woodbury's formula.
+      Observe that he exact sampling procedure has a strong Gram-Schmidt flavor, and the product of the conditional densities in \Eqref{eq:conditionals_densities} refers to the base$\times$height formula.
       In the end, DPPs favors configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume.\\
 
       The previous sampling scheme is exact and generic but requires the eigendecomposition of the underlying kernel.
@@ -230,7 +242,7 @@
 \section{The \DPPy\ Toolbox} % (fold)
 \label{sec:the_dppy_toolbox}
 
-  \DPPy\ strives to handle objects that fit the natural definition of the different DPPs models:
+  \DPPy\ strives to handle objects that fit the natural definition of the different DPPs models.
   \begin{itemize}
 	  \item The \DPPy\ object corresponding to the finite $\DPP(\bfK)$ can be instantiated as
 	  \begin{nscenter}
