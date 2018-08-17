@@ -50,7 +50,8 @@
  %   citation key, to preserve any natural sequence.
  %
 ENTRY
-  { address
+  { arxivId
+    address
     author
     booktitle
     chapter
@@ -58,6 +59,7 @@ ENTRY
     eid
     edition
     editor
+    eprint
     howpublished
     institution
     isbn
@@ -82,6 +84,26 @@ ENTRY
   { label extra.label sort.label short.list }
 
 INTEGERS { output.state before.all mid.sentence after.sentence after.block }
+
+FUNCTION {format.arxivId}
+{ arxivId empty$
+    { "" }
+    
+  if$
+}
+
+FUNCTION {format.eprint}
+{ eprint empty$
+     { ""}
+     { arxivId empty$
+          {"\textit{Preprint:}\href{http://arxiv.org/abs/" eprint * "}" * 
+             "{{ " * format.archive * eprint *
+              format.primaryClass * "}}" *}
+          { "{\url{arXiv:" arxivId * "}}" * }
+     if$
+     }
+     if$
+}
 
 FUNCTION {init.state.consts}
 { #0 'before.all :=

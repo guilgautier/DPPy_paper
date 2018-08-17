@@ -35,7 +35,14 @@
 \usepackage{layout}
 % \usepackage{mathtools}
 \usepackage{minted}
-% Needed to update LaTeXTools.sublime-settings file with path to pygmentize and 
+% See https://github.com/SublimeText/LaTeXTools/issues/657
+% - install pygments https://pypi.org/project/Pygments/
+% - update LaTeXTools.sublime-settings file with
+%   - path to pygmentize add --shell-escape flag
+%   - ST -> Preferences -> Package Settings -> LaTexTools -> Settings - User
+%   - OSX "texpath" : "$PATH:....:/Users/ggautier/anaconda/bin"
+%   - In "builder_settings" field add "options" : "--shell-escape",
+% 
 % \usepackage{monster2e}
 % \usepackage{multimedia}
 \usepackage{pgffor} % To create math commands recursively in commands.tex
