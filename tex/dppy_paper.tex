@@ -137,42 +137,42 @@ We give only the key ingredients about point processes and DPPs. For more detail
     \subsubsection{Exact Sampling} % (fold)
     \label{ssub:exact_sampling}
 
-      The determinantal feature confer DPPs many appealing properties, among which closed form expression for XXX, moments of linear statistics \etc
-      For our sampling purposes there is one crucial property: generic DPPs are mixtures of \textit{projection} DPPs i.e. DPPs parametrized by an orthogonal projection kernel.
+      The determinantal feature confer DPPs many appealing properties, among which closed-form expression for \todo{XXX}, moments of linear statistics \etc
+      For our sampling purposes there is one crucial property: generic DPPs are mixtures of \textit{projection} DPPs, i.e., DPPs parametrized by an orthogonal projection kernel.
       Namely, given the spectral decomposition of the kernel
       \begin{equation}
       \label{eq:eigdec_kernel}
-        K(x,y)=\suml_{i=1}^{\infty} \lambda_i \phi_i(x) \overline{\phi_i(y)},
+        K(x,y)\triangleq\suml_{i=1}^{\infty} \lambda_i \phi_i(x) \overline{\phi_i(y)},
         \quad \text{with }
         \int \phi_i(x) \overline{\phi_j(x)} \mu(\diff x) = \delta_{ij},
       \end{equation}
-
-      define the random orthogonal projection kernel
+\noindent
+      we can define the random orthogonal projection kernel
       $
         K^B(x,y)
-          = \suml_{i=1}^{\infty} B_i \phi_i(x) \overline{\phi_i(y)}
+          \triangleq \suml_{i=1}^{\infty} B_i \phi_i(x) \overline{\phi_i(y)}
       $, with independent $B_i\sim\Ber(\lambda_i)$.
-      \citet[Theorem 7]{HKPV06} give
+      \citet[Theorem 7]{HKPV06} prove that
       \begin{equation}
         \DPP(K) \sim \DPP(K^B),
       \end{equation}
       suggesting the following two steps algorithm to sample from $\DPP(K)$:
       \begin{enumerate}
-        \item Draw $B_i\sim\Ber(\lambda_i)$ independently and note $\lrcb{i_1,\dots,i_{N}} = \lrcb{i~;~B_i=1}$.
+        \item Draw $B_i\sim\Ber(\lambda_i)$ independently and note $\lrcb{i_1,\dots,i_{N}} = \lrcb{i:B_i=1}$.
         \item Sample from the \textit{projection} DPP with kernel $\tilde{K}(x,y) = \sum_{n=1}^{N}\phi_{i_n}(x) \overline{\phi_{i_n}(y)}$.
       \end{enumerate}
-
+\noindent
       The remaining question of sampling from \textit{projection} DPPs is addressed by \citet[Algorithm 18]{HKPV06}.
       It based on the chain rule and the fact that \textit{projection} $\DPP(\tilde{K})$ generates configurations of $N=\Tr \tilde{K}$ points almost surely.
-      In the first phase each point $x\in \bbX$ is associated to the random feature vector $\Phi(x)=\lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$, therefore $\tilde{K}(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
+      In the first phase, each point $x\in \bbX$ is associated to the random feature vector $\Phi(x) \triangleq \lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$. Therefore, $\tilde{K}(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
       % $N\overset{\text{a.s.}}{=}\Tr K$ points.
-      In this setting, the joint distribution of $(X_1,\dots,X_N)$ reads
+      In this setting, the joint distribution of $(X_1,\dots,X_N)$ satisfies
       \begin{equation}
       \label{eq:joint_distribution}
         \frac{1}{N!} \det \lrb{K(x_m,x_n)}_{m,n=1}^N \prod_{n=1}^N\mu(\diff x_n)
           = \frac{1}{N!} \Vol^2\lrcb{\Phi(x_1),\dots,\Phi(x_n)} \prod_{n=1}^N\mu(\diff x_n),
       \end{equation}
-
+\noindent
       so that the conditional densities appearing in the chain rule take the following form
       \begin{equation}
       \label{eq:conditionals_densities}
@@ -180,7 +180,7 @@ We give only the key ingredients about point processes and DPPs. For more detail
           = \frac{1}{N} \lrnorm{\phi(x)}^2
           \quad\text{and}\quad
         g_{n | 1:n-1}(x)
-          = \frac{1}{N-(n-1)} \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x)}^2,
+          = \frac{1}{N-(n-1)} \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x)}^2\!\!,
       \end{equation}
       % \begin{align*}
       %   g_1(x)           &= \frac{1}{N} \lrnorm{\phi(x)}^2
@@ -191,38 +191,36 @@ We give only the key ingredients about point processes and DPPs. For more detail
       %                       \lrb{K(x,x) - \overline{K(x,x_{1:n-1})} \lrb{K(x_k,x_l)}_{k,l=1}^{n-1} K(x_{1:n-1},x)}
       % \end{align*}
       where $\Pi_{H_{n-1}}$ is the orthogonal projection onto
-      $H_{n-1} = \Span\lrcb{\phi(x_1), \dots, \phi(x_{n-1}) }$.
+      $H_{n-1} \triangleq \Span\lrcb{\phi(x_1), \dots, \phi(x_{n-1}) }$.
       The expressions in \Eqref{eq:conditionals_densities} can be expressed as a ratio of two determinants and further expanded with Woodbury's formula.
-      Observe that he exact sampling procedure has a strong Gram-Schmidt flavor, and the product of the conditional densities in \Eqref{eq:conditionals_densities} refers to the base$\times$height formula.
-      In the end, DPPs favors configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume.\\
+      Observe that the exact sampling procedure has a strong Gram-Schmidt flavor and the product of the conditional densities in \Eqref{eq:conditionals_densities} refers to the base$\times$height formula.
+      In the end, DPPs favors configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume.
 
       The previous sampling scheme is exact and generic but requires the eigendecomposition of the underlying kernel.
-      In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has average cost $\calO(M\lrb{\Tr \bfK}^2)$,
+      In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has average cost of $\calO(M\lrb{\Tr \bfK}^2)$,
       % which may still be problematic for large $M$, 
-      see \citep{TrBaAm18}.
-
-      On the other hand, sampling from the conditionals in \Eqref{eq:conditionals_densities} can be cumbersome in the infinite case, since it may require tailored proposal distributions.\\
+      see \citet{TrBaAm18}.
+      On the other hand, sampling from the conditionals in \Eqref{eq:conditionals_densities} can be cumbersome in the infinite case, since it may require tailored proposal distributions.
 
       These issues have motivated work on approximate sampling procedures with two main directions: kernel approximation and MCMC samplers.
-      It is worth mentioning that some specific DPPs admit special exact samplers, \eg uniform spanning trees \citep{PrWi98} or eigenvalues of some random matrices \citep{DuEd02}.
+      It is worth mentioning that some specific DPPs admit special exact samplers, e.g., uniform spanning trees \citep{PrWi98} or eigenvalues of some random matrices \citep{DuEd02}.
 
     % subsubsection exact_sampling (end)
 
     \subsubsection{Random Matrices} % (fold)
     \label{ssub:random_matrices}
 
-      Originally, continuous DPPs emerged in quantum mechanics and mathematical physics with the pioneering work of \citet{Wig67} relating eigenvalues of random matrices to energy levels of heavy atoms.
-      That is to say, diagonalizing a properly randomized $N\times N$ matrix is a way to generate exact samples of continuous DPPs at cost $\calO(N^3)$.
-      More generally, $\beta$-Ensembles for which the case $\beta=2$ refers to a specific class of \textit{projection} DPPs \citep{Kon05} have joint probability distribution
+      Originally, continuous DPPs emerged in quantum mechanics and mathematical physics with the pioneering work of \citet{Wig67}, relating eigenvalues of random matrices to energy levels of heavy atoms.
+      That is to say \todo{I'm missing a link}, diagonalizing a properly randomized $N\times N$ matrix is a way to generate exact samples of continuous DPPs at cost $\calO(N^3)$.
+      More generally, $\beta$-ensembles for which the case $\beta=2$ refers to a specific class of \textit{projection} DPPs \citep{Kon05} have joint probability distribution
       \begin{equation}
         \frac{1}{Z_{N,\beta}}
         \lrabs{\Delta(x_1,\dots,x_N)}^{\beta}
         \prod_{i= 1}^N
           \mu(d x_i),
       \end{equation}
-
-      where $\lrabs{\Delta(x_1,\dots,x_N)}$ denotes the Vandermonde determinant, and $\beta$ plays the role of an inverse temperature controlling the strength of the repulsive interaction between the points.
-      The cases $\beta=1, 2$ and $4$ together with Gaussian, Gamma and Beta reference measure $\mu$ received special attention, since they correspond to the distribution of some random matrix models.
+      where $\lrabs{\Delta(x_1,\dots,x_N)}$ denotes the Vandermonde determinant and $\beta$ plays the role of an inverse temperature controlling the strength of the repulsive interaction between the points.
+      The cases $\beta=1, 2,$ and $4,$ together with Gaussian, Gamma, and Beta reference measure~$\mu$ received special attention, since they correspond to the distribution of some random matrix models.
       \citet{DuEd02} unlocked generic $\beta>0$ parameters through equivalent tridiagonal models, thus reducing the sampling cost to $\calO(N^2)$.
 
     % subsubsection random_matrices (end)
@@ -276,8 +274,9 @@ The release of \DPPy\ marks the first reproducible and fully documented entry po
 % section conclusion_and_future_work (end)
 
 % Acknowledgements should go at the end, before appendices and references
-\newpage
-\acks{The research presented was supported by French Ministry of Higher Education and Research, CPER Nord-Pas de Calais/FEDER DATA Advanced data science and tech- nologies 2015-2020, and French National Research Agency projects EXTRA-LEARN (n.ANR-14-CE24-0010-01) and BOB (n.ANR-16-CE23-0003).}
+%\newpage
+{\small
+\acks{The research presented was supported by French Ministry of Higher Education and Research, CPER Nord-Pas de Calais/FEDER DATA Advanced data science and tech- nologies 2015-2020, and French National Research Agency projects EXTRA-LEARN (n.ANR-14-CE24-0010-01) and BOB (n.ANR-16-CE23-0003).}}
 
 
 

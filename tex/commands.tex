@@ -67,15 +67,15 @@
 % Sum of Squares polynomial
 \newcommand\SOS{\operatorname{SOS}}
 % Moment sequence
-\newcommand\bmom{\bm{m}}
+\newcommand\bmom{\bf{m}}
 % Canonical moment sequence
-\newcommand\bc{\bm{c}}
+\newcommand\bc{\bf{c}}
 
 
 %%% bold, cal and bb Uppercase letters A..Z
 \foreach \x in {A,...,Z}
 	{%
-	\expandafter\xdef\csname bf\x \endcsname{\noexpand\ensuremath{\noexpand\bm{\x}}}
+	\expandafter\xdef\csname bf\x \endcsname{\noexpand\ensuremath{\noexpand\bf{\x}}}
 	\expandafter\xdef\csname cal\x \endcsname{\noexpand\ensuremath{\noexpand\mathcal{\x}}}
 	\expandafter\xdef\csname bb\x \endcsname{\noexpand\ensuremath{\noexpand\mathbb{\x}}}
 }
@@ -83,7 +83,7 @@
 %%% bold greek letters
 \foreach \x/\y  in {alpha/\alpha, beta/\beta, gamma/\gamma, delta/\delta, epsilon/\epsilon, zeta/\zeta, eta/\eta, theta/\theta, iota/\iota, kappa/\kappa, lambda/\lambda, mu/\mu, nu/\nu, pi/\pi, rho/\rho, sigma/\sigma, tau/\tau, upsilon/\upsilon, phi/\phi, chi/\chi, psi/\psi, omega/\omega }
 	{%
-\expandafter\xdef\csname bf\x \endcsname{\noexpand\ensuremath{\noexpand\bm{\y}}}
+\expandafter\xdef\csname bf\x \endcsname{\noexpand\ensuremath{\noexpand\bf{\y}}}
 }
 
 %% Equal = with limits
@@ -141,7 +141,7 @@
 % erf
 \newcommand\erf{\operatorname{erf}}
 % complex number
-\newcommand\ii{\bm{i}}
+\newcommand\ii{\bf{i}}
 
 %%%%%%%%%%%%%%%%%%%%%%%
 % Size adaptive symbols
