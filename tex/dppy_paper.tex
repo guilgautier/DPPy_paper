@@ -59,7 +59,7 @@
   In particular, for generic kernel matrices, exact sampling requires the eigendecomposition. 
   This prohibitive cost has triggered an effort towards efficient approximate samplers ranging from kernel approximation \citep{AKFT13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
   
-  \DPPy\ is the first\footnote{\citet{TrBaAm18} also recently surveyed the main exact sampling schemes, but without related code.}
+  \DPPy\ is the first\footnote{\citet{TrBaAm18} also recently surveyed the main exact sampling schemes but without related code.\\}
  toolbox which provides a turnkey implementation of all general algorithms to sample DPPs.  Packaging together all known sampling algorithms now and in the future will improve reproducibility of papers on DPPs and favour dissemination of results.
   \setcounter{footnote}{5}
   We also use Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} for continuous integration, both to run tests and certify that \DPPy\ can be used with Linux and MacOS. 
@@ -68,7 +68,7 @@
 
 % section introduction (end)
 
-\section{Determinantal Point Processes} % (fold)
+\section{Determinantal point processes} % (fold)
 \label{sec:determinantal_point_processes}
 
 We give only the key ingredients about point processes and DPPs. For more details see \citet{DaVe03} and \citet{HKPV06}.
@@ -236,18 +236,18 @@ We give only the key ingredients about point processes and DPPs. For more detail
 
 % section determinantal_point_processes (end)
 
-\section{The \DPPy\ Toolbox} % (fold)
+\section{The \DPPy\ toolbox} % (fold)
 \label{sec:the_dppy_toolbox}
 
-  \DPPy\ strives to handle objects that fit the natural definition of the different DPPs models.
+  \DPPy\ handles objects that fit the natural definition of the different DPPs models.
   \begin{itemize}
 	  \item The \DPPy\ object corresponding to the finite $\DPP(\bfK)$ can be instantiated as
 	  \begin{nscenter}
 	  	\mintinline{python}{Finite_DPP(kernel_type="inclusion", projection=False, **{"K":K})}.
 	  \end{nscenter}
-		It has two main sampling methods namely \mintinline{python}{.sample_exact()} and \mintinline{python}{.sample_mcmc()} implementing different variants of the exact sampling scheme and current state of the art MCMC samplers.
+		It has two main sampling methods, namely \mintinline{python}{.sample_exact()} and \mintinline{python}{.sample_mcmc()}, implementing different variants of the exact sampling scheme and current state-of-the-art MCMC samplers.
 
-		\item The \DPPy\ object corresponding to $\beta$-Ensembles can be instantiated as
+		\item The \DPPy\ object corresponding to $\beta$-ensembles can be instantiated as
 		\begin{nscenter}
 			\mintinline{python}{Beta_Ensemble(ensemble_name="laguerre", beta=3.14)},
 		\end{nscenter}
@@ -256,30 +256,27 @@ We give only the key ingredients about point processes and DPPs. For more detail
 		\begin{nscenter}
 			\mintinline{python}{.sample(sampling_mode="banded", **{"shape":10, "scale":2.0, "size":50})}
 		\end{nscenter}
-		and two methods for display; \mintinline{python}{.plot()} to plot the last realisation and \mintinline{python}{.hist()} to construct the empirical distribution.
+		and two methods for display: \mintinline{python}{.plot()} to plot the last realisation and \mintinline{python}{.hist()} to construct the empirical distribution.
 
   \end{itemize}
-
-  For more information, please refer to the documentation\footnoteref{fn:docs} and corresponding notebooks that showcase the use \DPPy\ objects.
+  For more information, please refer to the documentation\footnoteref{fn:docs} and corresponding \todo{jupyter?} notebooks that showcase the use \DPPy\ objects.
 
 
 % section the_dppy_toolbox (end)
 
 
-\section{Conclusion and Future Work} % (fold)
+\section{Conclusion and future work} % (fold)
 \label{sec:conclusion_and_future_work}
 
-The release of \DPPy\ marks the first reproducible and fully documented entry point for using DPPs. It is ready to raise contributors' interest to consolidate the existing content and enlarge the scope of \DPPy\ \eg with procedures for learning the kernel from data.
+The release of \DPPy\ marks the first reproducible and fully documented entry point for using DPPs. It is ready to raise contributors' interest to consolidate the existing content and enlarge the scope of \DPPy\ e.g., with procedures for learning the kernels from data.
 
 % section conclusion_and_future_work (end)
 
 % Acknowledgements should go at the end, before appendices and references
 %\newpage
-{\small
-\acks{The research presented was supported by French Ministry of Higher Education and Research, CPER Nord-Pas de Calais/FEDER DATA Advanced data science and tech- nologies 2015-2020, and French National Research Agency projects EXTRA-LEARN (n.ANR-14-CE24-0010-01) and BOB (n.ANR-16-CE23-0003).}}
-
-
-
+%{\small
+\acks{The research presented was supported by European CHIST-ERA project DELTA, French Ministry of
+Higher Education and Research, Nord-Pas-de-Calais Regional Council, Inria and Otto-von-Guericke-Universit\"at Magdeburg associated-team north-European project Allocate, and French National Research Agency projects ExTra-Learn (n.ANR-14-CE24-0010-01) and BoB (n.ANR-16-CE23-0003).}%}
 
 \section{Links to JMLR } % (fold)
 \label{sec:links_to_jmlr_}
@@ -291,7 +288,10 @@ The release of \DPPy\ marks the first reproducible and fully documented entry po
     \item \href{http://www.jmlr.org/format/authors-guide.html}{JMLR author guide}
   \end{itemize}
 
-\todo{at the end have nicer biblio}
+\todo{at the end have nicer and unnified biblio, maybe with michals modified bst for jmlr that treats links nicely}
+
+\todo{copy $^\dagger$ etc like in ICML paper}
+
 % Manual newpage inserted to improve layout of sample file - not
 % needed in general before appendices/bibliography.
 
