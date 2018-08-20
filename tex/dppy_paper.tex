@@ -14,7 +14,7 @@
 
 % Heading arguments are {volume}{year}{pages}{date submitted}{date published}{paper id}{author-full-names}
 
-\jmlrheading{xx}{2018}{xx-xx}{8/18}{xx/xx}{gaba18}{Guillaume Gautier, R\'emi Bardenet, and Michal Valko}
+\jmlrheading{xx}{2018}{xx-xx}{8/18}{xx/xx}{gabava18}{Guillaume Gautier, R\'emi Bardenet, and Michal Valko}
 
 % Short headings should be running head and authors last names
 
@@ -58,7 +58,8 @@
  In the finite case, routine inference tasks such as normalization, marginalization,  or sampling have complexity $\calO(M^3)$, where $M$ is the size of the ground set \citep{KuTa12}. This is  intractable for large $M$ \citep{Gil14}. 
   In particular, for generic kernel matrices, exact sampling requires the eigendecomposition. 
   This prohibitive cost has triggered an effort towards efficient approximate samplers ranging from kernel approximation \citep{AKFT13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
-  
+ 
+   \setcounter{footnote}{0}
   \DPPy\ is the first\footnote{\citet{TrBaAm18} also recently surveyed the main exact sampling schemes but without related code.\\}
  toolbox which provides a turnkey implementation of all general algorithms to sample DPPs.  Packaging together all known sampling algorithms now and in the future will improve reproducibility of papers on DPPs and favour dissemination of results.
   \setcounter{footnote}{5}
