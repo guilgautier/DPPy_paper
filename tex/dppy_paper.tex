@@ -25,10 +25,10 @@
 
 \title{\DPPy: A Python toolbox for sampling\\determinantal point processes}
 
-\author{\name Guillaume Gautier \email g.gautier@inria.fr \\
+\author{\name Guillaume Gautier$^{*,\dagger}$ \email g.gautier@inria.fr \\
        \name R\'emi Bardenet$^\dagger$ \email remi.bardenet@gmail.com \\
-       \name Michal Valko \email michal.valko@inria.fr\\
-       \addr SequeL team, INRIA Lille - Nord Europe,  40, avenue Halley 59650, Villeneuve d'Ascq, France\\
+       \name Michal Valko$^*$ \email michal.valko@inria.fr\\
+       \addr $^*$SequeL team, INRIA Lille - Nord Europe,  40, avenue Halley 59650, Villeneuve d'Ascq, France\\
        \addr $^\dagger$Univ.\,Lille, CNRS, Centrale Lille, UMR 9189 - CRIStAL, 59651 Villeneuve d'Ascq, France
 }
 
@@ -40,7 +40,7 @@
 \begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
   Determinantal point processes (DPPs) are specific probability distributions over clouds of points that are used as models for computational tools across physics, probability, statistics, and more recently in machine learning.
   Sampling from DPPs is nontrivial and therefore we present a Python toolbox \DPPy\ that puts together known exact and approximate sampling algorithms.
-  The project is hosted on GitHub\footnote{\url{https://github.com/guilgautier/DPPy}} and we equip it with an extensive documentation.\footnote{\label{fn:docs}\url{https://dppy.readthedocs.io}} The documentation takes the form of a short survey of DPPs and relates each mathematical property with \DPPy\ objects for easy use.
+  The project is hosted on GitHub\footnote{\url{https://github.com/guilgautier/DPPy}} and we equip it with an extensive documentation. The documentation\footnote{\label{fn:docs}\url{https://dppy.readthedocs.io}} takes the form of a short survey of DPPs and relates each mathematical property with \DPPy\ objects for easy use.
 \end{abstract}
 
 \begin{keywords}determinantal point processes, sampling schemes\end{keywords}
@@ -77,7 +77,7 @@
 
     A point process $\calX$ on $\bbX$ is a random subset of points $\lrcb{X_1, \dots, X_N} \subset \bbX$, with the \emph{random} number of points $N$. We further assume that $N$ is almost surely finite and that all points in a sample are distinct.
     To understand the interaction in a point process $\calX$, we focus on each cloud of $k$ points (for all $k$). 
-    The corresponding $k$-correlation functions characterize the underlying point process, and admits the following intuitive interpretation, see \citet[Section 4]{MoWa04},
+    The corresponding $k$-correlation functions characterize the underlying point process, and admits the following intuitive interpretation \citep[Section 4]{MoWa04},
     \begin{equation}
     	\Proba{
     		\begin{tabular}{c}
@@ -125,8 +125,8 @@
 		\noindent
     where $\bfK_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$.
 
-    To guarantee the existence of the DPP as described by Equations~\ref{eq:k-correlation_function_DPP} and~\ref{eq:inclusion_proba_finite}, the underlying kernel must have $[0,1]$-valued eigenvalues. The kernel is also commonly assumed to be Hermitian symmetric, see \citet[Theorem 3]{Sos00}.
-    The latter assumption is only sufficient, there exist DPPs with nonsymmetric kernels, see \citet{BoDiFu10}.
+    To guarantee the existence of the DPP as described by Equations~\ref{eq:k-correlation_function_DPP} and~\ref{eq:inclusion_proba_finite}, the underlying kernel must have $[0,1]$-valued eigenvalues. The kernel is also commonly assumed to be Hermitian symmetric \citep[Theorem 3]{Sos00}.
+    The latter assumption is only sufficient, there exist DPPs with nonsymmetric kernels \citep{BoDiFu10}.
   % subsection definition (end)
 
   \subsection{Sampling} % (fold)
@@ -195,9 +195,9 @@
       In the end, DPPs favors configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume.
 
       The previous sampling scheme is exact and generic but requires the eigendecomposition of the underlying kernel.
-      In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has average cost of $\calO(M\lrb{\Tr \bfK}^2)$,
+      In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has average cost of $\calO(M\lrb{\Tr \bfK}^2)$
       % which may still be problematic for large $M$, 
-      see \citet{TrBaAm18}.
+      \citep{TrBaAm18}.
       On the other hand, sampling from the conditionals in \Eqref{eq:conditionals_densities} can be cumbersome in the infinite case, since it may require tailored proposal distributions.
 
       These issues have motivated work on approximate sampling procedures with two main directions: kernel approximation and MCMC samplers.
