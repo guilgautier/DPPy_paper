@@ -49,36 +49,21 @@
 \label{sec:introduction}
 
   Determinantal point processes (DPPs) are distributions over configurations of points that encode diversity through a kernel function $K$ and a reference measure $\mu$.
-<<<<<<< HEAD
-  There were introduced by \citet{Mac75} and have then found applications in fields as diverse as probability \citep{Sos00, Kon05, HKPV06}, number theory \citep{RuSa96}, statistical physics \citep{PaBe11}, Monte Carlo methods \citep{BaHa16}, and spatial statistics \citep{LaMoRu15}.
-  In machine learning, DPPs over finite sets have been used as a model of diverse sets of items, where the kernel function takes the form of a finite matrix $\bfK$, see \citep{KuTa12} for a comprehensive survey.
-  Further applications of DPPs in machine learning (ML) e.g. include recommendation tasks \citep{KaDeKo16, GaPaKo16} or text summarization \citep{DuBa16}.\\
-
-  In the finite case, routine inference tasks such as normalization, marginalization and sampling have complexity roughly $\calO(M^3)$, where $M$ denotes the size of the ground set \citep{KuTa12}. This becomes intractable for large $M$ \citep{Gil14}. In particular, for generic kernel matrices, exact sampling requires the eigendecomposition of the kernel. This prohibitive cost has triggered an effort towards efficient approximate samplers ranging from random approximation \todo{Maybe find a different way of saying it, "random approximation" is too vague} of the kernel \citep{AfKuFo13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.\\
-
-  \DPPy\ is the first toolbox which provides a turnkey implementation of all general algorithms to sample DPPs. \citet{TrBaAm18} also recently surveyed the main exact sampling schemes, but without related code.
-  To the best of our knowledge, there is scarcely any reproducible papers involving DPPs; sampling schemes mostly remain in pseudo-code form with no clean implementation.
-  \todo{"To the best..." Too harsh. Rather say sth like "Packaging together all known sampling algorithms now and in the future will improve reproducibility of papers on DPPs and favour dissemination of results."}
-  \setcounter{footnote}{5}
-  Relatedly, we use Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} for continuous integration, both to run tests and certify that \DPPy\ can be used with Linux and MacOS.
-  Moreover, \DPPy\ is supported by an extensive documentation\footnoteref{fn:docs} providing the essential mathematical background; this illustrates some key properties of DPPs through \DPPy\ objects and associated methods. \DPPy\ can thus also easily serve as tutorial material.
-=======
   There were introduced by \citet{Mac75} and found applications in fields as diverse as probability \citep{Sos00, Kon05, HKPV06}, number theory \citep{RuSa96}, statistical physics \citep{PaBe11}, Monte Carlo methods \citep{BaHa16}, and spatial statistics \citep{LaMoRu15}.
   In machine learning (ML), DPPs over finite sets have been used to model diverse sets of items, where the kernel function takes the form of a finite matrix $\bfK$, see \citet{KuTa12} for a comprehensive survey.
   Further applications of DPPs in ML include recommendation tasks \citep{KaDeKo16, GaPaKo16} or text summarization \citep{DuBa18}.
 
- 	In the finite case, routine inference tasks such as normalization, marginalization,  or sampling have complexity $\calO(M^3)$, where $M$ is the size of the ground set \citep{KuTa12}. This is  intractable for large $M$ \citep{Gil14}. 
-  In particular, for generic kernel matrices, exact sampling requires the eigendecomposition. 
+ 	In the finite case, routine inference tasks such as normalization, marginalization,  or sampling have complexity $\calO(M^3)$, where $M$ is the size of the ground set \citep{KuTa12}. This is  intractable for large $M$ \citep{Gil14}.
+  In particular, for generic kernel matrices, exact sampling requires the eigendecomposition.
   This prohibitive cost has triggered an effort towards efficient approximate samplers ranging from kernel approximation \citep{AKFT13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
- 
+
   \setcounter{footnote}{0}
   \DPPy\ is the first\footnote{\citet{TrBaAm18} also recently surveyed the main exact sampling schemes but without related code.\\} toolbox which provides a turnkey implementation of all general algorithms to sample DPPs.
  	Packaging together all known sampling algorithms now and in the future will improve reproducibility of papers on DPPs and favour dissemination of results.
   \setcounter{footnote}{5}
-  We also use Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} for continuous integration, both to run tests and certify that \DPPy\ can be used with Linux and MacOS. 
+  We also use Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} for continuous integration, both to run tests and certify that \DPPy\ can be used with Linux and MacOS.
   Moreover, \DPPy\ is supported by an extensive documentation\footnoteref{fn:docs} providing the essential mathematical background by illustrating some key properties of DPPs through \DPPy\ objects and associated methods.
   \DPPy\ thus also serves as a tutorial.
->>>>>>> 28ef7b9ac99824132d6be5d9e029b535bf960687
 
 % section introduction (end)
 
@@ -91,7 +76,7 @@
   \label{sub:definition}
 
     A point process $\calX$ on $\bbX$ is a random subset of points $\lrcb{X_1, \dots, X_N} \subset \bbX$, with the \emph{random} number of points $N$. We further assume that $N$ is almost surely finite and that all points in a sample are distinct.
-    To understand the interaction in a point process $\calX$, we focus on each cloud of $k$ points (for all $k$). 
+    To understand the interaction in a point process $\calX$, we focus on each cloud of $k$ points (for all $k$).
     The corresponding $k$-correlation functions characterize the underlying point process, and admits the following intuitive interpretation \citep[Section 4]{MoWa04},
     \begin{equation}
     	\Proba{
@@ -103,7 +88,7 @@
     	= \rho_k\lrp{x_1,\dots,x_k}
     		\prod_{i=1}^k \mu(\diff x_i).
     \end{equation}
-    
+
     % Considering $\mu$ as the reference measure, the $k$-correlation functions are defined as
     % \begin{equation}
     % \label{eq:k-correlation_function}
@@ -140,13 +125,8 @@
 		\noindent
     where $\bfK_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$.
 
-<<<<<<< HEAD
     To guarantee existence of the DPP as described by Equations~\ref{eq:k-correlation_function_DPP} and~\ref{eq:inclusion_proba_finite} the underlying kernel must have $[0,1]$-valued eigenvalues\todo{Is that true? In particular, for nonhermitian kernels, you don't have the spectral theorem.} and it is commonly assumed to be Hermitian symmetric, see \citep[Theorem 3]{Sos00}.
     The latter assumption is only sufficient, there exist DPPs with non symmetric kernels, see \citep{BoDiFu09}.
-=======
-    To guarantee the existence of the DPP as described by Equations~\ref{eq:k-correlation_function_DPP} and~\ref{eq:inclusion_proba_finite}, the underlying kernel must have $[0,1]$-valued eigenvalues. The kernel is also commonly assumed to be Hermitian symmetric \citep[Theorem 3]{Sos00}.
-    The latter assumption is only sufficient, there exist DPPs with nonsymmetric kernels \citep{BoDiFu10}.
->>>>>>> 28ef7b9ac99824132d6be5d9e029b535bf960687
   % subsection definition (end)
 
   \subsection{Sampling} % (fold)
@@ -215,18 +195,10 @@
       In the end, DPPs favors configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume.
 
       The previous sampling scheme is exact and generic but requires the eigendecomposition of the underlying kernel.
-<<<<<<< HEAD
-      In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has average cost $\calO(M\lrb{\Tr \bfK}^2)$,
-      % which may still be problematic for large $M$,
-      see \citep{TrBaAm18}.
-
-      On the other hand, sampling from the conditionals in \Eqref{eq:conditionals_densities} can be cumbersome in the infinite case, since it may require tailored proposal distributions.\\
-=======
       In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has average cost of $\calO(M\lrb{\Tr \bfK}^2)$
-      % which may still be problematic for large $M$, 
+      % which may still be problematic for large $M$,
       \citep{TrBaAm18}.
       On the other hand, sampling from the conditionals in \Eqref{eq:conditionals_densities} can be cumbersome in the infinite case, since it may require tailored proposal distributions.
->>>>>>> 28ef7b9ac99824132d6be5d9e029b535bf960687
 
       These issues have motivated work on approximate sampling procedures with two main directions: kernel approximation and MCMC samplers.
       It is worth mentioning that some specific DPPs admit special exact samplers, e.g., uniform spanning trees \citep{PrWi98} or eigenvalues of some random matrices \citep{DuEd02}.
