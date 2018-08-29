@@ -50,7 +50,9 @@
  %   citation key, to preserve any natural sequence.
  %
 ENTRY
-  { address
+  { archivePrefix
+    arxivId
+    address
     author
     booktitle
     chapter
@@ -58,6 +60,7 @@ ENTRY
     eid
     edition
     editor
+    eprint
     howpublished
     institution
     isbn
@@ -82,6 +85,29 @@ ENTRY
   { label extra.label sort.label short.list }
 
 INTEGERS { output.state before.all mid.sentence after.sentence after.block }
+
+
+FUNCTION {format.arxiv}
+{ arxivId empty$
+    { "" }
+    { "\href{http://arxiv.org/abs/" arxivId * "}{arXiv:" * arxivId * "}" * }
+  if$
+}
+
+FUNCTION {format.btitle}
+{ title empty$
+    { "" }
+    { doi empty$
+      { url empty$
+          { title "t" change.case$ emphasize}
+          { "\href{" url * "}{" * title "t" change.case$ emphasize * "}" * }
+          if$
+      }        
+        { "\href{http://dx.doi.org/" doi * "}{" * title "t" change.case$ emphasize * "}" * }
+      if$
+    }
+  if$
+}
 
 FUNCTION {init.state.consts}
 { #0 'before.all :=
@@ -706,7 +732,7 @@ FUNCTION {article}
   format.authors "author" output.check
   author format.key output
   new.block
-  format.title "title" output.check
+  format.btitle "title" output.check
   new.block
   crossref missing$
     { journal emphasize "journal" output.check
@@ -723,6 +749,9 @@ FUNCTION {article}
       if$
     }
   if$
+  new.block
+  format.arxiv output
+  new.block
   format.issn output
   format.doi output
   format.url output
@@ -758,6 +787,9 @@ FUNCTION {book}
       format.book.crossref output.nonnull
     }
   if$
+  new.block
+  format.arxiv output
+  new.block
   format.edition output
   format.date "year" output.check
   format.isbn output
@@ -773,7 +805,7 @@ FUNCTION {booklet}
   format.authors output
   author format.key output
   new.block
-  format.title "title" output.check
+  format.btitle "title" output.check
   howpublished address new.block.checkb
   howpublished output
   address output
@@ -830,7 +862,7 @@ FUNCTION {incollection}
   format.authors "author" output.check
   author format.key output
   new.block
-  format.title "title" output.check
+  format.btitle "title" output.check
   new.block
   crossref missing$
     { format.in.ed.booktitle "booktitle" output.check
@@ -860,7 +892,7 @@ FUNCTION {inproceedings}
   format.authors "author" output.check
   author format.key output
   new.block
-  format.title "title" output.check
+  format.btitle "title" output.check
   new.block
   crossref missing$
     { format.in.ed.booktitle "booktitle" output.check
@@ -885,6 +917,9 @@ FUNCTION {inproceedings}
       format.pages output
     }
   if$
+  new.block
+  format.arxiv output
+  new.block
   format.isbn output
   format.doi output
   format.url output
@@ -917,7 +952,7 @@ FUNCTION {mastersthesis}
   format.authors "author" output.check
   author format.key output
   new.block
-  format.title "title" output.check
+  format.btitle "title" output.check
   new.block
   "Master's thesis" format.thesis.type output.nonnull
   school "school" output.check
@@ -989,7 +1024,7 @@ FUNCTION {techreport}
   format.authors "author" output.check
   author format.key output
   new.block
-  format.title "title" output.check
+  format.btitle "title" output.check
   new.block
   format.tr.number output.nonnull
   institution "institution" output.check
@@ -1006,7 +1041,7 @@ FUNCTION {unpublished}
   format.authors "author" output.check
   author format.key output
   new.block
-  format.title "title" output.check
+  format.btitle "title" output.check
   new.block
   note "note" output.check
   format.date output

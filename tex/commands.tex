@@ -1,17 +1,20 @@
 % Specific to this .tex
 \newcommand{\DPPy}{\textsf{DPPy}}
 
+% Footnotes 1, 2, 3 and then fancy ones!
 \makeatletter
 \@addtoreset{footnote}{page}
 \makeatother
-\renewcommand{\thefootnote}{\ifcase\value{footnote}\or1\or2\or3\or\color{black}{\faGithub}\or\color{black}{\faBook}\or\color{black}{\faGears}\fi} % 1, 2, 3 and then fancy footnotes!
+\renewcommand{\thefootnote}{\ifcase\value{footnote}\or\color{black}{1}\or\color{black}{2}\or\color{black}{3}\or\color{black}{\faGithub}\or\color{black}{\faBook}\or\color{black}{\faGears}\fi} 
 
+% Cross ref a foonote
 \makeatletter
 \newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
 \makeatother
 
 \addtolength{\skip\footins}{-3pc plus 5pt}
 
+% Center env for minted package to display code
 \newenvironment{nscenter}
  {\parskip=3pt\par\nopagebreak\centering}
  {\parskip=2pt\par\noindent\ignorespacesafterend}
@@ -26,6 +29,7 @@
 \newcommand*{\Eqref}[1]{Equation~\ref{#1}}
 \newcommand*{\Figref}[1]{Figure~\ref{#1}}
 
+% TODO command
 \newcommand*{\todo}[1]{\textcolor{red}{TODO:{#1}}}
 
 % Proof ends with filled box
@@ -63,15 +67,15 @@
 % Sum of Squares polynomial
 \newcommand\SOS{\operatorname{SOS}}
 % Moment sequence
-\newcommand\bmom{\bm{m}}
+\newcommand\bmom{\bf{m}}
 % Canonical moment sequence
-\newcommand\bc{\bm{c}}
+\newcommand\bc{\bf{c}}
 
 
 %%% bold, cal and bb Uppercase letters A..Z
 \foreach \x in {A,...,Z}
 	{%
-	\expandafter\xdef\csname bf\x \endcsname{\noexpand\ensuremath{\noexpand\bm{\x}}}
+	\expandafter\xdef\csname bf\x \endcsname{\noexpand\ensuremath{\noexpand\bf{\x}}}
 	\expandafter\xdef\csname cal\x \endcsname{\noexpand\ensuremath{\noexpand\mathcal{\x}}}
 	\expandafter\xdef\csname bb\x \endcsname{\noexpand\ensuremath{\noexpand\mathbb{\x}}}
 }
@@ -79,7 +83,7 @@
 %%% bold greek letters
 \foreach \x/\y  in {alpha/\alpha, beta/\beta, gamma/\gamma, delta/\delta, epsilon/\epsilon, zeta/\zeta, eta/\eta, theta/\theta, iota/\iota, kappa/\kappa, lambda/\lambda, mu/\mu, nu/\nu, pi/\pi, rho/\rho, sigma/\sigma, tau/\tau, upsilon/\upsilon, phi/\phi, chi/\chi, psi/\psi, omega/\omega }
 	{%
-\expandafter\xdef\csname bf\x \endcsname{\noexpand\ensuremath{\noexpand\bm{\y}}}
+\expandafter\xdef\csname bf\x \endcsname{\noexpand\ensuremath{\noexpand\bf{\y}}}
 }
 
 %% Equal = with limits
@@ -120,8 +124,8 @@
 % \renewcommand{\labelitemiv}{$\cdot$}
 
 % Notations
-\newcommand\ie{\text{i.e.\ }}
-\newcommand\eg{\text{e.g.\ }}
+\newcommand\ie{\text{i.e., }}
+\newcommand\eg{\text{e.g., }}
 \newcommand\wrt{\text{w.r.t.\ }}
 \newcommand\etc{\text{etc.\ }}
 \newcommand\resp{\text{resp.\ }}
@@ -137,7 +141,7 @@
 % erf
 \newcommand\erf{\operatorname{erf}}
 % complex number
-\newcommand\ii{\bm{i}}
+\newcommand\ii{\bf{i}}
 
 %%%%%%%%%%%%%%%%%%%%%%%
 % Size adaptive symbols
