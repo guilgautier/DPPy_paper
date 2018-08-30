@@ -111,8 +111,11 @@
 	      \quad\forall S\subset \bbX,
 	  \end{equation}
 		\noindent
-    where $\bfK_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$. If we further assume that the kernel matrix $\bfK$ is Hermitian, then existence and unicity of the DPP~\ref{eq:inclusion_proba_finite} is equivalent to the condition that the spectrum of $\bfK$ should lie in $[0,1]$, see \cite[Theorem 3]{Sos00}. We note that the latter assumptions are only sufficient. In particular, there exist DPPs with non symmetric kernels, see \citep{BoDiFu09}.
-  % subsection definition (end)
+    where $\bfK_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$. If we further assume that the kernel matrix $\bfK$ is Hermitian, then existence and unicity of the DPP~\eqref{eq:inclusion_proba_finite} is equivalent to the condition that the spectrum of $\bfK$ should lie in $[0,1]$. The result actually holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem 3]{Sos00}. We note that there exist DPPs with nonsymmetric kernels \citep{BoDiFu09}.\todo{Missing ref?}.
+
+    The main interest of DPPs in ML is that they can model diversity while being tractable. To see where diversity lies, we simply observe that \eqref{eq:inclusion_proba_finite} entails
+    $$ \Proba{\{i,j\} \subset \calX} = {\bfK}_{ii}{\bfK}_{jj}-{\bfK}_{ij}{\bfK}_{ji} = \Proba{\{i\} \subset \calX}\Proba{\{i\} \subset \calX} - {\bfK}_{ij}{\bfK}_{ji}.$$
+    If $\bfK$ is Hermitian, the quantity ${\bfK}_{ij}{\bfK}_{ji} = \vert{\bfK}_{ij}\vert^2$ thus encodes how less often $i$ and $j$ should cooccur, compared to independent sampling with the same marginals. Most point processes that encode diversity are not tractable, in the sense that we do not have efficient algorithms to sample, marginalize, or compute normalization constants. DPPs are amenable to these tasks \citep{KuTa12}.
 
   \subsection{Sampling} % (fold)
   \label{sub:sampling}
@@ -120,36 +123,24 @@
     \subsubsection{Exact Sampling} % (fold)
     \label{ssub:exact_sampling}
 
-      The determinantal feature confer DPPs many appealing properties, among which closed-form expression for \todo{XXX}, moments of linear statistics \etc
-      For our sampling purposes there is one crucial property: generic DPPs are mixtures of \textit{projection} DPPs, i.e., DPPs parametrized by an orthogonal projection kernel.
-      Namely, given the spectral decomposition of the kernel
+      We assume henceforth that $K$ \todo{XXX}. All DPPs are mixtures of \textit{projection} DPPs, i.e., DPPs parametrized by an orthogonal projection kernel. Namely, given the spectral decomposition of the kernel
       \begin{equation}
       \label{eq:eigdec_kernel}
         K(x,y)\triangleq\suml_{i=1}^{\infty} \lambda_i \phi_i(x) \overline{\phi_i(y)},
         \quad \text{with }
         \int \phi_i(x) \overline{\phi_j(x)} \mu(\diff x) = \delta_{ij},
       \end{equation}
-			\noindent
-      we can define the random orthogonal projection kernel
-      $
-        K^B(x,y)
-          \triangleq \suml_{i=1}^{\infty} B_i \phi_i(x) \overline{\phi_i(y)}
-      $, with independent $B_i\sim\Ber(\lambda_i)$.
-      \citet[Theorem 7]{HKPV06} prove that
-      \begin{equation}
-        \DPP(K) \sim \DPP(K^B),
-      \end{equation}
-      suggesting the following two steps algorithm to sample from $\DPP(K)$:
+      \citet[Theorem 7]{HKPV06} proved that sampling $\DPP(K)$ can be done by
       \begin{enumerate}
-        \item Draw $B_i\sim\Ber(\lambda_i)$ independently and note $\lrcb{i_1,\dots,i_{N}} = \lrcb{i:B_i=1}$.
-        \item Sample from the \textit{projection} DPP with kernel $\tilde{K}(x,y) = \sum_{n=1}^{N}\phi_{i_n}(x) \overline{\phi_{i_n}(y)}$.
+        \item drawing $B_i\sim\Ber(\lambda_i)$ independently, and noting $\lrcb{i_1,\dots,i_{N}} = \lrcb{i:B_i=1}$.
+        \item sampling from the \textit{projection} DPP with kernel $\tilde{K}(x,y) = \sum_{n=1}^{N}\phi_{i_n}(x) \overline{\phi_{i_n}(y)}$.
       \end{enumerate}
-			\noindent
-      The remaining question of sampling from \textit{projection} DPPs is addressed by \citet[Algorithm 18]{HKPV06}.
-      It based on the chain rule and the fact that \textit{projection} $\DPP(\tilde{K})$ generates configurations of $N=\Tr \tilde{K}$ points almost surely.
-      In the first phase, each point $x\in \bbX$ is associated to the random feature vector $\Phi(x) \triangleq \lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$. Therefore, $\tilde{K}(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
+      The remaining question of sampling from projection DPPs is addressed by \citet[Algorithm 18]{HKPV06}.
+      It is based on the chain rule and a lemma that ensures that a \textit{projection} $\DPP(\tilde{K})$ generates configurations of $N=\Tr \tilde{K}$ points almost surely. \todo{I have stopped here so far.}
+
+      To be precise, note that if we denote by $\Phi(x) \triangleq \lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$ the feature vector associated with $x\in\bbX$, then $\tilde{K}(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
       % $N\overset{\text{a.s.}}{=}\Tr K$ points.
-      In this setting, the joint distribution of $(X_1,\dots,X_N)$ satisfies
+      In particular, the joint distribution of $(X_1,\dots,X_N)$ satisfies
       \begin{equation}
       \label{eq:joint_distribution}
         \frac{1}{N!} \det \lrb{K(x_m,x_n)}_{m,n=1}^N \prod_{n=1}^N\mu(\diff x_n)
