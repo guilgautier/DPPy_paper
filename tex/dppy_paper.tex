@@ -61,14 +61,12 @@
 \section{Determinantal point processes} % (fold)
 \label{sec:determinantal_point_processes}
 
-	We give only the key ingredients about point processes and DPPs. A more detailed introduction can be found in \citep{HKPV06}.
+	We give a nontechnical introduction to point processes and DPPs. More details can be found e.g. in \citep{HKPV06}.
 
   \subsection{Definition} % (fold)
   \label{sub:definition}
 
-    A point process $\calX$ on $\bbX$ is a random subset of points $\lrcb{X_1, \dots, X_N} \subset \bbX$, with the \emph{random} number of points $N$. We further assume that $N$ is almost surely finite and that all points in a sample are distinct.
-    To understand the interaction in a point process $\calX$, we focus on each cloud of $k$ points (for all $k$).
-    The corresponding $k$-correlation functions characterize the underlying point process, and admits the following intuitive interpretation \citep[Section 4]{MoWa04},
+    A point process $\calX$ on $\bbX$ is a random subset of points $\lrcb{X_1, \dots, X_N} \subset \bbX$, where the number of points $N$ is itself random. We further add to the definition that $N$ should be almost surely finite and that all points in a sample are distinct. Given a reference measure $\mu$ on $\bbX$, a point process is usually characterized by its $k$-correlation function $\rho_k$ for all $k$, where
     \begin{equation}
     	\Proba{
     		\begin{tabular}{c}
@@ -77,9 +75,9 @@
     		\end{tabular}
     	}
     	= \rho_k\lrp{x_1,\dots,x_k}
-    		\prod_{i=1}^k \mu(\diff x_i).
+    		\prod_{i=1}^k \mu(\diff x_i),
     \end{equation}
-
+    see \citep[Section 4]{MoWa04}. The functions $\rho_k$ describe the interaction among points in $\calX$ by quantifying cooccurrence of points at a set of locations.
     % Considering $\mu$ as the reference measure, the $k$-correlation functions are defined as
     % \begin{equation}
     % \label{eq:k-correlation_function}
@@ -95,8 +93,8 @@
     % \end{equation}
 
     % for all bounded measurable functions $f:\bbX^k\to \bbC$ and the sum ranges over $k$-tuples of distinct points of $\calX$.
-		\noindent
-  	A point process $\calX$ on $\bbX$ parametrized by a kernel $K:\bbX\times \bbX\rightarrow \mathbb{C}$ and a reference measure~$\mu$ on $\bbX$ is said to be determinantal, denoted as $\calX\sim\DPP(K)$, if its $k$-correlation functions satisfy
+
+    A point process $\calX$ on $(\bbX,\mu)$ parametrized by a kernel $K:\bbX\times \bbX\rightarrow \mathbb{C}$ is said to be \emph{determinantal}, denoted as $\calX\sim\DPP(K)$, if its $k$-correlation functions satisfy
 	  \begin{equation}
 	  \label{eq:k-correlation_function_DPP}
 	    \rho_k(x_1,\dots,x_k)
@@ -105,19 +103,15 @@
 	  \end{equation}
 
 		\noindent
-		The finite case, when $\bbX = \lrcb{1,\dots,M}$ and the reference measure is $\mu=\sum_{i=1}^M \delta_i$, corresponds to most common use of DPPs in ML \citep{KuTa12}.
-		In this context, the kernel function becomes a $M\times M$ matrix $\bfK$ encoding the similarity between items, and the correlation functions refer to inclusion probabilities.
-		We say that $\calX\sim \DPP(\bfK)$ if
+		Most DPPs in ML correspond to the finite case where $\bbX = \lrcb{1,\dots,M}$ and the reference measure is $\mu=\sum_{i=1}^M \delta_i$ \citep{KuTa12}.
+		In this context, the kernel function becomes an $M\times M$ matrix $\bfK$, and the correlation functions refer to inclusion probabilities. DPPs are thus often defined in ML by saying that $\calX\sim \DPP(\bfK)$ if
 	  \begin{equation}
 	  \label{eq:inclusion_proba_finite}
-	    \Proba{S \subset \calX} = \det \bfK_S,
+	    \Proba{S \subset \calX} = \det {\bfK}_S,
 	      \quad\forall S\subset \bbX,
 	  \end{equation}
 		\noindent
-    where $\bfK_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$.
-
-    To guarantee existence of the DPP as described by Equations~\ref{eq:k-correlation_function_DPP} and~\ref{eq:inclusion_proba_finite} the underlying kernel must have $[0,1]$-valued eigenvalues\todo{Is that true? In particular, for nonhermitian kernels, you don't have the spectral theorem.} and it is commonly assumed to be Hermitian symmetric, see \citep[Theorem 3]{Sos00}.
-    The latter assumption is only sufficient, there exist DPPs with non symmetric kernels, see \citep{BoDiFu09}.
+    where $\bfK_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$. If we further assume that the kernel matrix $\bfK$ is Hermitian, then existence and unicity of the DPP~\ref{eq:inclusion_proba_finite} is equivalent to the condition that the spectrum of $\bfK$ should lie in $[0,1]$, see \cite[Theorem 3]{Sos00}. We note that the latter assumptions are only sufficient. In particular, there exist DPPs with non symmetric kernels, see \citep{BoDiFu09}.
   % subsection definition (end)
 
   \subsection{Sampling} % (fold)
