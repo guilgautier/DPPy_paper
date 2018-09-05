@@ -140,23 +140,24 @@
     \subsubsection{Exact Sampling} % (fold)
     \label{ssub:exact_sampling}
 
-      We assume henceforth that $K$ \todo{XXX}. All DPPs are mixtures of \textit{projection} DPPs, i.e., DPPs parametrized by an orthogonal projection kernel. 
-      Namely, given the spectral decomposition of the kernel
+      We assume henceforth that $K$ is Hermitian and satisfies suitable conditions \cite[Theorem 3]{Sos00} so that its spectral decomposition is available:
       \begin{equation}
       \label{eq:eigdec_kernel}
         K(x,y)\triangleq\suml_{i=1}^{\infty} \lambda_i \phi_i(x) \overline{\phi_i(y)},
         \quad \text{with }
-        \int \phi_i(x) \overline{\phi_j(x)} \mu(\diff x) = \delta_{ij},
+        \int \phi_i(x) \overline{\phi_j(x)} \mu(\diff x) = \delta_{ij}.
       \end{equation}
-      \citet[Theorem 7]{HKPV06} proved that sampling $\DPP(K)$ can be done by
+      In the finite case, the eigendecomposition of an Hermitian kernel $\bfK$ can always be computed.
+      \noindent\citet[Theorem 7]{HKPV06} proved that sampling $\DPP(K)$ can be done in two steps:
       \begin{enumerate}
         \item drawing $B_i\sim\Ber(\lambda_i)$ independently, and noting $\lrcb{i_1,\dots,i_{N}} = \lrcb{i:B_i=1}$.
         \item sampling from the \textit{projection} DPP with kernel $\tilde{K}(x,y) = \sum_{n=1}^{N}\phi_{i_n}(x) \overline{\phi_{i_n}(y)}$.
       \end{enumerate}
-      The remaining question of sampling from projection DPPs is addressed by \citet[Algorithm 18]{HKPV06}.
-      It is based on the chain rule and a lemma that ensures that a \textit{projection} $\DPP(\tilde{K})$ generates configurations of $N=\Tr \tilde{K}$ points almost surely. \todo{I have stopped here so far.}
+      In particular, this shows that all DPPs are mixtures of \textit{projection} DPPs, that are DPPs parametrized by an orthogonal projection kernel.
+      The second step of the sampling scheme can be performed using \citet[Algorithm 18]{HKPV06} or \citepos{HKPV06} Algorithm 18 \todo{(gg) which is best?}.
+      It is based on the chain rule and a lemma that ensures that a \textit{projection} $\DPP(\tilde{K})$ generates configurations of $N=\Tr \tilde{K}$ points almost surely. \todo{(rbardenet) stopped here}
 
-      To be precise, note that if we denote by $\Phi(x) \triangleq \lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$ the feature vector associated with $x\in\bbX$, then $\tilde{K}(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
+      More precisely, note that if we denote by $\Phi(x) \triangleq \lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$ the feature vector associated with $x\in\bbX$, then $\tilde{K}(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
       % $N\overset{\text{a.s.}}{=}\Tr K$ points.
       In particular, the joint distribution of $(X_1,\dots,X_N)$ satisfies
       \begin{equation}
@@ -202,8 +203,8 @@
     \subsubsection{Random Matrices} % (fold)
     \label{ssub:random_matrices}
 
-      Originally, continuous DPPs emerged in quantum mechanics and mathematical physics with the pioneering work of \citet{Wig67}, relating eigenvalues of random matrices to energy levels of heavy atoms.
-      That is to say \todo{I'm missing a link}, diagonalizing a properly randomized $N\times N$ matrix is a way to generate exact samples of continuous DPPs at cost $\calO(N^3)$.
+      \todo{(gg) I killed the (unnecessary) historic note}\\
+      Computing the eigenvalues of properly randomized $N\times N$ matrices is a way to generate exact samples of continuous \textit{projection} DPPs at cost $\calO(N^3)$.
       More generally, $\beta$-ensembles for which the case $\beta=2$ refers to a specific class of \textit{projection} DPPs \citep{Kon05} have joint probability distribution
       \begin{equation}
         \frac{1}{Z_{N,\beta}}
