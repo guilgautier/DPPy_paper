@@ -111,7 +111,7 @@
 	      \quad\forall S\subset \bbX,
 	  \end{equation}
 		\noindent
-    where $\bfK_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$. If we further assume that the kernel matrix $\bfK$ is Hermitian, then existence and unicity of the DPP~\eqref{eq:inclusion_proba_finite} is equivalent to the condition that the spectrum of $\bfK$ should lie in $[0,1]$. The result actually holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem 3]{Sos00}. We note that there exist DPPs with nonsymmetric kernels \citep{BoDiFu09}.\todo{Missing ref?}.
+    where $\bfK_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$. If we further assume that the kernel matrix $\bfK$ is Hermitian, then existence and unicity of the DPP~\eqref{eq:inclusion_proba_finite} is equivalent to the condition that the spectrum of $\bfK$ should lie in $[0,1]$. The result actually holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem 3]{Sos00}. We note that there exist DPPs with nonsymmetric kernels \citep{BoDiFu10}.
 
     The main interest of DPPs in ML is that they can model diversity while being tractable. To see where diversity lies, we simply observe that \eqref{eq:inclusion_proba_finite} entails
     $$ \Proba{\{i,j\} \subset \calX} = {\bfK}_{ii}{\bfK}_{jj}-{\bfK}_{ij}{\bfK}_{ji} = \Proba{\{i\} \subset \calX}\Proba{\{i\} \subset \calX} - {\bfK}_{ij}{\bfK}_{ji}.$$
@@ -250,19 +250,25 @@
 \acks{The research presented was supported by European CHIST-ERA project DELTA, French Ministry of
 Higher Education and Research, Nord-Pas-de-Calais Regional Council, Inria and Otto-von-Guericke-Universit\"at Magdeburg associated-team north-European project Allocate, and French National Research Agency projects ExTra-Learn (n.ANR-14-CE24-0010-01) and BoB (n.ANR-16-CE23-0003).}%}
 
-\section{Links to JMLR } % (fold)
-\label{sec:links_to_jmlr_}
+\section{Links to JMLR} % (fold)
+\label{sec:links_to_jmlr}
+  
+  This section is to be removed, it is simply here to link to the JMLR website
 
-% section links_to_jmlr_ (end)
   \begin{itemize}
     \item \href{http://www.jmlr.org/mloss/mloss-info.html}{MLOSS website}
     \item \href{http://jmlr.csail.mit.edu/author-info.html}{JMLR author info}
     \item \href{http://www.jmlr.org/format/authors-guide.html}{JMLR author guide}
   \end{itemize}
 
-\todo{at the end have nicer and unnified biblio, maybe with michals modified bst for jmlr that treats links nicely}
+% section links_to_jmlr (end)
 
-\todo{copy $^\dagger$ etc like in ICML paper}
+
+\todo{at the end have nicer and unnified biblio, maybe with michals modified bst for jmlr that treats links nicely}\\
+\anstodo{(GG) clickable titles (using miso bst) + arxivId were added. Are we good now?}
+
+\todo{copy $^\dagger$ etc like in ICML paper}\\
+\anstodo{(GG) don't get it}
 
 % Manual newpage inserted to improve layout of sample file - not
 % needed in general before appendices/bibliography.
