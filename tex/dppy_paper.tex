@@ -151,14 +151,14 @@
       In the finite case, the eigendecomposition of an Hermitian kernel $\bfK$ can always be computed.
       \noindent\citet[Theorem 7]{HKPV06} proved that sampling $\DPP(K)$ can be done in two steps:
       \begin{enumerate}
-        \item drawing $B_i\sim\Ber(\lambda_i)$ independently, and noting $\lrcb{i_1,\dots,i_{N}} = \lrcb{i:B_i=1}$.
-        \item sampling from the \textit{projection} DPP with kernel $\tilde{K}(x,y) = \sum_{n=1}^{N}\phi_{i_n}(x) \overline{\phi_{i_n}(y)}$.
+        \item draw $B_i\sim\Ber(\lambda_i)$ independently, and denote $\lrcb{i_1,\dots,i_{N}} = \lrcb{i:B_i=1}$.
+        \item sample from the projection DPP with kernel $\tilde{K}(x,y) = \sum_{n=1}^{N}\phi_{i_n}(x) \overline{\phi_{i_n}(y)}$.
       \end{enumerate}
-      In particular, this shows that all DPPs are mixtures of \textit{projection} DPPs, that are DPPs parametrized by an orthogonal projection kernel.
+      In particular, this shows that all DPPs are mixtures of \emph{projection} DPPs, that are DPPs parametrized by an orthogonal projection kernel.
       The second step of the sampling scheme can be performed using \citet[Algorithm 18]{HKPV06} or \citepos{HKPV06} Algorithm 18 \todo{(gg) which is best?}.
-      It is based on the chain rule and a lemma that ensures that a \textit{projection} $\DPP(\tilde{K})$ generates configurations of $N=\Tr \tilde{K}$ points almost surely. \todo{(rbardenet) stopped here}
+      It is based on the chain rule and a lemma that ensures that a projection $\DPP(\tilde{K})$ generates configurations of $N=\Tr \tilde{K}$ points almost surely. \todo{(rbardenet) stopped here}
 
-      More precisely, note that if we denote by $\Phi(x) \triangleq \lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$ the feature vector associated with $x\in\bbX$, then $\tilde{K}(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
+      More precisely, if we denote by $\Phi(x) \triangleq \lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$ the feature vector associated with $x\in\bbX$, then $\tilde{K}(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
       % $N\overset{\text{a.s.}}{=}\Tr K$ points.
       In particular, the joint distribution of $(X_1,\dots,X_N)$ satisfies
       \begin{equation}
@@ -205,8 +205,8 @@
     \label{ssub:random_matrices}
 
       \todo{(gg) I killed the (unnecessary) historic note}\\
-      Computing the eigenvalues of properly randomized $N\times N$ matrices is a way to generate exact samples of continuous \textit{projection} DPPs at cost $\calO(N^3)$.
-      More generally, $\beta$-ensembles for which the case $\beta=2$ refers to a specific class of \textit{projection} DPPs \citep{Kon05} have joint probability distribution
+      Computing the eigenvalues of properly randomized $N\times N$ matrices is a way to generate exact samples of continuous projection DPPs at cost $\calO(N^3)$.
+      More generally, $\beta$-ensembles for which the case $\beta=2$ refers to a specific class of projection DPPs \citep{Kon05} have joint probability distribution
       \begin{equation}
         \frac{1}{Z_{N,\beta}}
         \lrabs{\Delta(x_1,\dots,x_N)}^{\beta}
