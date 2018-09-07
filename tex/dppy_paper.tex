@@ -72,7 +72,7 @@
 \section{Determinantal point processes} % (fold)
 \label{sec:determinantal_point_processes}
 
-	We give a nontechnical introduction to point processes and DPPs, for more details see, \eg \citet{HKPV06}.
+	We introduce DPPs, and refer to \citet{HKPV06} for more details.
 
   \subsection{Definition} % (fold)
   \label{sub:definition}
@@ -136,9 +136,6 @@
   \subsection{Sampling} % (fold)
   \label{sub:sampling}
 
-    \subsubsection{Exact Sampling} % (fold)
-    \label{ssub:exact_sampling}
-
       We assume henceforth that $K$ is Hermitian and satisfies suitable conditions \cite[Theorem 3]{Sos00} so that its spectral decomposition is available
       \begin{equation}
       \label{eq:eigdec_kernel}
@@ -198,32 +195,16 @@
       \citep{TrBaAm18}.
       In the continuous case, there is the additional cost of the rejection sampling routine required for sampling each conditional in \Eqref{eq:joint_distribution2}.
 
-      In applications where these costs are a bottleneck, users can rely on approximate sampling procedures. Research has focused on two main directions: kernel approximation and MCMC samplers\todo{Add a few references}. To conclude, some specific DPPs admit more efficient exact samplers that do not rely on \Eqref{eq:joint_distribution2}, e.g., uniform spanning trees \citep{PrWi98} or eigenvalues of random matrices \citep{DuEd02}.
+      In applications where these costs are a bottleneck, users can rely on approximate sampling procedures. Research has focused on two main directions: kernel approximation and MCMC samplers\todo{Add a few references}.
 
-    % subsubsection exact_sampling (end)
-
-    \subsubsection{Random Matrices} % (fold)
-    \label{ssub:random_matrices}
-
-      \todo{(gg) I killed the (unnecessary) historic note}\\
-      Computing the eigenvalues of properly randomized $N\times N$ matrices is a way to generate exact samples of continuous projection DPPs at cost $\calO(N^3)$.
-      More generally, $\beta$-ensembles for which the case $\beta=2$ refers to a specific class of projection DPPs \citep{Kon05} have joint probability distribution
+      To conclude, some specific DPPs admit more efficient exact samplers that do not rely on \Eqref{eq:joint_distribution2}, e.g., uniform spanning trees \citep{PrWi98} or eigenvalues of random matrices. For instance, so-called $\beta$-ensembles are defined by the joint distribution
       \begin{equation*}
         \frac{1}{Z_{N,\beta}}
         \lrabs{\Delta(x_1,\dots,x_N)}^{\beta}
         \prod_{i= 1}^N
-          \mu(d x_i),
+          \mu(\diff x_i)
       \end{equation*}
-      where $\lrabs{\Delta(x_1,\dots,x_N)}$ denotes the Vandermonde determinant and $\beta$ plays the role of an inverse temperature controlling the strength of the repulsive interaction between the points.
-      The cases $\beta=1, 2,$ and $4,$ together with Gaussian, Gamma, and Beta reference measure~$\mu$ received special attention, since they correspond to the eigenvalue distribution of some random matrix models.
-      \citet{DuEd02} unlocked generic $\beta>0$ parameters through equivalent tridiagonal models, thus reducing the sampling cost to $\calO(N^2)$.
-
-    % subsubsection random_matrices (end)
-
-    \subsubsection{Approximate Sampling} % (fold)
-    \label{ssub:approximate_sampling}
-
-      Kernel approximation, MCMC, no room
+      where $\beta>0$ and $\lrabs{\Delta(x_1,\dots,x_N)}$ denotes the Vandermonde determinant. They can be sampled as eigenvalues of tridiagonal random matrices \citep{DuEd02}. When $\beta=2$, they are projection DPPs, which is therefore an example of continuous DPP that can be sampled in $\calO(N^2)$.
 
     % subsubsection approximate_sampling (end)
 
