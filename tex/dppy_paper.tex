@@ -55,7 +55,7 @@
   The DPPs used in ML so far are finite, that is, they are distributions over subsets of a finite so-called \emph{ground set} of cardinality $M$. 
   In that case, the kernel function becomes a kernel matrix $\bfK$ of size $M\times M$. 
   Routine inference tasks such as normalization, marginalization, or sampling have complexity $\calO(M^3)$ \citep{KuTa12}. 
-  This is intractable for large $M$ \citep{Gil14}, as is the case for other kernel machines. 
+  This is intractable for large $M$ \citep{Gil14}, as is the case for other kernel machines. \todo{(gg) intractable here to justify approximate sampling, but then we say tractable at the end }  
   In particular, without strong assumptions on $\bfK$, exact sampling requires the eigendecomposition of $\bfK$.
   This prohibitive cost has triggered an effort towards efficient approximate samplers ranging from kernel approximation \citep{AKFT13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}; see also \citet{TrBaAm18} for a survey of sampling algorithms.
   \DPPy\ provides a turnkey implementation of all general algorithms so far to sample finite DPPs. 
@@ -80,7 +80,7 @@
     A point process $\calX$ on $\bbX$ is a random subset of points $\lrcb{X_1, \dots, X_N} \subset \bbX$, where the number of points $N$ is itself random. 
     We further add to the definition that $N$ should be almost surely finite and that all points in a sample are distinct. 
     Given a reference measure $\mu$ on $\bbX$, a point process is usually characterized by its $k$-correlation function $\rho_k$ for all $k$, where
-    \begin{equation}
+    \begin{equation*}
     	\Proba{
     		\begin{tabular}{c}
     			$\exists$ one point of the process in\\
@@ -89,7 +89,7 @@
     	}
     	= \rho_k\lrp{x_1,\dots,x_k}
     		\prod_{i=1}^k \mu(\diff x_i),
-    \end{equation}
+    \end{equation*}
     see \citet[Section 4]{MoWa04}. 
     The functions $\rho_k$ describe the interaction among points in $\calX$ by quantifying cooccurrence of points at a set of locations.
     % Considering $\mu$ as the reference measure, the $k$-correlation functions are defined as
@@ -109,14 +109,12 @@
     % for all bounded measurable functions $f:\bbX^k\to \bbC$ and the sum ranges over $k$-tuples of distinct points of $\calX$.
 
     A point process $\calX$ on $(\bbX,\mu)$ parametrized by a kernel $K:\bbX\times \bbX\rightarrow \mathbb{C}$ is said to be \emph{determinantal}, denoted as $\calX\sim\DPP(K)$, if its $k$-correlation functions satisfy
-	  \begin{equation}
+	  \begin{equation*}
 	  \label{eq:k-correlation_function_DPP}
 	    \rho_k(x_1,\dots,x_k)
 	      = \det \lrb{K(x_i, x_j)}_{i,j=1}^k,
 	    \quad \forall k\geq 1.
-	  \end{equation}
-
-		\noindent
+	  \end{equation*}
 		Most DPPs in ML correspond to the finite case where $\bbX = \lrcb{1,\dots,M}$ and the reference measure is $\mu=\sum_{i=1}^M \delta_i$ \citep{KuTa12}.
 		In this context, the kernel function becomes an $M\times M$ matrix $\bfK$, and the correlation functions refer to inclusion probabilities. DPPs are thus often defined in ML by saying that $\calX\sim \DPP(\bfK)$ if
 	  \begin{equation}
@@ -124,12 +122,12 @@
 	    \Proba{S \subset \calX} = \det {\bfK}_S,
 	      \quad\forall S\subset \bbX,
 	  \end{equation}
-		\noindent
-    where ${\bfK}_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$. If we further assume that the kernel matrix $\bfK$ is Hermitian, then existence and unicity of the DPP~\eqref{eq:inclusion_proba_finite} is equivalent to the condition that the spectrum of $\bfK$ should lie in $[0,1]$. 
-    The result actually holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem 3]{Sos00}. We mention that there exist DPPs with non symmetric kernels \citep{BoDiFu10}.
+    where ${\bfK}_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$. If we further assume that the kernel matrix $\bfK$ is Hermitian, then existence and unicity of the DPP \Eqref{eq:inclusion_proba_finite} is equivalent to the condition that the spectrum of $\bfK$ should lie in $[0,1]$. 
+    The result actually holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem 3]{Sos00}. 
+    We mention that there exist DPPs with non symmetric kernels \citep{BoDiFu10}.
 
-    The main interest of DPPs in ML is that they can model diversity while being tractable. 
-    To see where diversity lies, we simply observe that \eqref{eq:inclusion_proba_finite} entails
+    The main interest of DPPs in ML is that they can model diversity while being tractable.
+    To see where diversity lies, we simply observe that \Eqref{eq:inclusion_proba_finite} entails
     $$ \Proba{\{i,j\} \subset \calX} = {\bfK}_{ii}{\bfK}_{jj}-{\bfK}_{ij}{\bfK}_{ji} = \Proba{\{i\} \subset \calX}\Proba{\{i\} \subset \calX} - {\bfK}_{ij}{\bfK}_{ji}.$$
     If $\bfK$ is Hermitian, the quantity ${\bfK}_{ij}{\bfK}_{ji} = \vert{\bfK}_{ij}\vert^2$ thus encodes how less often $i$ and $j$ should cooccur, compared to independent sampling with the same marginals. 
     Most point processes that encode diversity are not tractable, in the sense that we do not have efficient algorithms to sample, marginalize, or compute normalization constants. 
@@ -141,7 +139,7 @@
     \subsubsection{Exact Sampling} % (fold)
     \label{ssub:exact_sampling}
 
-      We assume henceforth that $K$ is Hermitian and satisfies suitable conditions \cite[Theorem 3]{Sos00} so that its spectral decomposition is available:
+      We assume henceforth that $K$ is Hermitian and satisfies suitable conditions \cite[Theorem 3]{Sos00} so that its spectral decomposition is available
       \begin{equation}
       \label{eq:eigdec_kernel}
         K(x,y)\triangleq\suml_{i=1}^{\infty} \lambda_i \phi_i(x) \overline{\phi_i(y)},
@@ -161,12 +159,11 @@
       More precisely, if we denote by $\Phi(x) \triangleq \lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$ the feature vector associated with $x\in\bbX$, then $\tilde{K}(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
       % $N\overset{\text{a.s.}}{=}\Tr K$ points.
       In particular, the joint distribution of $(X_1,\dots,X_N)$ satisfies
-      \begin{equation}
+      \begin{equation*}
       \label{eq:joint_distribution}
         \frac{1}{N!} \det \lrb{K(x_m,x_n)}_{m,n=1}^N \prod_{n=1}^N\mu(\diff x_n)
           = \frac{1}{N!} \Vol^2\lrcb{\Phi(x_1),\dots,\Phi(x_n)} \prod_{n=1}^N\mu(\diff x_n),
-      \end{equation}
-			\noindent
+      \end{equation*}
       so that the conditional densities appearing in the chain rule take the following form
       \begin{equation}
       \label{eq:conditionals_densities}
@@ -207,12 +204,12 @@
       \todo{(gg) I killed the (unnecessary) historic note}\\
       Computing the eigenvalues of properly randomized $N\times N$ matrices is a way to generate exact samples of continuous projection DPPs at cost $\calO(N^3)$.
       More generally, $\beta$-ensembles for which the case $\beta=2$ refers to a specific class of projection DPPs \citep{Kon05} have joint probability distribution
-      \begin{equation}
+      \begin{equation*}
         \frac{1}{Z_{N,\beta}}
         \lrabs{\Delta(x_1,\dots,x_N)}^{\beta}
         \prod_{i= 1}^N
           \mu(d x_i),
-      \end{equation}
+      \end{equation*}
       where $\lrabs{\Delta(x_1,\dots,x_N)}$ denotes the Vandermonde determinant and $\beta$ plays the role of an inverse temperature controlling the strength of the repulsive interaction between the points.
       The cases $\beta=1, 2,$ and $4,$ together with Gaussian, Gamma, and Beta reference measure~$\mu$ received special attention, since they correspond to the eigenvalue distribution of some random matrix models.
       \citet{DuEd02} unlocked generic $\beta>0$ parameters through equivalent tridiagonal models, thus reducing the sampling cost to $\calO(N^2)$.
