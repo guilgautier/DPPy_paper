@@ -49,7 +49,7 @@
 \label{sec:introduction}
 
   Determinantal point processes (DPPs) are distributions over configurations of points that encode diversity through a kernel function $K$.
-  There were introduced by \citet{Mac75} as models for beams of fermions, and they have since found applications in fields as diverse as probability \citep{Sos00, Kon05, HKPV06}, number theory \citep{RuSa96}, statistical physics \citep{PaBe11}, Monte Carlo methods \citep{BaHa16}, spatial statistics \citep{LaMoRu15}, and machine learning \citep{KuTa12}.
+  There were introduced by \citet{Mac75} as models for beams of fermions, and they have since found applications in fields as diverse as probability \citep{Sos00, Kon05, HKPV06}, statistical physics \citep{PaBe11}, Monte Carlo methods \citep{BaHa16}, spatial statistics \citep{LaMoRu15}, and machine learning \citep{KuTa12}.
 
   In ML, DPPs mainly serve to model diverse sets of items as in recommendation tasks \citep{KaDeKo16, GaPaKo16} or text summarization \citep{DuBa18}. Consequently, MLers mostly use finite DPPs, that is, distributions over subsets of a finite so-called \emph{ground set} of cardinality $M$.
   In that case, the kernel function becomes a kernel matrix $\bfK$ of size $M\times M$.
@@ -58,8 +58,7 @@
 
   In terms of software, spatial statisticians maintain the R library \textsf{spatstat}\ \citep{BaTu05}, a general purpose toolbox on spatial point processes, which includes sampling and learning of continuous DPPs with stationary kernels, as described in \cite{LaMoRu15}. On the other hand, we propose \DPPy\, a turnkey implementation of all general algorithms so far to sample finite DPPs. We also provide a few algorithms for non-stationary continuous DPPs that are related to random projections and random covariance matrices, which may raise the interest of MLers.
 
-  \setcounter{footnote}{5}
-  \DPPy\ is hosted on GitHub\footnoteref{fn:github}, and we use Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} for continuous integration. %, both to run tests and certify that \DPPy\ can be used with Linux and MacOS.
+  \DPPy\ is hosted on GitHub\footnoteref{fn:github}, and we use \setcounter{footnote}{5}Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} for continuous integration. %, both to run tests and certify that \DPPy\ can be used with Linux and MacOS.
   Moreover, \DPPy\ is supported by an extensive documentation\footnoteref{fn:docs}, which provides the essential mathematical background and illustrates some key properties of DPPs through \DPPy\ objects and their methods. \DPPy\ thus also serves as a tutorial.
 
 % section introduction (end)
@@ -190,7 +189,7 @@
       \citep{TrBaAm18}.
       In the continuous case, there is the additional cost of the rejection sampling routine required for sampling each conditional in \Eqref{eq:joint_distribution2}.
 
-      In applications where these costs are a bottleneck, users can rely on approximate sampling procedures. Research has focused on two main directions: kernel approximation and MCMC samplers\todo{Add a few references}.
+      In applications where these costs are a bottleneck, users can rely on approximate sampling procedures. Research has focused on two main directions: kernel approximation \citep{AKFT13} and MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
 
       To conclude, some specific DPPs admit more efficient exact samplers that do not rely on \Eqref{eq:joint_distribution2}, e.g., uniform spanning trees \citep{PrWi98} or eigenvalues of random matrices. For instance, so-called $\beta$-ensembles are defined by the joint distribution
       \begin{equation*}
