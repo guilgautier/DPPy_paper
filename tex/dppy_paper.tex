@@ -23,7 +23,7 @@
 
 \begin{document}
 
-\title{\DPPy: A Python toolbox for sampling\\determinantal point processes}
+\title{\DPPy: Sampling Determinantal Point Processes with Python}
 
 \author{\name Guillaume Gautier$^{*,\dagger}$ \email g.gautier@inria.fr \\
        \name R\'emi Bardenet$^\dagger$ \email remi.bardenet@gmail.com \\
@@ -39,7 +39,7 @@
 \setcounter{footnote}{3}
 \begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
   Determinantal point processes (DPPs) are specific probability distributions over clouds of points that are used as models and computational tools across physics, probability, statistics, and more recently machine learning. Sampling from DPPs is nontrivial and therefore we present a Python toolbox \DPPy\ that puts together known exact and approximate sampling algorithms.
-  The project is hosted on GitHub\footnote{\url{https://github.com/guilgautier/DPPy}} and equipped with an extensive documentation.
+  The project is hosted on GitHub\footnote{\label{fn:github}\url{https://github.com/guilgautier/DPPy}} and equipped with an extensive documentation.
   This documentation\footnote{\label{fn:docs}\url{https://dppy.readthedocs.io}} takes the form of a short survey of DPPs and relates each mathematical property with \DPPy\ objects.
 \end{abstract}
 
@@ -49,20 +49,17 @@
 \label{sec:introduction}
 
   Determinantal point processes (DPPs) are distributions over configurations of points that encode diversity through a kernel function $K$.
-  There were introduced by \citet{Mac75} as models for beams of fermions, and they have since found applications in fields as diverse as probability \citep{Sos00, Kon05, HKPV06}, number theory \citep{RuSa96}, statistical physics \citep{PaBe11}, Monte Carlo methods \citep{BaHa16}, spatial statistics \citep{LaMoRu15}, and machine learning \citep{KuTa12}. In spatial statistics \todo{Talk about spatstat.}
-  In ML, DPPs mainly serve to model diverse sets of items as in recommendation tasks \citep{KaDeKo16, GaPaKo16} or text summarization \citep{DuBa18}.
+  There were introduced by \citet{Mac75} as models for beams of fermions, and they have since found applications in fields as diverse as probability \citep{Sos00, Kon05, HKPV06}, number theory \citep{RuSa96}, statistical physics \citep{PaBe11}, Monte Carlo methods \citep{BaHa16}, spatial statistics \citep{LaMoRu15}, and machine learning \citep{KuTa12}.
 
-  The DPPs used in ML so far are finite, that is, they are distributions over subsets of a finite so-called \emph{ground set} of cardinality $M$.
+  In ML, DPPs mainly serve to model diverse sets of items as in recommendation tasks \citep{KaDeKo16, GaPaKo16} or text summarization \citep{DuBa18}. Consequently, MLers mostly use finite DPPs, that is, distributions over subsets of a finite so-called \emph{ground set} of cardinality $M$.
   In that case, the kernel function becomes a kernel matrix $\bfK$ of size $M\times M$.
   Routine inference tasks such as normalization, marginalization, or sampling have complexity $\calO(M^3)$ \citep{KuTa12}.
   For large $M$, this becomes a bottleneck, as for other kernel machines. Efficient approximate samplers have thus been studied in the ML literature, ranging from kernel approximation \citep{AKFT13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}; see also \citet{TrBaAm18} for a survey of sampling algorithms.
 
-  \DPPy\ provides a turnkey implementation of all general algorithms so far to sample finite DPPs.
-  We also provide a few algorithms for continuous DPPs that are related to random projections and random covariance matrices, which may raise the interest of MLers.
+  In terms of software, spatial statisticians maintain the R library \textsf{spatstat}\ \citep{BaTu05}, a general purpose toolbox on spatial point processes, which includes sampling and learning of continuous DPPs with stationary kernels, as described in \cite{LaMoRu15}. On the other hand, we propose \DPPy\, a turnkey implementation of all general algorithms so far to sample finite DPPs. We also provide a few algorithms for non-stationary continuous DPPs that are related to random projections and random covariance matrices, which may raise the interest of MLers.
 
-  We hope that packaging together all known sampling algorithms now and in the future will improve the reproducibility and favor the dissemination of research on DPPs.
   \setcounter{footnote}{5}
-  We use Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} for continuous integration. %, both to run tests and certify that \DPPy\ can be used with Linux and MacOS.
+  \DPPy\ is hosted on GitHub\footnoteref{fn:github}, and we use Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} for continuous integration. %, both to run tests and certify that \DPPy\ can be used with Linux and MacOS.
   Moreover, \DPPy\ is supported by an extensive documentation\footnoteref{fn:docs}, which provides the essential mathematical background and illustrates some key properties of DPPs through \DPPy\ objects and their methods. \DPPy\ thus also serves as a tutorial.
 
 % section introduction (end)
@@ -202,7 +199,7 @@
         \prod_{i= 1}^N
           \mu(\diff x_i)
       \end{equation*}
-      where $\beta>0$ and $\lrabs{\Delta(x_1,\dots,x_N)}$ denotes the Vandermonde determinant. They can be sampled as eigenvalues of tridiagonal random matrices \citep{DuEd02}. When $\beta=2$, they are projection DPPs, which is therefore an example of continuous DPP that can be sampled in $\calO(N^2)$.
+      where $\beta>0$ and $\lrabs{\Delta(x_1,\dots,x_N)}$ denotes the Vandermonde determinant. They can be sampled as eigenvalues of tridiagonal random matrices \citep{DuEd02}. When $\beta=2$, $\beta$-ensembles are projection DPPs, which is therefore an example of continuous DPP that can be sampled in $\calO(N^2)$. Some of these ensembles are of direct interest to MLers: the so-called Laguerre ensemble, for instance, is the distribution of the eigenvalues of the empirical covariance matrix of i.i.d. complex Gaussian vectors.
 
     % subsubsection approximate_sampling (end)
 
