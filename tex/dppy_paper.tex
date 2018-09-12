@@ -63,9 +63,12 @@
   On the other hand, we propose \DPPy, a turnkey implementation of all general algorithms so far to sample \emph{finite} DPPs.
   We also provide a few algorithms for non-stationary continuous DPPs that are related to random projections and random covariance matrices, which may raise the interest of MLers.
 
-  \DPPy\ is hosted on GitHub\footnoteref{fn:github}, and we use \setcounter{footnote}{5}Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} for continuous integration.%, both to run tests and certify that \DPPy\ can be used with Linux and MacOS.
-  Moreover, \DPPy\ is supported by an extensive documentation\footnoteref{fn:docs}, which provides the essential mathematical background and illustrates some key properties of DPPs through \DPPy\ objects and their methods.
+  \DPPy\ is hosted on GitHub\footnoteref{fn:github}, and we use \setcounter{footnote}{5}Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} for continuous integration.
+  %, both to run tests and certify that \DPPy\ can be used with Linux and MacOS.
+  Moreover, it is supported by an extensive documentation\footnoteref{fn:docs}, which provides the essential mathematical background and illustrates some key properties of DPPs through \DPPy\ objects.
+  % and their methods.
   \DPPy\ thus also serves as a tutorial.
+  Along the paper, words in magenta point to the documentation.
 
 % section introduction (end)
 
@@ -141,11 +144,14 @@
       We assume henceforth that $K$ is Hermitian and satisfies suitable conditions \cite[Theorem 3]{Sos00} so that its spectral decomposition is available
       \begin{equation*}
       \label{eq:eigdec_kernel}
-        K(x,y)\triangleq\suml_{i=1}^{\infty} \lambda_i \phi_i(x) \overline{\phi_i(y)},
-        \quad \text{with }
-        \int \phi_i(x) \overline{\phi_j(x)} \mu(\diff x) = \delta_{ij}.
+        K(x,y)
+        \triangleq
+          \suml_{i=1}^{\infty} 
+            \lambda_i \phi_i(x) \overline{\phi_i(y)},
+          \quad \text{with }
+            \int \phi_i(x) \overline{\phi_j(x)} \mu(\diff x) = \delta_{ij}.
       \end{equation*}
-      In the finite case, the eigendecomposition of an Hermitian kernel $\bfK$ can always be computed.
+      In the \href{https://dppy.readthedocs.io/en/latest/finite_dpps/exact_sampling.html}{\textcolor{magenta}{finite case}}, the eigendecomposition of an Hermitian kernel $\bfK$ can always be computed.
       \citet[Theorem 7]{HKPV06} proved that sampling $\DPP(K)$ can be done in two steps:
       \begin{enumerate}
         \item draw $B_i\sim\Ber(\lambda_i)$ independently, and denote $\lrcb{i_1,\dots,i_{N}} = \lrcb{i:B_i=1}$,
@@ -157,13 +163,28 @@
       \cite{HKPV06} first prove that a projection $\DPP(\tilde{K})$ generates configurations of $N=\Tr \tilde{K}$ points almost surely, and then that it is enough to sample $(X_1,\dots,X_N)$ with distribution
       \begin{equation}
       \label{eq:joint_distribution1}
-      \frac{1}{N!} \det \lrb{\tilde K(x_m,x_n)}_{m,n=1}^N \prod_{n=1}^N\diff \mu(x_n) = \frac{1}{N!} \Vol^2\lrcb{\Phi(x_1),\dots,\Phi(x_n)} \prod_{n=1}^N \diff\mu(x_n).
+        \frac{1}{N!} 
+          \det \lrb{\tilde K(x_m,x_n)}_{m,n=1}^N 
+            \prod_{n=1}^N\diff \mu(x_n) 
+        = \frac{1}{N!} 
+            \Vol^2\lrcb{\Phi(x_1),\dots,\Phi(x_n)} 
+              \prod_{n=1}^N \diff\mu(x_n).
       \end{equation}
       where $\Phi(x) \triangleq \lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$ denotes the so-called \emph{feature vector} associated with $x\in\bbX$, so that $\tilde{K}(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
       The algorithm boils down to expressing the chain rule for \Eqref{eq:joint_distribution1} as follows
       \begin{equation}
       \label{eq:joint_distribution2}
-       \underbrace{\frac{1}{N} \lrnorm{\phi(x_1)}^2\diff\mu(x_1)}_{p(x_1)} \,\prod_{n=2}^{N}\, \underbrace{\frac{1}{N-(n-1)} \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x_n)}^2\!\! \diff\mu(x_n)}_{p(x_n\vert x_1,\dots,x_{n-1})},
+        \underbrace{
+          \frac{1}{N} 
+            \lrnorm{\phi(x_1)}^2 
+              \diff\mu(x_1)
+          }_{p(x_1)}
+        \,\prod_{n=2}^{N}\,
+        \underbrace{
+          \frac{1}{N-(n-1)} 
+            \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x_n)}^2\!\! 
+              \diff\mu(x_n)
+          }_{p(x_n\vert x_1,\dots,x_{n-1})},
       \end{equation}
 	    where $\Pi_{H_{n-1}}$ is the orthogonal projection onto $H_{n-1} \triangleq \Span\lrcb{\phi(x_1), \dots, \phi(x_{n-1}) }$.
       The crux of \citet[Algorithm 18]{HKPV06} is that, because $\tilde K$ is a projection kernel, each term in \Eqref{eq:joint_distribution2} is a well-normalized conditional density, making \Eqref{eq:joint_distribution2} a chain rule.
@@ -188,8 +209,7 @@
       Some remarks are in order.
       First, each conditional in \Eqref{eq:joint_distribution2} can be expressed as a ratio of two determinants and further expanded with Woodbury's formula.
       In that case, ML practitioners will recognize in each conditional a posterior variance in Gaussian process regression with kernel $\tilde K$ \cite[Equation 2.26]{RaWi06}.
-      \todo{Give here a pointer to the documentation for those who want the formulas} 
-      We insist that this link with Gaussian processes is a consequence of $\tilde K$ being a \emph{projection} kernel.
+      We insist that this link with Gaussian processes is a \href{https://dppy.readthedocs.io/en/latest/finite_dpps/exact_sampling.html#caution}{\textcolor{magenta}{consequence}} of $\tilde K$ being a \emph{projection} kernel.
       Second, we observe that the chain rule in \Eqref{eq:joint_distribution2} has a strong Gram-Schmidt flavor, since it actually comes from a recursive application of the base$\times$height formula.
       In the end, DPPs favor configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume, which is another way of understanding repulsiveness.
 
@@ -201,19 +221,20 @@
       In applications where these costs are a bottleneck, users can rely on approximate sampling procedures.
       Research has focused on two main directions: kernel approximation \citep{AKFT13} and MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
 
-      To conclude, some specific DPPs admit more efficient exact samplers that do not rely on \Eqref{eq:joint_distribution2}, e.g., uniform spanning trees \citep{PrWi98} or eigenvalues of random matrices.
+      To conclude, some specific DPPs admit more efficient exact samplers that do not rely on \Eqref{eq:joint_distribution2}, \eg uniform spanning trees \citep{PrWi98} or eigenvalues of random matrices.
       For instance, a $\beta$-ensemble is a set of $N$ points $\{X_1,\dots,X_N\}\subset\mathbb{R}$ with pdf
       \begin{equation*}
-        \frac{1}{Z_{N,\beta}} \prod_{m< n}
-        \lrabs{x_m-x_n}^{\beta}
+        \frac{1}{Z_{N,\beta}} 
+        \prod_{m< n}
+          \lrabs{x_m-x_n}^{\beta}
         \prod_{i= 1}^N
           \omega(x_i),
       \end{equation*}
       where $\beta>0$.
-      For some choices of the weight function $\omega$, the $\beta$-ensemble can be sampled as the spectrum of simple tridiagonal random matrices \citep{DuEd02,KiNe04}.
+      For some choices of the weight function $\omega$, the $\beta$-ensemble can be sampled as the \href{https://dppy.readthedocs.io/en/latest/continuous_dpps/beta_ensembles.banded_models.html}{\textcolor{magenta}{spectrum of simple tridiagonal random matrices}} \citep{DuEd02,KiNe04}.
       When $\beta=2$, $\beta$-ensembles are projection DPPs, and therefore examples of continuous DPPs that can be sampled in $\calO(N^2)$.
       Some of these ensembles are of direct interest to MLers.
-      For instance, the \emph{Laguerre} ensemble, where $\omega$ is a Gamma pdf, is the distribution of the eigenvalues of the empirical covariance matrix of i.i.d. Gaussian vectors.
+      For instance, the \emph{Laguerre} ensemble, where $\omega$ is a Gamma pdf, is the distribution of the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors.
 
     % subsubsection approximate_sampling (end)
 
@@ -243,7 +264,7 @@
 		and two methods for display: \mintinline{python}{.plot()} to plot the last realization and \mintinline{python}{.hist()} to construct the empirical distribution.
   \end{itemize}
 
-  More information can be found in the documentation\footnoteref{fn:docs} and the corresponding Jupyter notebooks, which showcase \DPPy\ objects.
+  More information can be found in the documentation\footnoteref{fn:docs} and the corresponding Jupyter \href{https://github.com/guilgautier/DPPy/tree/master/notebooks}{\textcolor{magenta}{notebooks}}, which showcase \DPPy\ objects.
 
 % section the_dppy_toolbox (end)
 
@@ -251,7 +272,7 @@
 \label{sec:conclusion_and_future_work}
 
 	\DPPy\ can readily serve as research and teaching material.
-  \DPPy\ is also ready for other contributors to add content and enlarge its scope, e.g., with procedures for learning kernels.
+  \DPPy\ is also ready for other contributors to add content and enlarge its scope, \eg with procedures for learning kernels.
 
 % section conclusion_and_future_work (end)
 
@@ -261,26 +282,6 @@
 \newpage
 \acks{The research presented was supported by European CHIST-ERA project DELTA, French Ministry of
 Higher Education and Research, Nord-Pas-de-Calais Regional Council, Inria and Otto-von-Guericke-Universit\"at Magdeburg associated-team north-European project Allocate, and French National Research Agency projects ExTra-Learn (n.ANR-14-CE24-0010-01) and BoB (n.ANR-16-CE23-0003).}%}
-
-\section{Links to JMLR} % (fold)
-\label{sec:links_to_jmlr}
-
-  This section is to be removed, it is simply here to link to the JMLR website
-
-  \begin{itemize}
-    \item \href{http://www.jmlr.org/mloss/mloss-info.html}{MLOSS website}
-    \item \href{http://jmlr.csail.mit.edu/author-info.html}{JMLR author info}
-    \item \href{http://www.jmlr.org/format/authors-guide.html}{JMLR author guide}
-  \end{itemize}
-
-% section links_to_jmlr (end)
-
-
-\todo{at the end have nicer and unnified biblio, maybe with michals modified bst for jmlr that treats links nicely}\\
-\anstodo{(GG) clickable titles (using miso bst) + arxivId were added. Are we good now?}
-
-\todo{copy $^\dagger$ etc like in ICML paper}\\
-\anstodo{(GG) don't get it}
 
 % Manual newpage inserted to improve layout of sample file - not
 % needed in general before appendices/bibliography.
