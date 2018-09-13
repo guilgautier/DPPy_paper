@@ -26,7 +26,7 @@ setup(
     # https://packaging.python.org/en/latest/single_source_version.html
     version='0.1.dev',
 
-    description='A sample Python project',
+    description='Companon paper of the DPPy Python toolbox https://github.com/guilgautier/DPPy',
     long_description=long_description,
 
     # The project's main homepage.
@@ -48,8 +48,8 @@ setup(
         'Development Status :: 3 - Alpha',
 
         # Indicate who your project is intended for
-        'Intended Audience :: ',
-        'Topic :: ',
+        'Intended Audience :: science/reaserch',
+        'Topic :: exact and approximate sampling methods for determinantal point processes',
 
         # Pick your license as you wish (should match "license" above)
         'License :: OSI Approved :: MIT License',
@@ -65,7 +65,7 @@ setup(
     ],
 
     # What does your project relate to?
-    keywords='DPPy companion-paper determinantal-point-processes',
+    keywords='determinantal point processes, sampling methods, DPPy companion paper',
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
