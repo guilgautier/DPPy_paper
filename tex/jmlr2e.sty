@@ -224,7 +224,8 @@
 
 \def\@startauthor{\noindent \normalsize\bf}
 \def\@endauthor{}
-\def\@starteditor{\noindent \small {\bf Editor:~}}
+% \def\@starteditor{\noindent \small {\bf Editor:~}}
+\def\@starteditor{\noindent \small {\bf }}
 \def\@endeditor{\normalsize}
 \def\@maketitle{\vbox{\hsize\textwidth
  \linewidth\hsize \vskip \beforetitskip
@@ -259,12 +260,13 @@
 
 \def\firstpageno#1{\setcounter{page}{#1}}
 
+% \def\jmlrheading#1#2#3#4#5#6#7{\def\ps@jmlrtps{\let\@mkboth\@gobbletwo%
+% \def\@oddhead{\scriptsize Journal of Machine Learning Research #1 (#2) #3 \hfill Submitted #4; Published #5}%
+% \def\@oddfoot{\parbox[t]{\textwidth}{\raggedright \scriptsize \copyright #2 #7.\\[5pt] 
+% License: CC-BY 4.0, see \url{https://creativecommons.org/licenses/by/4.0/}. Attribution requirements
+% are provided at \url{http://jmlr.org/papers/v#1/#6.html}.\hfill}}%
 \def\jmlrheading#1#2#3#4#5#6#7{\def\ps@jmlrtps{\let\@mkboth\@gobbletwo%
-\def\@oddhead{\scriptsize Journal of Machine Learning Research #1 (#2) #3 \hfill Submitted #4; Published #5}%
-\def\@oddfoot{\parbox[t]{\textwidth}{\raggedright \scriptsize \copyright #2 #7.\\[5pt] 
-License: CC-BY 4.0, see \url{https://creativecommons.org/licenses/by/4.0/}. Attribution requirements
-are provided at \url{http://jmlr.org/papers/v#1/#6.html}.\hfill}}%
-
+\def\@oddhead{}%
 \def\@evenhead{}\def\@evenfoot{}}%
 \thispagestyle{jmlrtps}}
 
