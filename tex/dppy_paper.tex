@@ -144,7 +144,7 @@
       \label{eq:eigdec_kernel}
         K(x,y)
         \triangleq
-          \suml_{i=1}^{\infty} 
+          \suml_{i=1}^{\infty}
             \lambda_i \phi_i(x) \overline{\phi_i(y)},
           \quad \text{with }
             \int \phi_i(x) \overline{\phi_j(x)} \mu(\diff x) = \delta_{ij}.
@@ -161,26 +161,26 @@
       \cite{HKPV06} first prove that a projection $\DPP(\tilde{K})$ generates configurations of $N=\Tr \tilde{K}$ points almost surely, and therefore, it is enough to sample $(X_1,\dots,X_N)$ with distribution
       \begin{equation}
       \label{eq:joint_distribution1}
-        \frac{1}{N!} 
-          \det \lrb{\tilde K(x_m,x_n)}_{m,n=1}^N 
-            \prod_{n=1}^N\diff \mu(x_n) 
-        = \frac{1}{N!} 
-            \Vol^2\lrcb{\Phi(x_1),\dots,\Phi(x_n)} 
+        \frac{1}{N!}
+          \det \lrb{\tilde K(x_m,x_n)}_{m,n=1}^N
+            \prod_{n=1}^N\diff \mu(x_n)
+        = \frac{1}{N!}
+            \Vol^2\lrcb{\Phi(x_1),\dots,\Phi(x_n)}
               \prod_{n=1}^N \diff\mu(x_n),
       \end{equation}
       where $\Phi(x) \triangleq \lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$ denotes the \emph{feature vector} associated with $x\in\bbX$, so that $\tilde{K}(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
-      The algorithm boils down to expressing the chain rule for \Eqref{eq:joint_distribution1} as 
+      The algorithm boils down to expressing the chain rule for \Eqref{eq:joint_distribution1} as
       \begin{equation}
       \label{eq:joint_distribution2}
         \underbrace{
-          \frac{1}{N} 
-            \lrnorm{\phi(x_1)}^2 
+          \frac{1}{N}
+            \lrnorm{\phi(x_1)}^2
               \diff\mu(x_1)
           }_{p(x_1)}
         \,\prod_{n=2}^{N}\,
         \underbrace{
-          \frac{1}{N-(n-1)} 
-            \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x_n)}^2\!\! 
+          \frac{1}{N-(n-1)}
+            \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x_n)}^2\!\!
               \diff\mu(x_n)
           }_{p(x_n\vert x_1,\dots,x_{n-1})},
       \end{equation}
@@ -222,7 +222,7 @@
       To conclude, some specific DPPs admit more efficient exact samplers that do not rely on \Eqref{eq:joint_distribution2}, \eg uniform spanning trees \citep{PrWi98} or eigenvalues of random matrices.
       For instance, a $\beta$-ensemble is a set of $N$ points $\{X_1,\dots,X_N\}\subset\mathbb{R}$ with pdf
       \begin{equation*}
-        \frac{1}{Z_{N,\beta}} 
+        \frac{1}{Z_{N,\beta}}
         \prod_{m< n}
           \lrabs{x_m-x_n}^{\beta}
         \prod_{i= 1}^N
@@ -277,8 +277,8 @@
 %\newpage
 %{\small
 \newpage
-\acks{We would like to thank \href{https://guillep.github.io/}{Guillermo Polito} for leading the reproducible research \href{https://github.com/CRIStAL-PADR/reproducible-research-SE-notes}{work group} without whom this project would have not existed.
-The research presented was supported by European CHIST-ERA project DELTA, French Ministry of Higher Education and Research, Nord-Pas-de-Calais Regional Council, Inria and Otto-von-Guericke-Universit\"at Magdeburg associated-team north-European project Allocate, and French National Research Agency projects ExTra-Learn (n.ANR-14-CE24-0010-01) and BoB (n.ANR-16-CE23-0003).
+\acks{We would like to thank \href{https://guillep.github.io/}{Guillermo Polito} for leading our reproducible research \href{https://github.com/CRIStAL-PADR/reproducible-research-SE-notes}{workgroup}, this project owes him a lot.
+We acknowledge funding by European CHIST-ERA project DELTA, the French Ministry of Higher Education and Research, the Nord-Pas-de-Calais Regional Council, Inria and Otto-von-Guericke-Universit\"at Magdeburg associated-team north-European project Allocate, and French National Research Agency projects ExTra-Learn (n.ANR-14-CE24-0010-01) and BoB (n.ANR-16-CE23-0003).
 }%}
 
 % Manual newpage inserted to improve the layout of sample file - not
