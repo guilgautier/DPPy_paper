@@ -44,5 +44,7 @@ If you use this package, please consider citing it with this piece of BibTeX:
 
 ## Reproducibility
 
-This paper advertising the [DPPy](https://github.com/guilgautier/DPPy) Python library would have never existed without [Guillermo Polito](https://github.com/guillep) who is leading the [reproducible work group](https://github.com/CRIStAL-PADR/reproducible-research-SE-notes).
+This paper together with the [DPPy](https://github.com/guilgautier/DPPy) Python library are fully reproducible.
+
+We would like to thank \href{https://guillep.github.io/}{Guillermo Polito} for leading our reproducible research \href{https://github.com/CRIStAL-PADR/reproducible-research-SE-notes}{workgroup}, this project owes him a lot.
 Take a look at the corresponding [booklet](https://github.com/CRIStAL-PADR/reproducible-research-SE-notes) to learn more on how to make your research reproducible!
