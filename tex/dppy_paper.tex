@@ -86,6 +86,7 @@
     We further add to the definition that $N$ should be almost surely finite and that all points in a sample are distinct.
     Given a reference measure $\mu$ on~$\bbX$, a point process is usually characterized by its $k$-correlation function $\rho_k$ for all $k$, where
     \begin{equation*}
+    \label{eq:correlation_function_intuition}
     	\Proba{
     		\begin{tabular}{c}
     			$\exists$ one point of the process in\\
@@ -135,7 +136,14 @@
 
     The main interest in DPPs in ML is that they can model diversity while being tractable.
     To see how diversity shows, we simply observe that \Eqref{eq:inclusion_proba_finite} entails
-    $$ \Proba{\{i,j\} \subset \calX} = {\bfK}_{ii}{\bfK}_{jj}-{\bfK}_{ij}{\bfK}_{ji} = \Proba{\{i\} \subset \calX}\times \Proba{\{i\} \subset \calX} - {\bfK}_{ij}{\bfK}_{ji}.$$
+    \begin{equation*}
+    \label{eq:2point_correlation_function_inclusion_proba_finite_case}
+      \Proba{\{i,j\} \subset \calX} 
+        = {\bfK}_{ii}{\bfK}_{jj}-{\bfK}_{ij}{\bfK}_{ji} 
+        = \Proba{\{i\} \subset \calX}
+          \times \Proba{\{i\} \subset \calX} 
+            - {\bfK}_{ij}{\bfK}_{ji}.
+    \end{equation*}
     If $\bfK$ is Hermitian, the quantity ${\bfK}_{ij}{\bfK}_{ji} = \vert{\bfK}_{ij}\vert^2$ encodes how less often $i$ and $j$ should co-occur, compared to independent sampling with the same marginals.
     Most point processes that encode diversity are not tractable, in the sense that we do not have efficient algorithms to sample, marginalize, or compute normalization constants.
     DPPs are amenable to these tasks \citep{KuTa12}.
@@ -226,6 +234,7 @@
       To conclude, some specific DPPs admit more efficient exact samplers that do not rely on \Eqref{eq:joint_distribution2}, \eg uniform spanning trees \citep{PrWi98} or eigenvalues of random matrices.
       For instance, a $\beta$-ensemble is a set of $N$ points $\{X_1,\dots,X_N\}\subset \bbR$ with pdf
       \begin{equation*}
+      \label{eq:beta_ensemble_pdf}
         \frac{1}{Z_{N,\beta}}
         \prod_{m< n}
           \lrabs{x_m-x_n}^{\beta}
