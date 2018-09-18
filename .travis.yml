@@ -1,24 +1,17 @@
-language: python
-
+language: generic
 sudo: enabled
-
-matrix:
-  include:
-  - os: linux
-    python: 3.6
+os: linux
 
 install:
   # For LaTeX
   - ". ./scripts/ensure_latex.sh"
   - "./scripts/ensure_book_dependencies.sh"
-  # To use minted package, install pygments toolbox
-  # - pip install --upgrade pip
-  - pip install .
 
 script:
 - cd tex
-- pdflatex --shell-escape dppy_paper.tex # --shell-escape option for minted pkg
+- pdflatex dppy_paper.tex # --shell-escape option for minted pkg
 - cd ..
+
 deploy:
   skip_cleanup: true
   provider: releases

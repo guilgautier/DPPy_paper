@@ -7,27 +7,12 @@ Take a look at the extensive [documentation](https://dppy.readthedocs.io/en/late
 
 This paper together with [DPPy](https://github.com/guilgautier/DPPy) are fully reproducible.
 
-## Dependencies
-
-[Pygments](http://pygments.org/) to use `minted` package for highlighting code.
-
-```bash
-pip install pygments
-```
-
-## Install the project
-
-```bash
-git clone https://github.com/guilgautier/DPPy_paper.git
-cd DPPy_paper
-pip install .
-```
-
 ## Build the PDF
 
 ```bash
-cd tex
-pdflatex --shell-escape dppy_paper.tex
+git clone https://github.com/guilgautier/DPPy_paper.git
+cd DPPy_paper/tex
+pdflatex dppy_paper.tex
 ```
 
 ### How to cite this work?
