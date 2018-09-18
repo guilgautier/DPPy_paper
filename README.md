@@ -2,7 +2,10 @@
 
 [![Build Status](https://travis-ci.com/guilgautier/DPPy_paper.svg?token=jftmsjDJSt2JLJqsgR9n&branch=master)](https://travis-ci.com/guilgautier/DPPy_paper)
 
-This is the companion paper associated with the [DPPy](https://github.com/guilgautier/DPPy) Python library which equipped with an extensive [documentation](https://dppy.readthedocs.io/en/latest/).
+This is the companion paper associated with the [DPPy](https://github.com/guilgautier/DPPy) Python library.
+Take a look at the extensive [documentation](https://dppy.readthedocs.io/en/latest/) supporting [DPPy](https://github.com/guilgautier/DPPy).
+
+This paper together with [DPPy](https://github.com/guilgautier/DPPy) are fully reproducible.
 
 ## Dependencies
 
@@ -23,7 +26,8 @@ pip install .
 ## Build the PDF
 
 ```bash
-pdflatex --shell-escape tex/dppy_paper.tex
+cd tex
+pdflatex --shell-escape dppy_paper.tex
 ```
 
 ### How to cite this work?
@@ -44,7 +48,6 @@ If you use this package, please consider citing it with this piece of BibTeX:
 
 ## Reproducibility
 
-This paper together with the [DPPy](https://github.com/guilgautier/DPPy) Python library are fully reproducible.
+We would like to thank [Guillermo Polito](https://guillep.github.io/) for leading our reproducible research [workgroup](https://github.com/CRIStAL-PADR/reproducible-research-SE-notes), this project owes him a lot.
 
-We would like to thank \href{https://guillep.github.io/}{Guillermo Polito} for leading our reproducible research \href{https://github.com/CRIStAL-PADR/reproducible-research-SE-notes}{workgroup}, this project owes him a lot.
 Take a look at the corresponding [booklet](https://github.com/CRIStAL-PADR/reproducible-research-SE-notes) to learn more on how to make your research reproducible!
