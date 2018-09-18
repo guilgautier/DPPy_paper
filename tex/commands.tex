@@ -1,5 +1,15 @@
 % Specific to this .tex
+% DPP
 \newcommand{\DPPy}{\textsf{DPPy}}
+\newcommand\DPP{\operatorname{DPP}}
+
+% TODO command
+\newcommand*{\todo}[1]{\textcolor{red}{TODO:{#1}}}
+\newcommand*{\anstodo}[1]{\textcolor{blue}{ANS-TODO:{#1}}}
+
+% Notations
+\newcommand\eg{\text{e.g., }}
+\newcommand\iid{\text{i.i.d.\,}}
 
 % Footnotes 1, 2, 3 and then fancy ones!
 \makeatletter
@@ -20,59 +30,17 @@
  {\parskip=3pt\par\nopagebreak\centering}
  {\parskip=2pt\par\noindent\ignorespacesafterend}
 
-% Referencing
-\newcommand*{\Chapref}[1]{Chapter~\ref{#1}}
-\newcommand*{\Secref}[1]{Section~\ref{#1}}
-\newcommand*{\Defref}[1]{Definition~\ref{#1}}
-\newcommand*{\Thref}[1]{Theorem~\ref{#1}}
-\newcommand*{\Propref}[1]{Proposition~\ref{#1}}
-\newcommand*{\Lemref}[1]{Lemma~\ref{#1}}
 \newcommand*{\Eqref}[1]{Equation~\ref{#1}}
-\newcommand*{\Figref}[1]{Figure~\ref{#1}}
-
-% TODO command
-\newcommand*{\todo}[1]{\textcolor{red}{TODO:{#1}}}
-\newcommand*{\anstodo}[1]{\textcolor{blue}{ANS-TODO:{#1}}}
-
-% Proof ends with filled box
-% \newcommand{\BlackBox}{\rule{1.5ex}{1.5ex}}  % end of proof
-% \newenvironment{proof}{\par\noindent{\bf Proof\ }}{\hfill\BlackBox\\[2mm]}
 
 %%%%%%%%%
 % MATHS %
 %%%%%%%%%
 
-\renewcommand{\hat}{\widehat}
 \renewcommand{\tilde}{\widetilde}
-\newcommand{\minus}{\scalebox{0.9}{-}}
-\newcommand{\plus}{\scalebox{0.6}{+}}
-\newcommand{\equal}{\scalebox{0.6}{=}}
 
 % Sum/Product with limits
 \newcommand{\suml}{ \sum\limits }
 \newcommand{\prodl}{ \prod\limits }
-
-\newcommand{\minl}{\min \limits}
-\def\minsub#1{\minl_{\substack{#1}}}
-\newcommand{\maxl}{\max \limits}
-\def\maxsub#1{\maxl_{\substack{#1}}}
-
-\newcommand{\argmin}{\operatornamewithlimits{argmin}}
-\newcommand{\argmax}{\operatornamewithlimits{argmax}}
-
-% Reference measure
-\newcommand\muref{\mu_{\text{ref}}}
-% Reference density
-\newcommand\fref{f_{\text{ref}}}
-% Moment Problem
-\newcommand\TMP{\operatorname{TMP}}
-% Sum of Squares polynomial
-\newcommand\SOS{\operatorname{SOS}}
-% Moment sequence
-\newcommand\bmom{\bf{m}}
-% Canonical moment sequence
-\newcommand\bc{\bf{c}}
-
 
 %%% bold, cal and bb Uppercase letters A..Z
 \foreach \x in {A,...,Z}
@@ -82,68 +50,10 @@
 	\expandafter\xdef\csname bb\x \endcsname{\noexpand\ensuremath{\noexpand\mathbb{\x}}}
 }
 
-%%% bold greek letters
-\foreach \x/\y  in {alpha/\alpha, beta/\beta, gamma/\gamma, delta/\delta, epsilon/\epsilon, zeta/\zeta, eta/\eta, theta/\theta, iota/\iota, kappa/\kappa, lambda/\lambda, mu/\mu, nu/\nu, pi/\pi, rho/\rho, sigma/\sigma, tau/\tau, upsilon/\upsilon, phi/\phi, chi/\chi, psi/\psi, omega/\omega }
-	{%
-\expandafter\xdef\csname bf\x \endcsname{\noexpand\ensuremath{\noexpand\bf{\y}}}
-}
-
-%% Equal = with limits
-\def\xequal#1#2{\operatornamewithlimits{=}_{\substack{#1}}^{\substack{#2}}}
-%% Equiv
-\def\xequiv#1#2{\operatornamewithlimits{\Longleftrightarrow}_{\substack{#1}}^{\substack{#2}}}
-
-%% SW--NE dots
-\newcommand\rddots{\reflectbox{$\ddots$}}
-
-% DPPs
-% Support
-\newcommand\supp{\operatorname{supp}}
-% dist
-\newcommand\dist{\operatorname{dist}}
-% Convex Hull
-\newcommand\conv{\operatorname{conv}}
-% Configuration
-\newcommand\Conf{\operatorname{Conf}}
-% DPP
-\newcommand\DPP{\operatorname{DPP}}
-% Vandermonde
-\newcommand\Vand{\operatorname{Vander}}
-% Volume
 \newcommand\Vol{\operatorname{Vol}}
-% Zonotope
-\newcommand\Zon{\calZ}
-% Empirical measure
-\newcommand\hmu{\hat{\mu}}
-% z tilde
-\newcommand\tz{\tilde{z}}
-
-
-% % Itemize symbols
-% \renewcommand{\labelitemi}{$\bullet$}
-% \renewcommand{\labelitemii}{$\diamond$}
-% \renewcommand{\labelitemiii}{$\ast$}
-% \renewcommand{\labelitemiv}{$\cdot$}
-
-% Notations
-\newcommand\ie{\text{i.e., }}
-\newcommand\eg{\text{e.g., }}
-\newcommand\wrt{\text{w.r.t.\,}}
-\newcommand\etc{\text{etc.\,}}
-\newcommand\resp{\text{resp.\,}}
-\newcommand\iid{\text{i.i.d.\,}}
-
 
 % differential notation dx
 \newcommand*\diff{\mathop{}\!\mathrm{d}}
-\newcommand*\Diff[1]{\mathop{}\!\mathrm{d^#1}}
-\renewcommand{\d}[1]{\ensuremath{\operatorname{d}\!{#1}}}
-% exponential
-\newcommand\e{\operatorname{\mathrm{e}}}
-% erf
-\newcommand\erf{\operatorname{erf}}
-% complex number
-\newcommand\ii{\bf{i}}
 
 %%%%%%%%%%%%%%%%%%%%%%%
 % Size adaptive symbols
@@ -154,15 +64,10 @@
 \newcommand{\lrp}[1]{\left( #1 \right)}
 % curly brackets (typically sets)
 \newcommand{\lrcb}[1]{\left\{ #1 \right\}}
-\newcommand{\lrllb}[1]{\left\llbracket #1 \right\rrbracket}
-% scalar product
-\newcommand{\lrsp}[1]{\left\langle #1 \right\rangle}
 % absolute value
 \newcommand{\lrabs}[1]{\left| #1 \right|}
 % norm
 \newcommand{\lrnorm}[1]{\left\| #1 \right\|}
-% floor
-\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
 
 %%%%%%%%%%%%%%%%%%%%%
 % Probability symbols
@@ -170,81 +75,24 @@
 
 \newcommand\Prob{\operatorname{\bbP}}
 \newcommand\Exp{\operatorname{\bbE}}
-\newcommand\Vari{\operatorname{\bbV ar}}
-\newcommand\Cova{\operatorname{\bbC ov}}
 
 % Adaptive brackets
 \newcommand{\Proba}[1]{\Prob\lrb{#1}}
 \newcommand{\Expe}[1]{\Exp\lrb{#1}}
-\newcommand{\Var}[1]{\Vari\lrb{#1}}
-\newcommand{\Cov}[1]{\Cova\lrb{#1}}
 
 % Independent symbol similar to perp
 \def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
 \newcommand\indep{\protect\mathpalette{\protect\independenT}{\perp}}
-%%%%%%%%%%%%%%%
+
 % Distributions
-
-% Indicator function
-\newcommand\indic{\mathds{1}}
-% Bernoulli
 \newcommand\Ber{\operatorname{\calB er }}
-% Beta
-\newcommand\Beta{\operatorname{Beta}}
-% Beta
-\newcommand\Dir{\operatorname{Dir}}
-% Uniform
-\newcommand\Unif{\operatorname{\calU}}
-% Poisson
-\newcommand\Poiss{\operatorname{\calP oiss}}
-% Gaussian
-\newcommand\Norm{\operatorname{\calN}}
-%Chi 2
-\newcommand{\ChiTwo}[1]{\mbox{\large$\chi_{#1}^2$}}
-
-%%%%%%%%%%%%%
-% Set symbols
-%%%%%%%%%%%%%
-% Complement
-\newcommand\comp{\mathsf{c}}
-
-% Permutations
-\newcommand\Sn{\mathfrak{S}_n}
-
-% Unit circle
-\newcommand\Sone{\bbS^1}
-
-%%%%%%%%%%
-% Topology
-%%%%%%%%%%
-\newcommand\Int{\operatorname{Int}}
 
 %%%%%%%%%%%%%%%%
 % Linear Algebra
 %%%%%%%%%%%%%%%%
 \renewcommand{\top}{\mathsf{\scriptscriptstyle T}}
 
-\newcommand\RE{\operatorname{Re}}
-\newcommand\IM{\operatorname{Im}}
-\newcommand\Ker{\operatorname{Ker}}
 \newcommand\Span{\operatorname{span}}
 
 \newcommand\Tr{\operatorname{Tr}}
 \newcommand\rank{\operatorname{rank}}
-\newcommand\diag{\operatorname{diag}}
-\newcommand\Sp{\operatorname{Sp}}
-
-
-%%% citepos command for adding 's to author name
-% e.g. \citepos{Wig67} yields Wigner's (1967)
-\makeatletter
-% make numeric styles use name format
-\patchcmd{\NAT@test}{\else \NAT@nm}{\else \NAT@nmfmt{\NAT@nm}}{}{}
-% define \citepos just like \citet
-\DeclareRobustCommand\citepos
-  {\begingroup
-   \let\NAT@nmfmt\NAT@posfmt% ...except with a different name format
-   \NAT@swafalse\let\NAT@ctype\z@\NAT@partrue
-   \@ifstar{\NAT@fulltrue\NAT@citetp}{\NAT@fullfalse\NAT@citetp}}
-\let\NAT@orig@nmfmt\NAT@nmfmt
-\def\NAT@posfmt#1{\NAT@orig@nmfmt{#1's}}
