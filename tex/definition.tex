@@ -1,0 +1,71 @@
+% !TEX root = dppy_paper.tex 
+\subsection{Definition} % (fold)
+\label{sub:definition}
+
+A point process $\calX$ on $\bbX$ is a random subset of points $\lrcb{X_1, \dots, X_N} \subset \bbX$, where the number of points $N$ is itself random.
+We further add to the definition that $N$ should be almost surely finite and that all points in a sample are distinct.
+Given a reference measure $\mu$ on~$\bbX$, a point process is usually characterized by its $k$-correlation function $\rho_k$ for all $k$, where
+\begin{equation*}
+\label{eq:correlation_function_intuition}
+	\Proba{
+		\begin{tabular}{c}
+			$\exists$ one point of the process in\\
+			each ball $B(x_i, \diff x_i), \forall i=1,\dots, k $
+		\end{tabular}
+	}
+	= \rho_k\lrp{x_1,\dots,x_k}
+		\prod_{i=1}^k \mu(\diff x_i),
+\end{equation*}
+see \citet[Section 4]{MoWa04}.
+The functions $\rho_k$ describe the interaction among points in $\calX$ by quantifying co-occurrence of points at a set of locations.
+% Considering $\mu$ as the reference measure, the $k$-correlation functions are defined as
+% \begin{equation}
+% \label{eq:k-correlation_function}
+%   \Expe{ \sum_{
+%     \substack{
+%       (X_1,\dots,X_k) \\
+%       X_1 \neq \dots \neq X_k} }
+%     f(X_1,\dots,X_k)
+%     }
+%     = \int_{\bbX^k}
+%       f(x_1,\dots,x_k) \rho_k(x_1,\dots,x_k)
+%       \prod_{i=1}^k \mu(dx_i),
+% \end{equation}
+
+% for all bounded measurable functions $f:\bbX^k\to \bbC$ and the sum ranges over $k$-tuples of distinct points of $\calX$.
+
+A point process $\calX$ on $(\bbX,\mu)$ parametrized by a kernel $K:\bbX\times \bbX\rightarrow \bbC$ is said to be \emph{determinantal}, denoted as $\calX\sim\DPP(K)$, if its $k$-correlation functions satisfy
+  \begin{equation*}
+  \label{eq:k-correlation_function_DPP}
+    \rho_k(x_1,\dots,x_k)
+      = \det \lrb{K(x_i, x_j)}_{i,j=1}^k,
+    \quad \forall k\geq 1.
+  \end{equation*}
+	Most DPPs in ML correspond to the finite case where $\bbX = \lrcb{1,\dots,M}$ and the reference measure is $\mu=\sum_{i=1}^M \delta_i$ \citep{KuTa12}.
+	In this context, the kernel function becomes an $M\times M$ matrix $\bfK$, and the correlation functions refer to inclusion probabilities.
+DPPs are thus often defined in ML as $\calX\sim \DPP(\bfK)$ if
+  \begin{equation}
+  \label{eq:inclusion_proba_finite}
+    \Proba{S \subset \calX} = \det {\bfK}_S,
+      \quad\forall S\subset \bbX,
+  \end{equation}
+where ${\bfK}_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$.
+If we further assume that the kernel matrix $\bfK$ is Hermitian, then the existence and unicity of the DPP in \Eqref{eq:inclusion_proba_finite} is equivalent to the condition that the spectrum of $\bfK$ lies in $[0,1]$.
+The result also holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem 3]{Sos00}.
+We note that there are also DPPs with nonsymmetric kernels \citep{BoDiFu10}.
+
+The main interest in DPPs in ML is that they can model diversity while being tractable.
+To see how diversity shows, we simply observe that \Eqref{eq:inclusion_proba_finite} entails
+\begin{equation*}
+\label{eq:2point_correlation_function_inclusion_proba_finite_case}
+  \Proba{\{i,j\} \subset \calX} 
+    = {\bfK}_{ii}{\bfK}_{jj}-{\bfK}_{ij}{\bfK}_{ji} 
+    = \Proba{\{i\} \subset \calX}
+      \times \Proba{\{i\} \subset \calX} 
+        - {\bfK}_{ij}{\bfK}_{ji}.
+\end{equation*}
+If $\bfK$ is Hermitian, the quantity ${\bfK}_{ij}{\bfK}_{ji} = \vert{\bfK}_{ij}\vert^2$ encodes how less often $i$ and $j$ should co-occur, compared to independent sampling with the same marginals.
+Most point processes that encode diversity are not tractable, in the sense that we do not have efficient algorithms to sample, marginalize, or compute normalization constants.
+DPPs are amenable to these tasks \citep{KuTa12}.
+
+% subsection definition (end)

@@ -1,0 +1,39 @@
+% !TEX root = dppy_paper.tex 
+\section{The \DPPy\ toolbox} % (fold)
+\label{sec:the_dppy_toolbox}
+
+  \DPPy\ handles objects that fit the natural definition of the different DPPs models.
+  \begin{itemize}
+	  \item The \DPPy\ object corresponding to the finite $\DPP(\bfK)$ can be instantiated as
+    \begin{nscenter}
+      \texttt{FiniteDPP(%
+        kernel\pyus type\pyeq\pystr{inclusion},\,%
+        projection\pyeq\pygreen{False},\,%
+        \pykwargs\pylrcb{%
+          \pystr{K}:K}%
+        ).}
+    \end{nscenter}
+		It has two main sampling methods, namely \texttt{.sample\pyus exact()} and \texttt{.sample\pyus mcmc()}, implementing different variants of the exact sampling scheme and current state-of-the-art MCMC samplers.
+
+		\item The \DPPy\ object corresponding to $\beta$-ensembles can be instantiated as
+    \begin{nscenter}
+      \texttt{BetaEnsemble(%
+        ensemble\pyus name\pyeq\pystr{laguerre},\,%
+        beta\pyeq\pygreen{3.14}%
+        )}.
+    \end{nscenter}
+		It has one sampling method
+    \begin{nscenter}
+      \texttt{.sample(%
+        sampling\pyus mode\pyeq\pystr{banded},\,%
+        \pykwargs\pylrcb{%
+          \pystr{shape}:\pygreen{10},\,%
+          \pystr{scale}:\pygreen{2.0},\,%
+          \pystr{size}:\pygreen{50}}%
+        )}
+    \end{nscenter}
+		and two methods for display: \texttt{.plot()} to plot the last realization and \texttt{.hist()} to construct the empirical distribution.
+  \end{itemize}
+  More information can be found in the documentation\footnoteref{fn:docs} and the corresponding Jupyter \href{https://github.com/guilgautier/DPPy/tree/master/notebooks}{\textcolor{magenta}{notebooks}}, which showcase \DPPy\ objects.
+
+% section the_dppy_toolbox (end)
