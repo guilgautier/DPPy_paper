@@ -260,13 +260,13 @@
   \begin{itemize}
 	  \item The \DPPy\ object corresponding to the finite $\DPP(\bfK)$ can be instantiated as
 	  \begin{nscenter}
-	  	\mintinline{python}{Finite_DPP(kernel_type="inclusion", projection=False, **{"K":K})}.
+	  	\mintinline{python}{FiniteDPP(kernel_type="inclusion", projection=False, **{"K":K})}.
 	  \end{nscenter}
 		It has two main sampling methods, namely \mintinline{python}{.sample_exact()} and \mintinline{python}{.sample_mcmc()}, implementing different variants of the exact sampling scheme and current state-of-the-art MCMC samplers.
 
 		\item The \DPPy\ object corresponding to $\beta$-ensembles can be instantiated as
 		\begin{nscenter}
-			\mintinline{python}{Beta_Ensemble(ensemble_name="laguerre", beta=3.14)}.
+			\mintinline{python}{BetaEnsemble(ensemble_name="laguerre", beta=3.14)}.
 		\end{nscenter}
 		It has one sampling method
 		\begin{nscenter}
