@@ -113,7 +113,7 @@
 
     % for all bounded measurable functions $f:\bbX^k\to \bbC$ and the sum ranges over $k$-tuples of distinct points of $\calX$.
 
-    A point process $\calX$ on $(\bbX,\mu)$ parametrized by a kernel $K:\bbX\times \bbX\rightarrow \mathbb{C}$ is said to be \emph{determinantal}, denoted as $\calX\sim\DPP(K)$, if its $k$-correlation functions satisfy
+    A point process $\calX$ on $(\bbX,\mu)$ parametrized by a kernel $K:\bbX\times \bbX\rightarrow \bbC$ is said to be \emph{determinantal}, denoted as $\calX\sim\DPP(K)$, if its $k$-correlation functions satisfy
 	  \begin{equation*}
 	  \label{eq:k-correlation_function_DPP}
 	    \rho_k(x_1,\dots,x_k)
@@ -224,7 +224,7 @@
       Research has focused on two main directions: kernel approximation \citep{AKFT13} and MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
 
       To conclude, some specific DPPs admit more efficient exact samplers that do not rely on \Eqref{eq:joint_distribution2}, \eg uniform spanning trees \citep{PrWi98} or eigenvalues of random matrices.
-      For instance, a $\beta$-ensemble is a set of $N$ points $\{X_1,\dots,X_N\}\subset\mathbb{R}$ with pdf
+      For instance, a $\beta$-ensemble is a set of $N$ points $\{X_1,\dots,X_N\}\subset \bbR$ with pdf
       \begin{equation*}
         \frac{1}{Z_{N,\beta}}
         \prod_{m< n}
