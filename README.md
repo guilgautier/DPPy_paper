@@ -15,19 +15,29 @@ cd DPPy_paper/tex
 pdflatex dppy_paper.tex
 ```
 
+TODO: use Travis to build the `pdf`
+
 ### How to cite this work?
 
-[DPPy](https://github.com/guilgautier/DPPy) has the present [companion paper](https://github.com/guilgautier/DPPy_paper) to be submitted to the [JMLR Machine Learning Open Source Software](http://www.jmlr.org/mloss/) track.
+We wrote this companion paper to [DPPy](https://github.com/guilgautier/DPPy) for latter submission to the [MLOSS](http://www.jmlr.org/mloss/) track of JMLR.
 
-If you use this package, please consider citing it with this piece of BibTeX:
+The companion paper is available on:
+- [arXiv](http://arxiv.org/abs/1809.07258) or see the [`arxiv`](https://github.com/guilgautier/DPPy_paper/tree/arxiv) branch
+- [GitHub](https://github.com/guilgautier/DPPy_paper)
+
+If you use this package, please consider citing it with this piece of BibTeX
 ```bibtex
-@misc{DPPy,
-    title =   {{DPPy: Sampling Determinantal Point Processes with Python}},
-    author =  {Guillaume Gautier, Rémi Bardenet, Michal Valko},
-    year =    {2018},
-    url =     {https://github.com/guilgautier/DPPy/},
-    howpublished = {Online at: \url{github.com/guilgautier/DPPy/}},
-    note =    {Code at https://github.com/guilgautier/DPPy/, documentation at https://dppy.readthedocs.io/, companion paper at https://github.com/guilgautier/DPPy_paper/}
+@article{GaBaVa18,,
+    archivePrefix = {arXiv},
+    arxivId = {1809.07258},
+    author = {Gautier, Guillaume and Bardenet, R{\'{e}}mi and Valko, Michal},
+    eprint = {1809.07258},
+    journal = {ArXiv e-prints},
+    title = {{DPPy: Sampling Determinantal Point Processes with Python}},
+    keywords = {Computer Science - Machine Learning, Computer Science - Mathematical Software, Statistics - Machine Learning},
+    url = {http://arxiv.org/abs/1809.07258},
+    year = {2018},
+    note = {Code at http://github.com/guilgautier/DPPy/ Documentation at http://dppy.readthedocs.io/}
 }
 ```
 
