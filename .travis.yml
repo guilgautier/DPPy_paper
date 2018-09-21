@@ -1,22 +1,18 @@
 language: generic
 sudo: enabled
 os: linux
-
 install:
-  # For LaTeX
-  - ". ./scripts/ensure_latex.sh"
-  - "./scripts/ensure_book_dependencies.sh"
-
+- ". ./scripts/ensure_latex.sh"
+- "./scripts/ensure_book_dependencies.sh"
 script:
 - cd tex
-- pdflatex dppy_paper.tex # --shell-escape option for minted pkg
+- pdflatex dppy_paper.tex
 - cd ..
-
 deploy:
   skip_cleanup: true
   provider: releases
-  api_key:
-    secure: ####
+  api-key:
+    secure: QChcYwLRtzUCBtHo+x9FpzKLHbSdgnnUmBv92k8cK74+crAaHArls+b0A/1gwqH9lEJqZPOpbo9Fx0dxFlSDAkF2uuHu4bdABGJrjG4V8oKMdBnnGlVWkrR+cEYttBf3ULCPCcMPc3j90D5N57YuWtP79sEWnf+eXxEK1ps/E76TNtRkXisuSqoIq95ZpNllzaDlt6h4kp3bWCZgGTxHdkU2GVRfnNxg3FSZqNw/0NKgQuCw0vuiTeltnW/08vpXBoADm6r2irsTVMq72x/X+Z0Hj117xE/g8z3mwjg1lhBMY0IK1566X7XeX0DJjgh96Ku7qa+6aF0Ry1w1R/hCUOyCxc1zN/Vufl5iTa1F3F7vS92sQBoWzaRFMx2o1z+HKUltjkkn19rowVtYumF+VF7FW77ODDmFOLMAlA/iua3CLi/ZuhRElUT4xUbtwD5RrhSoVJ2yZBdDn8M+BuvLXV5c7uuJPDboD626jd8fQmdPK+1l1uQzNvtTDKCSyDr7uFC/b2C1me/HY1UGXHho1UsDWoTkGO1uY889fDHtLG8KT40Wgas1a3ifj+jVrdTwHpeAUchcO5USGUltT7iJaVQGtDGsk/PJHD1+dkT/dZoVmR9j0R/9jTX+idIN13wRk6+a7SmCTnpkJLxkAZCfx62vN2NOK5fINyn2rNLKgCo=
   file: tex/dppy_paper.pdf
   on:
     repo: guilgautier/DPPy_paper
