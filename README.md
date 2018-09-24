@@ -15,8 +15,6 @@ cd DPPy_paper/tex
 pdflatex dppy_paper.tex
 ```
 
-TODO: use Travis to build the `pdf`
-
 ### How to cite this work?
 
 We wrote this companion paper to [DPPy](https://github.com/guilgautier/DPPy) for latter submission to the [MLOSS](http://www.jmlr.org/mloss/) track of JMLR.
