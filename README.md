@@ -8,7 +8,8 @@ Take a look at the extensive [documentation](https://dppy.readthedocs.io/en/late
 This paper together with [DPPy](https://github.com/guilgautier/DPPy) are fully reproducible.
 
 ## Build the PDF
-
+- You need a full LaTeX installation, like TeXlive or MikeTex. And git.
+- Reproduce this:
 ```bash
 git clone https://github.com/guilgautier/DPPy_paper.git
 cd DPPy_paper/tex
@@ -17,16 +18,17 @@ pdflatex dppy_paper.tex
 
 ### How to cite this work?
 
-We wrote this companion paper to [DPPy](https://github.com/guilgautier/DPPy) for latter submission to the [MLOSS](http://www.jmlr.org/mloss/) track of JMLR.
+We wrote this companion paper to [DPPy](https://github.com/guilgautier/DPPy), for latter submission to the [MLOSS](http://www.jmlr.org/mloss/) track of JMLR.
 
 The companion paper is available on:
 - [arXiv](http://arxiv.org/abs/1809.07258) or see the [`arxiv`](https://github.com/guilgautier/DPPy_paper/tree/arxiv) branch
 - [GitHub](https://github.com/guilgautier/DPPy_paper)
 
-If you use this package, please consider citing it with this piece of BibTeX
+If you use this package, please consider citing it with this piece of BibTeX:
+
 ```bibtex
 @article{GaBaVa18,,
-    archivePrefix = {arXiv},
+    archivePrefix = {arXiv}
     arxivId = {1809.07258},
     author = {Gautier, Guillaume and Bardenet, R{\'{e}}mi and Valko, Michal},
     eprint = {1809.07258},
@@ -35,7 +37,7 @@ If you use this package, please consider citing it with this piece of BibTeX
     keywords = {Computer Science - Machine Learning, Computer Science - Mathematical Software, Statistics - Machine Learning},
     url = {http://arxiv.org/abs/1809.07258},
     year = {2018},
-    note = {Code at http://github.com/guilgautier/DPPy/ Documentation at http://dppy.readthedocs.io/}
+    note = {Code at https://GitHub.com/guilgautier/DPPy/ ; Documentation at http://DPPy.ReadTheDocs.io/}
 }
 ```
 
