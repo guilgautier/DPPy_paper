@@ -1,6 +1,6 @@
 # DPPy_paper
 
-[![Build Status](https://travis-ci.com/guilgautier/DPPy_paper.svg?token=jftmsjDJSt2JLJqsgR9n&branch=master)](https://travis-ci.com/guilgautier/DPPy_paper)
+[![Build Status](https://travis-ci.org/guilgautier/DPPy_paper.svg?branch=arXiv-v1)](https://travis-ci.org/guilgautier/DPPy_paper)
 
 This is the companion paper associated with the [DPPy](https://github.com/guilgautier/DPPy) Python library.
 Take a look at the extensive [documentation](https://dppy.readthedocs.io/en/latest/) supporting [DPPy](https://github.com/guilgautier/DPPy).
