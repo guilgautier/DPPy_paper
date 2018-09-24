@@ -1,0 +1,188 @@
+\begin{thebibliography}{23}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Affandi et~al.(2013)Affandi, Kulesza, Fox, and Taskar]{AKFT13}
+Affandi, R.~H., Kulesza, A., Fox, E.~B., and Taskar, B.
+\newblock \href{http://proceedings.mlr.press/v31/affandi13a}{{Nystr{\"{o}}m
+  Approximation for Large-Scale Determinantal Processes}}.
+\newblock In \emph{International Conference on Artificial Intelligence and
+  Statistics (AISTATS)}, 2013.
+
+\bibitem[Anari et~al.(2016)Anari, Gharan, and Rezaei]{AnGhRe16}
+Anari, N., Gharan, S.~O., and Rezaei, A.
+\newblock \href{http://proceedings.mlr.press/v49/anari16}{{Monte Carlo Markov
+  Chain Algorithms for Sampling Strongly Rayleigh Distributions and
+  Determinantal Point Processes}}.
+\newblock In \emph{Conference on Learning Theory (COLT)}, 2016.
+\newblock \href{http://arxiv.org/abs/1602.05242}{arXiv:1602.05242}.
+
+\bibitem[Baddeley \& Turner(2005)Baddeley and Turner]{BaTu05}
+Baddeley, A. and Turner, R.
+\newblock \href{http://spatstat.org/}{{spatstat: an R package for analyzing
+  spatial point patterns}}.
+\newblock \emph{Journal of Statistical Software}, 2005.
+
+\bibitem[Bardenet \& Hardy(2016)Bardenet and Hardy]{BaHa16}
+Bardenet, R. and Hardy, A.
+\newblock \href{http://arxiv.org/abs/1605.00361}{{Monte Carlo with
+  Determinantal Point Processes}}.
+\newblock \emph{ArXiv e-prints}, 2016.
+\newblock \href{http://arxiv.org/abs/1605.00361}{arXiv:1605.00361}.
+
+\bibitem[Borodin et~al.(2010)Borodin, Diaconis, and Fulman]{BoDiFu10}
+Borodin, A., Diaconis, P., and Fulman, J.
+\newblock
+  \href{http://www.ams.org/journals/bull/2010-47-04/S0273-0979-2010-01306-9/S0273-0979-2010-01306-9.pdf}{{On
+  adding a list of numbers (and other one-dependent determinantal processes)}}.
+\newblock \emph{Bulletin of the American Mathematical Society}, 47\penalty0
+  (4):\penalty0 639--670, 2010.
+\newblock \href{http://arxiv.org/abs/0904.3740}{arXiv:0904.3740}.
+
+\bibitem[Dumitriu \& Edelman(2002)Dumitriu and Edelman]{DuEd02}
+Dumitriu, I. and Edelman, A.
+\newblock
+  \href{https://sites.math.washington.edu/~dumitriu/JMathPhys_43_5830.pdf}{{Matrix
+  Models for Beta Ensembles}}.
+\newblock \emph{Journal of Mathematical Physics}, 43\penalty0 (11):\penalty0
+  5830--5847, 2002.
+\newblock \href{http://arxiv.org/abs/math-ph/0206043}{arXiv:math-ph/0206043}.
+
+\bibitem[Dupuy \& Bach(2018)Dupuy and Bach]{DuBa18}
+Dupuy, C. and Bach, F.
+\newblock \href{http://proceedings.mlr.press/v84/dupuy18a}{{Learning
+  Determinantal Point Processes in Sublinear Time}}.
+\newblock In \emph{International Conference on Artificial Intelligence and
+  Statistics (AISTATS)}, 2018.
+\newblock \href{http://arxiv.org/abs/1610.05925}{arXiv:1610.05925}.
+
+\bibitem[Gartrell et~al.(2016)Gartrell, Paquet, and Koenigstein]{GaPaKo16}
+Gartrell, M., Paquet, U., and Koenigstein, N.
+\newblock
+  \href{https://www.aaai.org/ocs/index.php/AAAI/AAAI17/paper/download/14657/14354}{{Low-Rank
+  Factorization of Determinantal Point Processes for Recommendation}}.
+\newblock In \emph{AAAI Conference on Artificial Intelligence}, 2016.
+\newblock \href{http://arxiv.org/abs/1602.05436}{arXiv:1602.05436}.
+
+\bibitem[Gautier et~al.(2017)Gautier, Bardenet, and Valko]{GaBaVa17}
+Gautier, G., Bardenet, R., and Valko, M.
+\newblock \href{http://proceedings.mlr.press/v70/gautier17a}{{Zonotope
+  Hit-and-run for Efficient Sampling from Projection DPPs}}.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2017.
+\newblock \href{http://arxiv.org/abs/1705.10498}{arXiv:1705.10498}.
+
+\bibitem[Hough et~al.(2006)Hough, Krishnapur, Peres, and Vir{\'{a}}g]{HKPV06}
+Hough, J.~B., Krishnapur, M., Peres, Y., and Vir{\'{a}}g, B.
+\newblock \href{http://dx.doi.org/10.1214/154957806000000078}{{Determinantal
+  Processes and Independence}}.
+\newblock In \emph{Probability Surveys}, volume~3, pp.\  206--229. The
+  Institute of Mathematical Statistics and the Bernoulli Society, 2006.
+\newblock \href{http://arxiv.org/abs/math/0503110}{arXiv:math/0503110}.
+
+\bibitem[Kathuria et~al.(2016)Kathuria, Deshpande, and Kohli]{KaDeKo16}
+Kathuria, T., Deshpande, A., and Kohli, P.
+\newblock
+  \href{http://papers.nips.cc/paper/6452-batched-gaussian-process-bandit-optimization-via-determinantal-point-processes}{{Batched
+  Gaussian Process Bandit Optimization via Determinantal Point Processes}}.
+\newblock In \emph{Neural Information Processing Systems (NIPS)}, 2016.
+\newblock \href{http://arxiv.org/abs/1611.04088}{arXiv:1611.04088}.
+
+\bibitem[Killip \& Nenciu(2004)Killip and Nenciu]{KiNe04}
+Killip, R. and Nenciu, I.
+\newblock \href{http://dx.doi.org/10.1155/S1073792804141597}{{Matrix models for
+  circular ensembles}}.
+\newblock \emph{International Mathematics Research Notices}, 2004.
+\newblock \href{http://arxiv.org/abs/math/0410034}{arXiv:math/0410034}.
+
+\bibitem[K{\"{o}}nig(2004)]{Kon05}
+K{\"{o}}nig, W.
+\newblock \href{http://dx.doi.org/10.1214/154957805100000177}{{Orthogonal
+  polynomial ensembles in probability theory}}.
+\newblock \emph{Probab. Surveys}, 2:\penalty0 385--447, 2004.
+\newblock \href{http://arxiv.org/abs/math/0403090}{arXiv:math/0403090}.
+
+\bibitem[Kulesza \& Taskar(2012)Kulesza and Taskar]{KuTa12}
+Kulesza, A. and Taskar, B.
+\newblock \href{http://dx.doi.org/10.1561/2200000044}{{Determinantal Point
+  Processes for Machine Learning}}.
+\newblock \emph{Foundations and Trends in Machine Learning}, 5\penalty0
+  (2-3):\penalty0 123--286, 2012.
+\newblock \href{http://arxiv.org/abs/1207.6083}{arXiv:1207.6083}.
+
+\bibitem[Lavancier et~al.(2012)Lavancier, M{\o}ller, and Rubak]{LaMoRu15}
+Lavancier, F., M{\o}ller, J., and Rubak, E.
+\newblock \href{http://dx.doi.org/10.1111/rssb.12096}{{Determinantal point
+  process models and statistical inference : Extended version}}.
+\newblock \emph{Journal of the Royal Statistical Society. Series B: Statistical
+  Methodology}, 77\penalty0 (4):\penalty0 853--877, 2012.
+\newblock \href{http://arxiv.org/abs/1205.4818}{arXiv:1205.4818}.
+
+\bibitem[Li et~al.(2016)Li, Jegelka, and Sra]{LiJeSr16c}
+Li, C., Jegelka, S., and Sra, S.
+\newblock
+  \href{https://papers.nips.cc/paper/6182-fast-mixing-markov-chains-for-strongly-rayleigh-measures-dpps-and-constrained-sampling}{{Fast
+  Mixing Markov Chains for Strongly Rayleigh Measures, DPPs, and Constrained
+  Sampling}}.
+\newblock In \emph{Neural Information Processing Systems (NIPS)}, 2016.
+\newblock \href{http://arxiv.org/abs/1608.01008}{arXiv:1608.01008}.
+
+\bibitem[Macchi(1975)]{Mac75}
+Macchi, O.
+\newblock \href{http://dx.doi.org/10.2307/1425855}{{The coincidence approach to
+  stochastic point processes}}.
+\newblock \emph{Advances in Applied Probability}, 7\penalty0 (01):\penalty0
+  83--122, 1975.
+
+\bibitem[M{\o}ller \& Waagepetersen(2004)M{\o}ller and Waagepetersen]{MoWa04}
+M{\o}ller, J. and Waagepetersen, R.~P.
+\newblock \href{http://dx.doi.org/10.1201/9780203496930}{{Statistical inference
+  and simulation for spatial point processes}}, volume~23.
+\newblock Chapman {\&} Hall/CRC.
+\newblock 2004.
+\newblock ISBN 1584882654.
+
+\bibitem[Pathria \& Beale(2011)Pathria and Beale]{PaBe11}
+Pathria, R.~K. and Beale, P.~D.
+\newblock
+  \href{http://dx.doi.org/10.1016/B978-0-12-382188-1.00020-7}{{Statistical
+  Mechanics}}.
+\newblock Academic Press.
+\newblock 2011.
+\newblock ISBN 0123821894.
+
+\bibitem[Propp \& Wilson(1998)Propp and Wilson]{PrWi98}
+Propp, J.~G. and Wilson, D.~B.
+\newblock \href{http://dx.doi.org/10.1006/JAGM.1997.0917}{{How to Get a
+  Perfectly Random Sample from a Generic Markov Chain and Generate a Random
+  Spanning Tree of a Directed Graph}}.
+\newblock \emph{Journal of Algorithms}, 27\penalty0 (2):\penalty0 170--217,
+  1998.
+
+\bibitem[Rasmussen \& Williams(2006)Rasmussen and Williams]{RaWi06}
+Rasmussen, C.~E. and Williams, C. K.~I.
+\newblock \href{http://www.gaussianprocess.org/gpml/}{{Gaussian processes for
+  machine learning}}.
+\newblock MIT Press.
+\newblock 2006.
+\newblock ISBN 026218253X.
+
+\bibitem[Soshnikov(2000)]{Sos00}
+Soshnikov, A.
+\newblock
+  \href{https://www.math.ucdavis.edu/~soshniko/stati/umn.pdf}{{Determinantal
+  random point fields}}.
+\newblock \emph{Russian Mathematical Surveys}, 55\penalty0 (5):\penalty0
+  923--975, 2000.
+\newblock \href{http://arxiv.org/abs/math/0002099}{arXiv:math/0002099}.
+
+\bibitem[Tremblay et~al.(2018)Tremblay, Barthelme, and Amblard]{TrBaAm18}
+Tremblay, N., Barthelme, S., and Amblard, P.-O.
+\newblock \href{http://arxiv.org/abs/1802.08471}{{Optimized Algorithms to
+  Sample Determinantal Point Processes}}.
+\newblock \emph{ArXiv e-prints}, 2018.
+\newblock \href{http://arxiv.org/abs/1802.08471}{arXiv:1802.08471}.
+
+\end{thebibliography}
