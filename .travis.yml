@@ -1,5 +1,5 @@
 language: generic
-sudo: enabled
+sudo: require
 os: linux
 install:
 - ". ./scripts/ensure_latex.sh"

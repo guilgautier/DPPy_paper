@@ -4,7 +4,7 @@ tlmgr install array
 tlmgr install bm
 tlmgr install dirtytalk
 tlmgr install doublestroke
-tlmgr install fontawesome 	% For GitHub icon
+tlmgr install fontawesome # For GitHub icon
 tlmgr install framed
 tlmgr install fvextra
 tlmgr install graphicx
