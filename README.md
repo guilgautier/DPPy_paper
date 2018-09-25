@@ -4,6 +4,9 @@
 
 This is the companion paper associated with the [DPPy](https://github.com/guilgautier/DPPy) Python library, itself supported by an extensive [documentation](https://dppy.readthedocs.io/en/latest/).
 
+**In this `master` branch, you can find the current state of the draft of the companion paper!
+Here is the [arXiv](http://arxiv.org/abs/1809.07258) version of the paper.**
+
 This paper together with [DPPy](https://github.com/guilgautier/DPPy) are fully reproducible.
 
 ## Build the PDF
