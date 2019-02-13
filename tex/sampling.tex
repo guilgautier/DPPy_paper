@@ -89,13 +89,12 @@
     \frac{1}{Z_{N,\beta}}
     \prod_{m< n}
       \lrabs{x_m-x_n}^{\beta}
-    \prod_{i= 1}^N
-      \omega(x_i),
+    \prod_{n= 1}^N
+      \omega(x_n),
   \end{equation*}
   where $\beta>0$.
   For some choices of the weight function $\omega$, the $\beta$-ensemble can be sampled as the \href{https://dppy.readthedocs.io/en/latest/continuous_dpps/beta_ensembles.banded_models.html}{\textcolor{magenta}{spectrum of simple tridiagonal random matrices}} \citep{DuEd02,KiNe04}.
-  When $\beta=2$, $\beta$-ensembles are projection DPPs, and therefore examples of continuous DPPs that can be sampled in $\calO(N^2)$.
-  Some of these ensembles are of direct interest to MLers.
-  For instance, the \emph{Laguerre} ensemble, where $\omega$ is a Gamma pdf, is the distribution of the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors.
+  When $\beta=2$, $\beta$-ensembles are projection DPPs \citep{Kon05}, and therefore examples of continuous DPPs that can be sampled in $\calO(N^2)$.
+  Some of these ensembles are of direct interest to MLers \eg the \emph{Laguerre} ensemble for which $\omega$ is a Gamma pdf, is associated to the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors.
 
 % subsection sampling (end)

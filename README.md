@@ -33,7 +33,7 @@ The companion paper is available on:
 If you use this package, please consider citing it with this piece of BibTeX:
 
 ```bibtex
-@article{GaBaVa18,,
+@article{GaBaVa18,
     archivePrefix = {arXiv},
     arxivId = {1809.07258},
     author = {Gautier, Guillaume and Bardenet, R{\'{e}}mi and Valko, Michal},
