@@ -1,4 +1,4 @@
-% !TEX root = dppy_paper.tex 
+% !TEX root = dppy_paper.tex
 \subsection{Definition} % (fold)
 \label{sub:definition}
 
@@ -49,7 +49,7 @@ DPPs are thus often defined in ML as $\calX\sim \DPP(\bfK)$ if
     \Proba{S \subset \calX} = \det {\bfK}_S,
       \quad\forall S\subset \bbX,
   \end{equation}
-where ${\bfK}_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$.
+where ${\bfK}_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$. \href{https://dppy.readthedocs.io/en/latest/finite_dpps/definition.html}{\textcolor{magenta}{Sometimes}}, an almost-equivalent definition is given using a related likelihood kernel $\mathbf{L}$ rather than the correlation kernel $\mathbf{K}$.
 If we further assume that the kernel matrix $\bfK$ is Hermitian, then the existence and unicity of the DPP in \Eqref{eq:inclusion_proba_finite} is equivalent to the condition that the spectrum of $\bfK$ lies in $[0,1]$.
 The result also holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem 3]{Sos00}.
 We note that there are also DPPs with nonsymmetric kernels \citep{BoDiFu10}.
@@ -58,10 +58,10 @@ The main interest in DPPs in ML is that they can model diversity while being tra
 To see how diversity shows, we simply observe that \Eqref{eq:inclusion_proba_finite} entails
 \begin{equation*}
 \label{eq:2point_correlation_function_inclusion_proba_finite_case}
-  \Proba{\{i,j\} \subset \calX} 
-    = {\bfK}_{ii}{\bfK}_{jj}-{\bfK}_{ij}{\bfK}_{ji} 
+  \Proba{\{i,j\} \subset \calX}
+    = {\bfK}_{ii}{\bfK}_{jj}-{\bfK}_{ij}{\bfK}_{ji}
     = \Proba{\{i\} \subset \calX}
-      \times \Proba{\{i\} \subset \calX} 
+      \times \Proba{\{i\} \subset \calX}
         - {\bfK}_{ij}{\bfK}_{ji}.
 \end{equation*}
 If $\bfK$ is Hermitian, the quantity ${\bfK}_{ij}{\bfK}_{ji} = \vert{\bfK}_{ij}\vert^2$ encodes how less often $i$ and $j$ should co-occur, compared to independent sampling with the same marginals.

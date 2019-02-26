@@ -1,4 +1,4 @@
-% !TEX root = dppy_paper.tex 
+% !TEX root = dppy_paper.tex
 \subsection{Sampling} % (fold)
 \label{sub:sampling}
 
@@ -67,7 +67,7 @@
   %                       \lrb{K(x,x) - \overline{K(x,x_{1:n-1})} \lrb{K(x_k,x_l)}_{k,l=1}^{n-1} K(x_{1:n-1},x)}
   % \end{align*}
 
-  We make few remarks.
+  A few remarks are in order.
   First, each conditional in \Eqref{eq:joint_distribution2} can be expressed as a ratio of two determinants and further expanded with Woodbury's formula.
   In that case, in each conditional, ML practitioners will recognize  a posterior variance in Gaussian process regression with kernel $\tilde K$ \cite[Equation 2.26]{RaWi06}.
   We insist that this link with Gaussian processes is a \href{https://dppy.readthedocs.io/en/latest/finite_dpps/exact_sampling.html#caution}{\textcolor{magenta}{consequence}} of $\tilde K$ being a \emph{projection} kernel.
