@@ -1,36 +1,43 @@
 % !TEX root = dppy_paper.tex 
 \section{The \DPPy\ toolbox} % (fold)
 \label{sec:the_dppy_toolbox}
+  
+  \lstset{language=mypython}
 
   \DPPy\ handles objects that fit the natural definition of the different DPPs models.
   \begin{itemize}
 	  \item The \DPPy\ object corresponding to the finite $\DPP(\bfK)$ can be instantiated as
-    \begin{nscenter}
-      \texttt{FiniteDPP(%
-        kernel\pyus type\pyeq\pystr{inclusion},\,%
-        % projection\pyeq\pygreen{False},\,%
-        \pykwargs\pylrcb{%
-          \pystr{K}:K}%
-        ).}
-    \end{nscenter}
-    It has two main sampling methods, namely \texttt{.sample\pyus exact()} and \texttt{.sample\pyus mcmc()}, implementing different variants of the exact sampling scheme and current state-of-the-art MCMC samplers.\\
-    An additional \texttt{.sample\pyus exact\pyus k\pyus dpp()} allows to sample $k$-$\DPP$s \ie $\DPP$s conditionned to fixed cardinality samples $|\calX|=k$ \citep[Section 5]{KuTa12}.
+      \begin{lstlisting}[aboveskip=5pt,
+                      belowskip=-1pt,
+                      xleftmargin=.1\textwidth,
+                      xrightmargin=.2\textwidth]
+        FiniteDPP(kernel_type="correlation", **{"K": K}).
+      \end{lstlisting}
+    It has two main sampling methods, namely 
+    \lstinline{.sample_exact()} and 
+    \lstinline{.sample_mcmc()}, 
+    implementing different variants of the exact sampling scheme and current state-of-the-art MCMC samplers.\\
+    An additional
+    \lstinline{.sample_exact_k_dpp()}
+    allows to sample $k$-$\DPP$s \ie $\DPP$s conditionned to fixed cardinality samples $|\calX|=k$ \citep[Section 5]{KuTa12}.
 
 		\item The \DPPy\ object associated to, \eg the Laguerre $\beta$-ensemble can be instantiated as
-    \begin{nscenter}
-      \texttt{LaguerreEnsemble(%
-         beta\pyeq\pygreen{3.14}%
-         )}.
-    \end{nscenter}
+    \begin{lstlisting}[aboveskip=5pt,
+                      belowskip=-1pt,
+                      xleftmargin=.2\textwidth,
+                      xrightmargin=.2\textwidth]
+      LaguerreEnsemble(beta=3.14).
+    \end{lstlisting}
     It can be sampled using either the full matrix model (eigenvalues of random covariance matrix) when $\beta\in\lrcb{1,2,4}$ or the tridiagonal one for $\beta > 0$,
-    \begin{nscenter}
-      \texttt{.sample\pyus banded\pyus model(%
-          shape\pyeq\pygreen{1.0},\,%
-          scale\pyeq\pygreen{2.0},\,%
-          size\pyeq\pygreen{50}%
-        )}
-    \end{nscenter}
-    Displays are available via \texttt{.plot()} to plot the last realization and \texttt{.hist()} to construct the empirical distribution that converges to the Mar\v{c}enko-Pastur distribution.
+      \begin{lstlisting}[aboveskip=5pt,
+                      belowskip=-1pt,
+                      xleftmargin=.1\textwidth,
+                      xrightmargin=.2\textwidth]
+      .sample_banded_model(shape=1.0, scale=2.0, size=50).
+      \end{lstlisting}
+    Displays are available via 
+    \lstinline{.plot()} to plot the last realization and 
+    \lstinline{.hist()} to construct the empirical distribution that converges to the Mar\v{c}enko-Pastur distribution.
   \end{itemize}
   More information can be found in the documentation\footnoteref{fn:docs} and the corresponding Jupyter \href{https://github.com/guilgautier/DPPy/tree/master/notebooks}{\textcolor{magenta}{notebooks}}, which showcase \DPPy\ objects.
 

@@ -4,12 +4,12 @@
 \newcommand\DPP{\operatorname{DPP}}
 
 % Python code highlight
-\newcommand{\pygreen}[1]{\textcolor{OliveGreen}{#1}}
-\newcommand{\pystr}[1]{\textcolor{BrickRed}{"#1"}}
-\newcommand{\pylrcb}[1]{\string{#1\string}}
-\newcommand{\pykwargs}{\textcolor{Plum}{**}}
-\newcommand{\pyeq}{\textcolor{Plum}{=}}
-\newcommand{\pyus}{\texttt{\char`_}}
+% \newcommand{\pygreen}[1]{\textcolor{OliveGreen}{#1}}
+% \newcommand{\pystr}[1]{\textcolor{BrickRed}{"#1"}}
+% \newcommand{\pylrcb}[1]{\string{#1\string}}
+% \newcommand{\pykwargs}{\textcolor{Plum}{**}}
+% \newcommand{\pyeq}{\textcolor{Plum}{=}}
+% \newcommand{\pyus}{\texttt{\char`_}}
 
 % TODO command
 \newcommand*{\todo}[1]{\textcolor{red}{TODO:{#1}}}
@@ -34,10 +34,10 @@
 
 \addtolength{\skip\footins}{-3pc plus 5pt}
 
-% Center env for minted package to display code
-\newenvironment{nscenter}
- {\parskip=3pt\par\nopagebreak\centering}
- {\parskip=2pt\par\noindent\ignorespacesafterend}
+% % Center env for minted package to display code
+% \newenvironment{nscenter}
+%  {\parskip=3pt\par\nopagebreak\centering}
+%  {\parskip=2pt\par\noindent\ignorespacesafterend}
 
 \newcommand*{\Eqref}[1]{Equation~\ref{#1}}
 
@@ -105,3 +105,101 @@
 
 \newcommand\Tr{\operatorname{Tr}}
 \newcommand\rank{\operatorname{rank}}
+
+%%%%%%%%%%%%%%%
+% Python code %
+%%%%%%%%%%%%%%%
+
+%%% Python code with listings
+\renewcommand{\ttdefault}{pcr}
+
+\definecolor{white}{rgb}{1,1,1}
+\definecolor{light_gray}{rgb}{0.97,0.97,0.97}
+\definecolor{mykey}{rgb}{0.117,0.403,0.713}
+\definecolor{myviolet}{hsb}{0.79167,1,1}
+
+% https://tex.stackexchange.com/a/163911
+\makeatletter 
+\newcommand{\ProcessDigit}[1]
+{%
+  \ifnum\lst@mode=\lst@Pmode\relax%
+   {\color{OliveGreen} #1}%
+  \else
+    #1%
+  \fi
+}
+\makeatother
+
+% Inspired from https://github.com/olivierverdier/python-latex-highlighting
+\lstdefinelanguage{mypython}{
+    aboveskip=1mm,
+    belowskip=1mm,
+    columns=flexible,
+    mathescape,
+    showstringspaces=false,
+    basicstyle=\ttfamily\footnotesize,
+    %
+    keywordstyle=\bfseries\color{OliveGreen},
+    morekeywords={access,and,assert,break,class,continue,def,del,elif,else,%
+    except,exec,False,finally,for,from,global,if,import,in,is,lambda,not,raise,return,True},
+    %
+    morekeywords={[2] abs,all,any,basestring,bin,bool,bytearray,callable,chr,
+    classmethod,cmp,compile,complex,delattr,dict,dir,divmod,enumerate,eval,
+    execfile,file,filter,float,format,frozenset,getattr,globals,hasattr,hash,
+    help,hex,id,input,int,isinstance,issubclass,iter,len,list,locals,long,map,
+    max,memoryview,min,next,object,oct,open,ord,pow,property,print,range,raw_input,
+    reduce,reload,repr,reversed,round,set,setattr,slice,sorted,staticmethod,str,sum,super,tuple,type,unichr,unicode,vars,xrange,zip,apply,buffer,coerce,
+    intern},
+    keywordstyle=[2]\color{OliveGreen},
+    %
+    stringstyle=\ttfamily\color{FireBrick},
+    morestring=[b]{'},
+    morestring=[b]{"},
+    morestring=[s]{r'}{'},
+    morestring=[s]{r"}{"},
+    morestring=[s]{r'''}{'''},
+    morestring=[s]{r"""}{"""},
+    morestring=[s]{u'}{'},
+    morestring=[s]{u"}{"},
+    morestring=[s]{u'''}{'''},
+    morestring=[s]{u"""}{"""},
+    %
+    commentstyle=\slshape\textcolor{CadetBlue},
+    morecomment=[l]\#,%
+    morecomment=[s]{'''}{'''},
+    morecomment=[s]{"""}{"""},
+    literate=*%
+        {0}{{{\ProcessDigit{0}}}}1
+        {1}{{{\ProcessDigit{1}}}}1
+        {2}{{{\ProcessDigit{2}}}}1
+        {3}{{{\ProcessDigit{3}}}}1
+        {4}{{{\ProcessDigit{4}}}}1
+        {5}{{{\ProcessDigit{5}}}}1
+        {6}{{{\ProcessDigit{6}}}}1
+        {7}{{{\ProcessDigit{7}}}}1
+        {8}{{{\ProcessDigit{8}}}}1
+        {9}{{{\ProcessDigit{9}}}}1
+        %
+        {:}{{\bfseries:}}2%
+        {::}{{\bfseries:$\!$:}}2%
+        {=}{{\bfseries\color{myviolet}{=}}}2%
+        {-}{{\bfseries\color{myviolet}-}}{2}%
+        {+}{{\bfseries\color{myviolet}+}}{2}%
+        {*}{{\bfseries\color{myviolet}*}}2%
+        {**}{{\bfseries\color{myviolet}{**}}}3%
+        {/}{{\bfseries\color{myviolet}/}}{2}%
+        {//}{{\bfseries\color{myviolet}{//}}}{2}%
+        {!}{{\bfseries\color{myviolet}!}}{2}%
+        {<}{{\bfseries\color{myviolet}<}}{2}%
+        {<=}{{\bfseries\color{myviolet}{<=}}}3%
+        {>}{{\bfseries\color{myviolet}>}}{2}%
+        {>=}{{\bfseries\color{myviolet}{>=}}}3%
+        {==}{{\bfseries\color{myviolet}{==}}}3%
+        {!=}{{\bfseries\color{myviolet}{!=}}}3%
+        {+=}{{\bfseries\color{myviolet}{+=}}}3%
+        {-=}{{\bfseries\color{myviolet}{-=}}}3%
+        {*=}{{\bfseries\color{myviolet}{*=}}}3%
+        {/=}{{\bfseries\color{myviolet}{/=}}}3,
+    morekeywords={[3] jacobian_points_weights_to_moments_circle},
+    keywordstyle=[3]\color{blue}
+}
