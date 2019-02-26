@@ -49,7 +49,7 @@ DPPs are thus often defined in ML as $\calX\sim \DPP(\bfK)$ if
     \Proba{S \subset \calX} = \det {\bfK}_S,
       \quad\forall S\subset \bbX,
   \end{equation}
-where ${\bfK}_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$. \href{https://dppy.readthedocs.io/en/latest/finite_dpps/definition.html}{\textcolor{magenta}{Sometimes}}, an almost-equivalent definition is given using a related likelihood kernel $\mathbf{L}$ rather than the correlation kernel $\mathbf{K}$.
+where ${\bfK}_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$. \href{https://dppy.readthedocs.io/en/latest/finite_dpps/definition.html}{\textcolor{magenta}{Sometimes}}, an almost-equivalent definition is given using a related \emph{likelihood kernel} $\mathbf{L}$ rather than the \emph{correlation kernel} $\mathbf{K}$.
 If we further assume that the kernel matrix $\bfK$ is Hermitian, then the existence and unicity of the DPP in \Eqref{eq:inclusion_proba_finite} is equivalent to the condition that the spectrum of $\bfK$ lies in $[0,1]$.
 The result also holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem 3]{Sos00}.
 We note that there are also DPPs with nonsymmetric kernels \citep{BoDiFu10}.
