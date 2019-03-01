@@ -13,4 +13,5 @@ tlmgr install ucs
 tlmgr install layout
 tlmgr install pgffor
 # tlmgr install minted # highlight code
+tlmgr install tcolorbox
 tlmgr install xstring
