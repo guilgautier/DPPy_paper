@@ -38,10 +38,10 @@
 
 \setcounter{footnote}{3}
 \begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
-  Determinantal point processes (DPPs) are specific probability distributions over clouds of points that are used as models and computational tools across physics, probability, statistics, and more recently machine learning.
-  Sampling from DPPs is a challenge and therefore we present \DPPy, a Python toolbox that gathers known exact and approximate sampling algorithms.
-  The project is hosted on GitHub\!\footnote{\label{fn:github}\url{https://github.com/guilgautier/DPPy}}and equipped with an extensive documentation.
-  This documentation\!\footnote{\label{fn:docs}\url{https://dppy.readthedocs.io}}takes the form of a short survey of DPPs and relates each mathematical property with \DPPy\ objects.
+    Determinantal point processes (DPPs) are specific probability distributions over clouds of points that are used as models and computational tools across physics, probability, statistics, and more recently machine learning.
+    Sampling from DPPs is a challenge and therefore we present \DPPy, a Python toolbox that gathers known exact and approximate sampling algorithms.
+    The project is hosted on GitHub\!\footnote{\label{fn:github}\url{https://github.com/guilgautier/DPPy}}and equipped with an extensive documentation.
+    This documentation\!\footnote{\label{fn:docs}\url{https://dppy.readthedocs.io}}takes the form of a short survey of DPPs and relates each mathematical property with \DPPy\ objects.
 \end{abstract}
 
 \begin{keywords}%
@@ -126,20 +126,21 @@
               = \det \lrb{K(x_i, x_j)}_{i,j=1}^k,
             \quad \forall k\geq 1.
         \end{equation*}
-        Most DPPs in ML correspond to the finite case where $\bbX = \lrcb{1,\dots,M}$ and $\mu=\sum_{i=1}^M \delta_i$ \citep{KuTa12}.
-        In this context, the kernel function becomes an $M\times M$ matrix $\bfK$, and the correlation functions refer to inclusion probabilities.
-        DPPs are thus often defined in ML as $\calX\sim \DPP(\bfK)$ if
+        In ML, most DPPs are taken from the finite setting where $\bbX = \lrcb{1,\dots,M}$ and $\mu=\sum_{i=1}^M \delta_i$.
+        In this context, the kernel function becomes an $M\times M$ matrix $\bfK$, and the correlation functions refer to inclusion probabilities.~DPPs are thus often defined as $\calX\sim \DPP(\bfK)$ if
         \begin{equation}
         \label{eq:inclusion_proba_finite}
             \Proba{S \subset \calX} = \det {\bfK}_S,
                 \quad\forall S\subset \bbX,
         \end{equation}
         where ${\bfK}_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$.
-        The kernel matrix $\bfK$ is commonly assumed real-symmetric, in which case the existence and unicity of the DPP in \Eqref{eq:inclusion_proba_finite} is equivalent to the condition that its eigenvalues lie in $[0,1]$.
+        The kernel matrix $\bfK$ is commonly assumed real-symmetric, in which case the existence and uniqueness of the DPP in \Eqref{eq:inclusion_proba_finite} is equivalent to the condition that its eigenvalues lie in $[0,1]$.
         The result also holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem 3]{Sos00}.
         We note that there are also DPPs with nonsymmetric kernels \citep{BoDiFu10}.
-
-        \href{https://dppy.readthedocs.io/en/latest/finite_dpps/definition.html}{\textcolor{magenta}{Sometimes}}, an almost-equivalent definition is given using a related \emph{likelihood kernel} $\mathbf{L}$ rather than the \emph{correlation kernel} $\mathbf{K}$.
+        Oftentimes, ML practitioners favor a more flexible definition of the DPP in terms of a \emph{likelihood kernel} $\bfL$
+        ($\Proba{S \subset \calX}\propto \det \bfL_S$) which only requires $\bfL\succeq 0$
+        rather than a \emph{correlation kernel} $0\preceq \bfK \preceq I$.
+        However, the two kernels are linked by specific relations \href{https://dppy.readthedocs.io/en/latest/finite_dpps/properties.html#relation-between-correlation-and-likelihood-kernels}{relations}
 
         The main interest in DPPs in ML is that they can model diversity while being tractable.
         When $\bfK$ is assumed real-symmetric, ${\bfK}_{ij}$ encodes the similarity between items $i$ and $j$, then the determinantal structure brings diversity.
@@ -153,6 +154,7 @@
                 - |{\bfK}_{ij}|^2,
         \end{equation*}
         i.e., compared to independent sampling with the same marginals, the more similar the items $i, j$ the less likely they co-occur.
+
         Most point processes that encode diversity are not tractable, in the sense that efficient algorithms to sample, marginalize, or compute normalization constants are not available.
         DPPs are amenable to these tasks \citep{KuTa12,Gil14}, with polynomial complexity.
 
@@ -161,103 +163,129 @@
     \section{Sampling determinantal point processes} % (fold)
     \label{sec:sampling}
 
-          We assume henceforth that $K$ is real-symmetric and satisfies suitable conditions \cite[Theorem 3]{Sos00} so that its spectral decomposition is available
-          \begin{equation*}
-          \label{eq:eigdec_kernel}
-            K(x,y)
-            \triangleq
-              \suml_{i=1}^{\infty}
-                \lambda_i \phi_i(x) \phi_i(y),
-              \quad \text{with }
-                \int_{\bbX} \phi_i(x) \phi_j(x) \mu(\diff x) = \delta_{ij}.
-          \end{equation*}
-          In the \href{https://dppy.readthedocs.io/en/latest/finite_dpps/exact_sampling.html}{\textcolor{magenta}{finite case}}, the eigendecomposition of the kernel matrix $\bfK$ can always be computed.
-          \citet[Theorem 7, Algorithm 18]{HKPV06} proved that sampling $\DPP(K)$ can be done in two steps:
-          \begin{enumerate}
-            \item draw $B_i\sim\Ber(\lambda_i)$ independently and denote $\lrcb{i_1,\dots,i_{N}} = \lrcb{i:B_i=1}$,
-            \item sample from the DPP with kernel $\tilde{K}(x,y) = \sum_{n=1}^{N}\phi_{i_n}(x) \phi_{i_n}(y)$.
-          \end{enumerate}
-          In particular, this shows that all DPPs are mixtures of \emph{projection} DPPs, that is, DPPs parametrized by an orthogonal projection kernel.
-          We now describe the second step of the sampling scheme.
-          \cite{HKPV06} first prove that a projection $\DPP(\tilde{K})$ generates configurations of $N=\Tr \tilde{K}$ points almost surely, and therefore, it is enough to sample $(X_1,\dots,X_N)$ with distribution
-          \begin{equation}
-          \label{eq:joint_distribution1}
-            \frac{1}{N!}
-              \det \lrb{\tilde K(x_m,x_n)}_{m,n=1}^N
-                \prod_{n=1}^N \mu(\diff x_n)
-            = \frac{1}{N!}
-                \Vol^2\lrcb{\Phi(x_1),\dots,\Phi(x_n)}
-                  \prod_{n=1}^N \mu(\diff x_n),
-          \end{equation}
-          where $\Phi(x) \triangleq \lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$ denotes the \emph{feature vector} associated with $x\in\bbX$, so that $\tilde{K}(x,y) = \Phi(y)^{\top} \Phi(x)$.
-          The algorithm boils down to expressing the chain rule for \Eqref{eq:joint_distribution1} as
-          \begin{equation}
-          \label{eq:joint_distribution2}
-            \underbrace{
-              \frac{1}{N}
-                \lrnorm{\phi(x_1)}^2
-              }_{p(x_1)}
-                  \mu(\diff x_1)
-            \,\prod_{n=2}^{N}\,
-            \underbrace{
-              \frac{1}{N-(n-1)}
-                \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x_n)}^2
-              }_{p(x_n\vert x_1,\dots,x_{n-1})}
-                  \mu(\diff x_n),
-          \end{equation}
-          where $\Pi_{H_{n-1}}$ is the orthogonal projection onto $H_{n-1} \triangleq \Span\lrcb{\phi(x_1), \dots, \phi(x_{n-1}) }$.
-          The crux of \citet[Algorithm 18]{HKPV06} is that since $\tilde K$ is a projection kernel, each term in \Eqref{eq:joint_distribution2} is a well-normalized conditional density, making \Eqref{eq:joint_distribution2} a chain rule.
-          It is then enough to sample from each conditional sequentially.
-          \GG{Insist on exchangeability/invariance by permutation}
-          % \begin{equation}
-          % \label{eq:conditionals_densities}
-          %   p(x_1)
-          %     = \frac{1}{N} \lrnorm{\phi(x_1)}^2
-          %     \quad\text{and}\quad
-          %   p(x_n | x_1,\dots,x_{n-1})
-          %     = \frac{1}{N-(n-1)} \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x_n)}^2\!,
-          % \end{equation}
-          % \begin{align*}
-          %   g_1(x)           &= \frac{1}{N} \lrnorm{\phi(x)}^2
-          %                    &= \frac{1}{N} K(x,x) \\
-          %   g_{n | 1:n-1}(x) &= \frac{1}{N-(n-1)}
-          %                       \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x)}^2 \\
-          %                    &= \frac{1}{N-(n-1)}
-          %                       \lrb{K(x,x) - K(x,x_{1:n-1}) \lrb{K(x_k,x_l)}_{k,l=1}^{n-1} K(x_{1:n-1},x)}
-          % \end{align*}
+        We assume henceforth that $K$ is real-symmetric and satisfies suitable conditions \cite[Theorem 3]{Sos00} so that its spectral decomposition is available
+        \begin{equation*}
+        \label{eq:eigdec_kernel}
+        K(x,y)
+        \triangleq
+          \suml_{i=1}^{\infty}
+            \lambda_i \phi_i(x) \phi_i(y),
+          \quad \text{with }
+            \int_{\bbX} \phi_i(x) \phi_j(x) \mu(\diff x) = \delta_{ij}.
+        \end{equation*}
+        In the \href{https://dppy.readthedocs.io/en/latest/finite_dpps/exact_sampling.html}{\textcolor{magenta}{finite case}}, the eigendecomposition of the kernel matrix $\bfK$ can always be computed.
+        \citet[Theorem 7]{HKPV06} proved that sampling $\DPP(K)$ can be done in two steps:
+        \begin{enumerate}
+            \item draw $B_i\sim\Ber(\lambda_i)$ independently and denote $\lrcb{i_1,\dots,i_{N}} = \lrcb{i:B_i=1}$,\label{enum:sampling_step1}
+            \item sample from the DPP with kernel $\tilde{K}(x,y) = \sum_{n=1}^{N}\phi_{i_n}(x) \phi_{i_n}(y)$.\label{enum:sampling_step2}
+        \end{enumerate}
+        In other words, all DPPs are mixtures of \emph{projection} DPPs, that is, DPPs parametrized by an orthogonal projection kernel.
+        In a nutshell, step \ref{enum:sampling_step1} selects a component of the mixture and step \ref{enum:sampling_step2} generates a sample from the corresponding projection DPP.
+        \citet[Algorithm 18]{HKPV06} provide a generic way to sample from projection DPPs, which stems from two facts.
+        First, \GG{conditionally on $N$ ?} a projection DPP with kernel $\tilde{K}$ is formed by exactly $N=\rank \tilde{K}$ points, $\mu$-almost surely.
+        Then, one can apply the chain rule to sample $(X_1,\dots,X_N)$ with probability distribution given by \Eqref{eq:joint_distribution}, and then discard the order the points were drawn to get a valid sample $\lrcb{X_{1}, \dots, X_{N}} \sim \DPP(\tilde{K})$.
+        \begin{equation}
+        \label{eq:joint_distribution}\\
+        \!
+        \frac{\det[\tilde K(x_m,x_n)]_{m,n=1}^N}{N!}
+            \prod_{n=1}^N \mu(\diff x_n)
+        % = \frac{1}{N!}
+        %     \Vol^2\lrcb{\Phi(x_1),\dots,\Phi(x_n)}
+        %         \prod_{n=1}^N \mu(\diff x_n)
+            % \label{eq:joint_distribution1}\\
+        =
+        % \underbrace{
+                \frac{\|\Phi(x_1)\|^2}{N}
+            % }_{p(x_1)}
+            \mu(\diff x_1)
+            \prod_{n=2}^{N}
+            % \underbrace{
+                \frac{\| (I_N-\Pi_{H_{n-1}}) \Phi(x_n)\|^2}{N-(n-1)}
+              % }_{p(x_n\vert x_1,\dots,x_{n-1})}
+                \mu(\diff x_n),
+        \!
+        \end{equation}
+        where
+        $\Phi(x) \triangleq \lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$
+        denotes the \emph{feature vector} associated with $x\in\bbX$,
+        so that
+        $\tilde{K}(x,y) = \Phi(x)^{\top} \Phi(y)$
+        and
+        $\Pi_{H_{n-1}}$ the orthogonal projection matrix onto of
+        $\Span\lrcb{\Phi(x_m)}_{m=1}^{n-1}$.
 
-          A few remarks are in order.
-          First, each conditional in \Eqref{eq:joint_distribution2} can be expressed as a ratio of two determinants and further expanded with Woodbury's formula.
-          In that case, in each conditional, ML practitioners will recognize  a posterior variance in Gaussian process regression with kernel $\tilde K$ \cite[Equation 2.26]{RaWi06}.
-          We insist that this link with Gaussian processes is a \href{https://dppy.readthedocs.io/en/latest/finite_dpps/exact_sampling.html#caution}{\textcolor{magenta}{consequence}} of $\tilde K$ being a \emph{projection} kernel.
-          Second, we observe that the chain rule in \Eqref{eq:joint_distribution2} has a strong Gram-Schmidt flavor since it actually comes from a recursive application of the base$\times$height formula.
-          In the end, DPPs favor configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume, which is another way of understanding repulsiveness.
+        % The algorithm boils down to expressing the chain rule for \Eqref{eq:joint_distribution1} as
+        % % \begin{equation}
+        % % \label{eq:joint_distribution2}
+        % % \underbrace{
+        % %   \frac{1}{N}
+        % %     \lrnorm{\phi(x_1)}^2
+        % %   }_{p(x_1)}
+        % %       \mu(\diff x_1)
+        % % \,\prod_{n=2}^{N}\,
+        % % \underbrace{
+        % %   \frac{1}{N-(n-1)}
+        % %     \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x_n)}^2
+        % %   }_{p(x_n\vert x_1,\dots,x_{n-1})}
+        % %       \mu(\diff x_n),
+        % % \end{equation}
+        % where $\Pi_{H_{n-1}}$ is the orthogonal projection onto $H_{n-1} \triangleq \Span\lrcb{\Phi(x_1), \dots, \Phi(x_{n-1}) }$.
+        % The crux of \citet[Algorithm 18]{HKPV06} is that since $\tilde K$ is a projection kernel, each term in \Eqref{eq:joint_distribution2} is a well-normalized conditional density, making \Eqref{eq:joint_distribution2} a chain rule.
+        % It is then enough to sample from each conditional sequentially.
+        % \GG{Insist on exchangeability/invariance by permutation}
+        % \begin{equation}
+        % \label{eq:conditionals_densities}
+        %   p(x_1)
+        %     = \frac{1}{N} \lrnorm{\phi(x_1)}^2
+        %     \quad\text{and}\quad
+        %   p(x_n | x_1,\dots,x_{n-1})
+        %     = \frac{1}{N-(n-1)} \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x_n)}^2\!,
+        % \end{equation}
+        % \begin{align*}
+        %   g_1(x)           &= \frac{1}{N} \lrnorm{\phi(x)}^2
+        %                    &= \frac{1}{N} K(x,x) \\
+        %   g_{n | 1:n-1}(x) &= \frac{1}{N-(n-1)}
+        %                       \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x)}^2 \\
+        %                    &= \frac{1}{N-(n-1)}
+        %                       \lrb{K(x,x) - K(x,x_{1:n-1}) \lrb{K(x_k,x_l)}_{k,l=1}^{n-1} K(x_{1:n-1},x)}
+        % \end{align*}
 
-          The previous sampling scheme is exact and generic but requires the eigendecomposition of the underlying kernel.
-          In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has an average cost of $\calO(M\lrb{\Tr \bfK}^2)$
-          % which may still be problematic for large $M$,
-          \citep{TrBaAm18}.
-          In the continuous case, there is an additional cost of the rejection sampling routine required for sampling each conditional in \Eqref{eq:joint_distribution2}.
-          In applications where these costs are a bottleneck, users rely on approximate sampling.
-          Research has focused on two main directions: kernel approximation \citep{AKFT13} and MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
-          Mention \citep{Pou19,DeCaVa19}
+        A few remarks are in order.
+        First, the LHS of \Eqref{eq:joint_distribution} is indeed an exchangeable probability distribution.
+        % , the $N!$ factor captures all possible permutations.
+        The successive ratios that appear in the RHS are the normalized conditional densities (w.r.t.\,$\mu$) which drive the chain rule.
+        Observe that the respective normalizing constants are independent of the previous points.
+        Second, the numerators of the RHS can be expressed as the ratio of two determinants and further expanded with Woodbury's formula.
+        In that case, in each conditional, ML practitioners will recognize the incremental posterior variances in Gaussian process regression with kernel $\tilde K$ \citep[Equation 2.26]{RaWi06}.
+        We insist that this link with Gaussian processes is a \href{https://dppy.readthedocs.io/en/latest/finite_dpps/exact_sampling.html#caution}{\textcolor{magenta}{consequence}} of $\tilde K$ being a \emph{projection} kernel.
+        Third, the chain rule in \Eqref{eq:joint_distribution2} has a strong Gram-Schmidt flavor since it actually comes from a recursive application of the base$\times$height formula.
+        In the end, DPPs favor configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume, which is another way of understanding repulsiveness.
 
-          To conclude, some specific DPPs admit more efficient exact samplers that do not rely on \Eqref{eq:joint_distribution2}, \eg uniform spanning trees \citep{PrWi98} or eigenvalues of random matrices.
-          For instance, a $\beta$-ensemble is a set of $N$ points $\{X_1,\dots,X_N\}\subset \bbR$ with pdf
-          \begin{equation*}
-          \label{eq:beta_ensemble_pdf}
-            \frac{1}{Z_{N,\beta}}
-            \prod_{m< n}
-                \lrabs{x_m-x_n}^{\beta}
-            \prod_{n= 1}^N
-                \omega(x_n)
-                \diff x_n,
-          \end{equation*}
-          where $\beta>0$.
-          For some choices of the weight function $\omega$, the $\beta$-ensemble can be sampled as the \href{https://dppy.readthedocs.io/en/latest/continuous_dpps/beta_ensembles.banded_models.html}{\textcolor{magenta}{spectrum of simple tridiagonal random matrices}} \citep{DuEd02,KiNe04}.
-          When $\beta=2$, $\beta$-ensembles are projection DPPs \citep{Kon05}, and therefore examples of continuous DPPs that can be sampled in $\calO(N^2)$.
-          Some of these ensembles are of direct interest to MLers \eg the \emph{Laguerre} ensemble for which $\omega$ is a Gamma pdf, is associated to the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors.
-          \GG{Mention Multivariate Jacobi ensemble}
+        The previous sampling scheme is exact and generic but requires the eigendecomposition of the underlying kernel.
+        In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has an average cost of $\calO(M\lrb{\Tr \bfK}^2)$
+        % which may still be problematic for large $M$,
+        \citep{TrBaAm18}.
+        In the continuous case, there is an additional cost of the rejection sampling routine required for sampling each conditional.
+        In applications where these costs are a bottleneck, users rely on approximate sampling.
+        Research has focused on two main directions: kernel approximation \citep{AKFT13} and MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
+        Mention \citep{Pou19,DeCaVa19}
+
+        To conclude, some specific DPPs admit more efficient exact samplers that do not rely on \Eqref{eq:joint_distribution}, \eg uniform spanning trees \citep{PrWi98} or eigenvalues of random matrices.
+        For instance, a $\beta$-ensemble is a set of $N$ points $\{X_1,\dots,X_N\}\subset \bbR$ with pdf
+        \begin{equation*}
+        \label{eq:beta_ensemble_pdf}
+        \frac{1}{Z_{N,\beta}}
+        \prod_{m< n}
+            \lrabs{x_m-x_n}^{\beta}
+        \prod_{n= 1}^N
+            \omega(x_n)
+            \diff x_n,
+        \end{equation*}
+        where $\beta>0$.
+        For some choices of the weight function $\omega$, the $\beta$-ensemble can be sampled as the \href{https://dppy.readthedocs.io/en/latest/continuous_dpps/beta_ensembles.banded_models.html}{\textcolor{magenta}{spectrum of simple tridiagonal random matrices}} \citep{DuEd02,KiNe04}.
+        When $\beta=2$, $\beta$-ensembles are projection DPPs \citep{Kon05}, and therefore examples of continuous DPPs that can be sampled in $\calO(N^2)$.
+        Some of these ensembles are of direct interest to MLers \eg the \emph{Laguerre} ensemble for which $\omega$ is a Gamma pdf, is associated to the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors.
+        \GG{Mention Multivariate Jacobi ensemble}
 
     % section sampling (end)
 
@@ -266,44 +294,44 @@
 \section{The \DPPy\ toolbox} % (fold)
 \label{sec:the_dppy_toolbox}
 
-  \lstset{language=mypython}
+    \lstset{language=mypython}
 
-  \DPPy\ handles objects that fit the natural definition of the different DPPs models.
-  \begin{itemize}
-      \item The \DPPy\ object corresponding to the finite $\DPP(\bfK)$ can be instantiated as
-      \begin{lstlisting}[aboveskip=5pt,
+    \DPPy\ handles objects that fit the natural definition of the different DPPs models.
+    \begin{itemize}
+        \item The \DPPy\ object corresponding to the finite $\DPP(\bfK)$ can be instantiated as
+        \begin{lstlisting}[aboveskip=5pt,
                       belowskip=-1pt,
                       xleftmargin=.1\textwidth,
                       xrightmargin=.2\textwidth]
         FiniteDPP(kernel_type="correlation", **{"K": K}).
-      \end{lstlisting}
-    It has two main sampling methods, namely
-    \lstinline{.sample_exact()} and
-    \lstinline{.sample_mcmc()},
-    implementing different variants of the exact sampling scheme and current state-of-the-art MCMC samplers.\\
-    An additional
-    \lstinline{.sample_exact_k_dpp()}
-    allows to sample $k$-$\DPP$s \ie $\DPP$s conditionned to fixed cardinality samples $|\calX|=k$ \citep[Section 5]{KuTa12}.
+        \end{lstlisting}
+        It has two main sampling methods, namely
+        \lstinline{.sample_exact()} and
+        \lstinline{.sample_mcmc()},
+        implementing different variants of the exact sampling scheme and current state-of-the-art MCMC samplers.\\
+        An additional
+        \lstinline{.sample_exact_k_dpp()}
+        allows to sample $k$-$\DPP$s \ie $\DPP$s conditionned to fixed cardinality samples $|\calX|=k$ \citep[Section 5]{KuTa12}.
 
         \item The \DPPy\ object associated to, \eg the Laguerre $\beta$-ensemble can be instantiated as
-    \begin{lstlisting}[aboveskip=5pt,
-                      belowskip=-1pt,
-                      xleftmargin=.2\textwidth,
-                      xrightmargin=.2\textwidth]
-      LaguerreEnsemble(beta=3.14).
-    \end{lstlisting}
-    It can be sampled using either the full matrix model (eigenvalues of random covariance matrix) when $\beta\in\lrcb{1,2,4}$ or the tridiagonal one for $\beta > 0$,
-      \begin{lstlisting}[aboveskip=5pt,
-                      belowskip=-1pt,
-                      xleftmargin=.1\textwidth,
-                      xrightmargin=.2\textwidth]
-      .sample_banded_model(shape=1.0, scale=2.0, size=50).
-      \end{lstlisting}
-    Displays are available via
-    \lstinline{.plot()} to plot the last realization and
-    \lstinline{.hist()} to construct the empirical distribution that converges to the Mar\v{c}enko-Pastur distribution.
-  \end{itemize}
-  More information can be found in the documentation\footnoteref{fn:docs} and the corresponding Jupyter \href{https://github.com/guilgautier/DPPy/tree/master/notebooks}{\textcolor{magenta}{notebooks}}, which showcase \DPPy\ objects.
+        \begin{lstlisting}[aboveskip=5pt,
+                          belowskip=-1pt,
+                          xleftmargin=.2\textwidth,
+                          xrightmargin=.2\textwidth]
+          LaguerreEnsemble(beta=3.14).
+        \end{lstlisting}
+        It can be sampled using either the full matrix model (eigenvalues of random covariance matrix) when $\beta\in\lrcb{1,2,4}$ or the tridiagonal one for $\beta > 0$,
+          \begin{lstlisting}[aboveskip=5pt,
+                          belowskip=-1pt,
+                          xleftmargin=.1\textwidth,
+                          xrightmargin=.2\textwidth]
+          .sample_banded_model(shape=1.0, scale=2.0, size=50).
+          \end{lstlisting}
+        Displays are available via
+        \lstinline{.plot()} to plot the last realization and
+        \lstinline{.hist()} to construct the empirical distribution that converges to the Mar\v{c}enko-Pastur distribution.
+    \end{itemize}
+    More information can be found in the documentation\footnoteref{fn:docs} and the corresponding Jupyter \href{https://github.com/guilgautier/DPPy/tree/master/notebooks}{\textcolor{magenta}{notebooks}}, which showcase \DPPy\ objects.
 
 % section the_dppy_toolbox (end)
 
