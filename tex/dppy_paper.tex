@@ -25,11 +25,11 @@
 
 \title{\DPPy: Sampling DPPs with Python}
 
-\author{\name Guillaume Gautier$^{*,\dagger}$ \email g.gautier@inria.fr \\
+\author{\name Guillaume Gautier$^{\dagger*}$ \email g.gautier@inria.fr \\
        \name R\'emi Bardenet$^\dagger$ \email remi.bardenet@gmail.com \\
-       \name Michal Valko$^*$ \email michal.valko@inria.fr\\
-       \addr $^*$SequeL team, INRIA Lille - Nord Europe,  40, avenue Halley 59650, Villeneuve d'Ascq, France\\
-       \addr $^\dagger$Univ.\,Lille, CNRS, Centrale Lille, UMR 9189 - CRIStAL, 59651 Villeneuve d'Ascq, France
+       \name Michal Valko$^{*\ddag}$ \email valkom@google.com\\
+       \addr $^\dagger$Univ.\,Lille, CNRS, Centrale Lille, UMR 9189 - CRIStAL, 59651 Villeneuve d'Ascq, France\\
+       \addr $^*$INRIA Lille-Nord Europe, 40, avenue Halley 59650, Villeneuve d'Ascq, France. \addr $^\ddag$DeepMind Paris
 }
 
 \editor{}
@@ -40,13 +40,13 @@
 \begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
   Determinantal point processes (DPPs) are specific probability distributions over clouds of points that are used as models and computational tools across physics, probability, statistics, and more recently machine learning.
   Sampling from DPPs is a challenge and therefore we present \DPPy, a Python toolbox that gathers known exact and approximate sampling algorithms.
-  The project is hosted on GitHub\footnote{\label{fn:github}\url{https://github.com/guilgautier/DPPy}} and equipped with an extensive documentation.
-  This documentation\footnote{\label{fn:docs}\url{https://dppy.readthedocs.io}} takes the form of a short survey of DPPs and relates each mathematical property with \DPPy\ objects.
+  The project is hosted on GitHub\!\footnote{\label{fn:github}\url{https://github.com/guilgautier/DPPy}}and equipped with an extensive documentation.
+  This documentation\!\footnote{\label{fn:docs}\url{https://dppy.readthedocs.io}}takes the form of a short survey of DPPs and relates each mathematical property with \DPPy\ objects.
 \end{abstract}
 
 \begin{keywords}%
     determinantal point processes,
-    exact sampling,
+    sampling,
     MCMC,
     random matrices,
     Python
@@ -60,29 +60,32 @@
 
     In ML, DPPs mainly serve to model diverse sets of items, as in recommendation \citep{KaDeKo16, GaPaKo16} or text summarization \citep{DuBa18}.
     Consequently, MLers  use mostly finite DPPs, which are distributions over subsets of a finite \emph{ground set} of cardinality $M$, parametrized by an $M\times M$ kernel matrix $\bfK$.
-    Routine inference tasks such as normalization, marginalization, or sampling have complexity $\calO(M^3)$ \citep{KuTa12}.
+    Routine inference tasks such as normalization, marginalization, or sampling have complexity $\calO(M^3)$ \citep{Gil14}.
     For large $M$, $\calO(M^3)$ is a bottleneck, as for other kernel methods, see also \citet{TrBaAm18} for a survey on exact sampling.
     Efficient approximate samplers have thus been developed, ranging from kernel approximation \citep{AKFT13} to MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
 
     In terms of software, the R library \textsf{spatstat}\ \citep{BaTu05}, a general-purpose toolbox on spatial point processes, includes sampling and learning of continuous DPPs with stationary kernels, as described by \citet{LaMoRu15}.
-    On the other hand, we propose \DPPy, a turnkey implementation of all known general algorithms to sample \emph{finite} DPPs.
+    On the other hand, we propose \DPPy, a turnkey Python implementation of known general algorithms to sample \emph{finite} DPPs.
     We also provide a few algorithms for non-stationary continuous DPPs that are related to random projections and random covariance matrices, which can be of interest for MLers.
+    The \DPPy\ project is currently being used by the community (see, e.g., \citealp{BuRaWi19,Kam18,Pou19,DeCaVa19,GaBaVa19})
+    \setcounter{footnote}{3}
 
-    \DPPy\ is hosted on GitHub\footnoteref{fn:github}\!
-    and we use \setcounter{footnote}{5}Travis\footnote{\url{https://travis-ci.com/guilgautier/DPPy}} for continuous integration.
-    Moreover, the project is supported by an extensive documentation\footnoteref{fn:docs} which provides the essential mathematical background and illustrates some key properties of DPPs through \DPPy\ objects and associated methods.
+    \DPPy\ is hosted on GitHub,\!\footnoteref{fn:github}we use \setcounter{footnote}{5}Travis\!\footnote{\url{https://travis-ci.com/guilgautier/DPPy}}for continuous integration, Coveralls\!\footnote{\url{https://coveralls.io/github/guilgautier/DPPy}}for test coverage.
+    ReadTheDocs \!\footnoteref{fn:docs} allows to provide an extensive documentation which collects the essential mathematical background and showcases the key properties of DPPs through \DPPy\ objects and associated methods.
     \DPPy\ thus also serves as a tutorial.
+
     Along the paper, words in magenta point to the documentation.
+    In \Secref{sec:definitions}, we introduce DPPs. In \Secref{sec:sampling} we briefly review the challenging task of sampling
 
 % section introduction (end)
 
-\section{Determinantal point processes} % (fold)
-\label{sec:determinantal_point_processes}
+% \section{Determinantal point processes} % (fold)
+% \label{sec:determinantal_point_processes}
 
-    We introduce DPPs and the main sampling algorithm; see \citet{HKPV06} for details.
+%     We introduce DPPs and the main sampling algorithm; see \citet{HKPV06} for details.
 
-    \subsection{Definition} % (fold)
-    \label{sub:definition}
+    \section{Definitions} % (fold)
+    \label{sec:definitions}
 
         A point process $\calX$ on $\bbX$ is a random subset of points $\lrcb{X_1, \dots, X_N} \subset \bbX$, where the number of points $N$ is itself random.
         We further add to the definition that $N$ should be almost surely finite and that all points in a sample are distinct.
@@ -117,43 +120,45 @@
         % for all bounded measurable functions $f:\bbX^k\to \bbC$ and the sum ranges over $k$-tuples of distinct points of $\calX$.
 
         A point process $\calX$ on $(\bbX,\mu)$ parametrized by a kernel $K:\bbX\times \bbX\rightarrow \bbC$ is said to be \emph{determinantal}, denoted as $\calX\sim\DPP(K)$, if its $k$-correlation functions satisfy
-          \begin{equation*}
-          \label{eq:k-correlation_function_DPP}
+        \begin{equation*}
+            \label{eq:k-correlation_function_DPP}
             \rho_k(x_1,\dots,x_k)
               = \det \lrb{K(x_i, x_j)}_{i,j=1}^k,
             \quad \forall k\geq 1.
-          \end{equation*}
-            Most DPPs in ML correspond to the finite case where $\bbX = \lrcb{1,\dots,M}$ and the reference measure is $\mu=\sum_{i=1}^M \delta_i$ \citep{KuTa12}.
-            In this context, the kernel function becomes an $M\times M$ matrix $\bfK$, and the correlation functions refer to inclusion probabilities.
+        \end{equation*}
+        Most DPPs in ML correspond to the finite case where $\bbX = \lrcb{1,\dots,M}$ and $\mu=\sum_{i=1}^M \delta_i$ \citep{KuTa12}.
+        In this context, the kernel function becomes an $M\times M$ matrix $\bfK$, and the correlation functions refer to inclusion probabilities.
         DPPs are thus often defined in ML as $\calX\sim \DPP(\bfK)$ if
-          \begin{equation}
-          \label{eq:inclusion_proba_finite}
+        \begin{equation}
+        \label{eq:inclusion_proba_finite}
             \Proba{S \subset \calX} = \det {\bfK}_S,
-              \quad\forall S\subset \bbX,
-          \end{equation}
-        where ${\bfK}_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$. \href{https://dppy.readthedocs.io/en/latest/finite_dpps/definition.html}{\textcolor{magenta}{Sometimes}}, an almost-equivalent definition is given using a related \emph{likelihood kernel} $\mathbf{L}$ rather than the \emph{correlation kernel} $\mathbf{K}$.
-        If we further assume that the kernel matrix $\bfK$ is Hermitian, then the existence and unicity of the DPP in \Eqref{eq:inclusion_proba_finite} is equivalent to the condition that the spectrum of $\bfK$ lies in $[0,1]$.
+                \quad\forall S\subset \bbX,
+        \end{equation}
+        where ${\bfK}_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$.
+        The kernel matrix $\bfK$ is commonly assumed real-symmetric, in which case the existence and unicity of the DPP in \Eqref{eq:inclusion_proba_finite} is equivalent to the condition that its eigenvalues lie in $[0,1]$.
         The result also holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem 3]{Sos00}.
         We note that there are also DPPs with nonsymmetric kernels \citep{BoDiFu10}.
+        \href{https://dppy.readthedocs.io/en/latest/finite_dpps/definition.html}{\textcolor{magenta}{Sometimes}}, an almost-equivalent definition is given using a related \emph{likelihood kernel} $\mathbf{L}$ rather than the \emph{correlation kernel} $\mathbf{K}$.
 
         The main interest in DPPs in ML is that they can model diversity while being tractable.
-        To see how diversity shows, we simply observe that \Eqref{eq:inclusion_proba_finite} entails
+        When $\bfK$ is assumed real-symmetric, ${\bfK}_{ij}$ encodes the similarity between items $i$ and $j$, then the determinantal structure brings diversity.
+        Indeed, \Eqref{eq:inclusion_proba_finite} entails
         \begin{equation*}
         \label{eq:2point_correlation_function_inclusion_proba_finite_case}
           \Proba{\{i,j\} \subset \calX}
             = {\bfK}_{ii}{\bfK}_{jj}-{\bfK}_{ij}{\bfK}_{ji}
             = \Proba{\{i\} \subset \calX}
-              \times \Proba{\{i\} \subset \calX}
-                - {\bfK}_{ij}{\bfK}_{ji}.
+              \times \Proba{\{j\} \subset \calX}
+                - |{\bfK}_{ij}|^2.
         \end{equation*}
-        If $\bfK$ is Hermitian, the quantity ${\bfK}_{ij}{\bfK}_{ji} = \vert{\bfK}_{ij}\vert^2$ encodes how less often $i$ and $j$ should co-occur, compared to independent sampling with the same marginals.
+        That is to say, compared to independent sampling with the same marginals.
         Most point processes that encode diversity are not tractable, in the sense that we do not have efficient algorithms to sample, marginalize, or compute normalization constants.
-        DPPs are amenable to these tasks \citep{KuTa12}.
+        DPPs are amenable to these tasks \citep{KuTa12,Gil14}.
 
-    % subsection definition (end)
+    % section definitions (end)
 
-    \subsection{Sampling} % (fold)
-    \label{sub:sampling}
+    \section{Sampling determinantal point processes} % (fold)
+    \label{sec:sampling}
 
           We assume henceforth that $K$ is Hermitian and satisfies suitable conditions \cite[Theorem 3]{Sos00} so that its spectral decomposition is available
           \begin{equation*}
@@ -163,7 +168,7 @@
               \suml_{i=1}^{\infty}
                 \lambda_i \phi_i(x) \overline{\phi_i(y)},
               \quad \text{with }
-                \int \phi_i(x) \overline{\phi_j(x)} \mu(\diff x) = \delta_{ij}.
+                \int_{\bbX} \phi_i(x) \overline{\phi_j(x)} \mu(\diff x) = \delta_{ij}.
           \end{equation*}
           In the \href{https://dppy.readthedocs.io/en/latest/finite_dpps/exact_sampling.html}{\textcolor{magenta}{finite case}}, the eigendecomposition of a Hermitian kernel $\bfK$ can always be computed.
           \citet[Theorem 7]{HKPV06} proved that sampling $\DPP(K)$ can be done in two steps:
@@ -179,10 +184,10 @@
           \label{eq:joint_distribution1}
             \frac{1}{N!}
               \det \lrb{\tilde K(x_m,x_n)}_{m,n=1}^N
-                \prod_{n=1}^N\diff \mu(x_n)
+                \prod_{n=1}^N \mu(\diff x_n)
             = \frac{1}{N!}
                 \Vol^2\lrcb{\Phi(x_1),\dots,\Phi(x_n)}
-                  \prod_{n=1}^N \diff\mu(x_n),
+                  \prod_{n=1}^N \mu(\diff x_n),
           \end{equation}
           where $\Phi(x) \triangleq \lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$ denotes the \emph{feature vector} associated with $x\in\bbX$, so that $\tilde{K}(x,y) = \Phi(y)^{\dagger} \Phi(x)$.
           The algorithm boils down to expressing the chain rule for \Eqref{eq:joint_distribution1} as
@@ -196,7 +201,7 @@
             \,\prod_{n=2}^{N}\,
             \underbrace{
               \frac{1}{N-(n-1)}
-                \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x_n)}^2\!\!
+                \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x_n)}^2\!
                   \diff\mu(x_n)
               }_{p(x_n\vert x_1,\dots,x_{n-1})},
           \end{equation}
@@ -209,7 +214,7 @@
           %     = \frac{1}{N} \lrnorm{\phi(x_1)}^2
           %     \quad\text{and}\quad
           %   p(x_n | x_1,\dots,x_{n-1})
-          %     = \frac{1}{N-(n-1)} \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x_n)}^2\!\!,
+          %     = \frac{1}{N-(n-1)} \lrnorm{ \Pi_{H_{n-1}^{\perp}} \phi(x_n)}^2\!,
           % \end{equation}
           % \begin{align*}
           %   g_1(x)           &= \frac{1}{N} \lrnorm{\phi(x)}^2
@@ -250,7 +255,7 @@
           When $\beta=2$, $\beta$-ensembles are projection DPPs \citep{Kon05}, and therefore examples of continuous DPPs that can be sampled in $\calO(N^2)$.
           Some of these ensembles are of direct interest to MLers \eg the \emph{Laguerre} ensemble for which $\omega$ is a Gamma pdf, is associated to the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors.
 
-    % subsection sampling (end)
+    % section sampling (end)
 
 % section determinantal_point_processes (end)
 

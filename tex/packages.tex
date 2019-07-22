@@ -1,13 +1,17 @@
+% !TEX root = dppy_paper.tex
 \usepackage{jmlr2e}
-\usepackage{amsfonts,amsmath,amssymb}
+\usepackage{amsfonts, amsmath, amssymb}
 \usepackage{fontawesome} % For fancy icons :)
+\usepackage[usenames, dvipsnames, svgnames]{xcolor}
+\definecolor{mydarkblue}{rgb}{0,0.08,0.45}
 \usepackage{hyperref}
 \hypersetup{
-	breaklinks=true,
-  colorlinks=true,
-  linkcolor=blue,
-  urlcolor=gray,
-  citecolor=blue
+    breaklinks=true,
+    colorlinks=true,
+    linkcolor=mydarkblue,
+    citecolor=mydarkblue,
+    filecolor=mydarkblue,
+    urlcolor=mydarkblue
 }
 \usepackage[utf8x]{inputenc}
 \usepackage{pgffor} % To create math commands recursively in commands.tex
@@ -15,6 +19,3 @@
 
 % Code display
 \usepackage{listings}
-% \usepackage{lmodern}
-\usepackage[usenames,dvipsnames,svgnames]{xcolor}
-\usepackage[most]{tcolorbox}

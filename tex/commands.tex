@@ -1,7 +1,10 @@
+% !TEX root = dppy_paper.tex
 % Specific to this .tex
 % DPP
 \newcommand{\DPPy}{\textsf{DPPy}}
 \newcommand\DPP{\operatorname{DPP}}
+
+\newcommand*{\Secref}[1]{Section~\ref{#1}}
 
 % Python code highlight
 % \newcommand{\pygreen}[1]{\textcolor{OliveGreen}{#1}}
@@ -25,7 +28,16 @@
 \@addtoreset{footnote}{page}
 \makeatother
 
-\renewcommand{\thefootnote}{\ifcase\value{footnote}\or\color{black}{1}\or\color{black}{2}\or\color{black}{3}\or\color{black}{\faGithub}\or\color{black}{\faBook}\or\color{black}{\faGears}\fi} 
+\renewcommand{\thefootnote}{
+    \ifcase\value{footnote}
+        \or{1}
+        \or{2}
+        \or{3}
+        \or{\color{black}\faGithub}
+        \or{\color{black}\faBook}
+        \or{\color{black}\faGears}
+        \or{\color{black}\faIndent}
+    \fi}
 
 % Cross ref a foonote
 \makeatletter
@@ -119,7 +131,7 @@
 \definecolor{myviolet}{hsb}{0.79167,1,1}
 
 % https://tex.stackexchange.com/a/163911
-\makeatletter 
+\makeatletter
 \newcommand{\ProcessDigit}[1]
 {%
   \ifnum\lst@mode=\lst@Pmode\relax%
