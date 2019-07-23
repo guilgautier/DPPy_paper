@@ -1,16 +1,16 @@
 %
 % File:    Macros for Journal of Machine Learning Research
-%      Very minor modification of macros for Journal of Artificial 
-%      Intelligence Research (jair.sty) 
+%      Very minor modification of macros for Journal of Artificial
+%      Intelligence Research (jair.sty)
 %
-% Suggestions: Submit an issue or pull request to 
+% Suggestions: Submit an issue or pull request to
 %   https://github.com/JournalMLR/jmlr-style-file
 %
 %   Last edited October 9, 2000 by Leslie Pack Kaelbling
 %   Last edited January 23, 2001 by Alex J. Smola (we should set up RCS or CVS)
 %   Last edited March 29, 2004 Erik G. Learned-Miller
-%   Last edited January 17, 2016 Charles Sutton 
-%   Last edited January 9, 2017 Charles Sutton 
+%   Last edited January 17, 2016 Charles Sutton
+%   Last edited January 9, 2017 Charles Sutton
 %    (We have now set up GIT, good thing that we waited for it to
 %     be invented.)
 %
@@ -55,11 +55,11 @@
 \fi
 
 \bibpunct{(}{)}{;}{a}{,}{,}
- 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                             P A G E   S I Z E
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- 
+
 % Change the overall width of the page.  If these parameters are
 %       changed, they will require corresponding changes in the
 %       maketitle section.
@@ -119,10 +119,10 @@
      \@xsect{#5}}
 
 \def\@sect#1#2#3#4#5#6[#7]#8{\ifnum #2>\c@secnumdepth
-     \def\@svsec{}\else 
+     \def\@svsec{}\else
      \refstepcounter{#1}\edef\@svsec{\csname the#1\endcsname\hskip 0.5em }\fi
      \@tempskipa #5\relax
-      \ifdim \@tempskipa>\z@ 
+      \ifdim \@tempskipa>\z@
         \begingroup #6\relax
           \@hangfrom{\hskip #3\relax\@svsec}{\interlinepenalty \@M #8\par}
         \endgroup
@@ -158,10 +158,10 @@
 % Change the size of the footnote rule
 %
 %\renewcommand{\footnoterule}{\vspace{32pt}\hrule width 5cm}
-\renewcommand{\footnoterule}{\vspace{32pt}\hrule width 7cm}
+\renewcommand{\footnoterule}{\vspace{3em}\hrule width 7cm}
 
 
-\long\def\@makefntext#1{\@setpar{\@@par\@tempdima \hsize 
+\long\def\@makefntext#1{\@setpar{\@@par\@tempdima \hsize
              \advance\@tempdima-15pt\parshape \@ne 15pt \@tempdima}\par
              \parindent 2em\noindent \hbox to \z@{\hss{\@thefnmark} \hfil}#1}
 
@@ -262,7 +262,7 @@
 
 % \def\jmlrheading#1#2#3#4#5#6#7{\def\ps@jmlrtps{\let\@mkboth\@gobbletwo%
 % \def\@oddhead{\scriptsize Journal of Machine Learning Research #1 (#2) #3 \hfill Submitted #4; Published #5}%
-% \def\@oddfoot{\parbox[t]{\textwidth}{\raggedright \scriptsize \copyright #2 #7.\\[5pt] 
+% \def\@oddfoot{\parbox[t]{\textwidth}{\raggedright \scriptsize \copyright #2 #7.\\[5pt]
 % License: CC-BY 4.0, see \url{https://creativecommons.org/licenses/by/4.0/}. Attribution requirements
 % are provided at \url{http://jmlr.org/papers/v#1/#6.html}.\hfill}}%
 \def\jmlrheading#1#2#3#4#5#6#7{\def\ps@jmlrtps{\let\@mkboth\@gobbletwo%
@@ -306,7 +306,7 @@
 %  Allow ``hanging indents'' in long captions
 %
 \long\def\@makecaption#1#2{
-   \vskip 10pt 
+   \vskip 10pt
    \setbox\@tempboxa\hbox{#1: #2}
    \ifdim \wd\@tempboxa >\hsize               % IF longer than one line:
        \begin{list}{#1:}{
@@ -315,7 +315,7 @@
        \addtolength{\leftmargin}{\labelsep}
         }\item #2 \end{list}\par   % Output in quote mode
      \else                                    %   ELSE  center.
-       \hbox to\hsize{\hfil\box\@tempboxa\hfil}  
+       \hbox to\hsize{\hfil\box\@tempboxa\hfil}
    \fi}
 
 
@@ -346,10 +346,10 @@
 
 \newcommand{\BlackBox}{\rule{1.5ex}{1.5ex}}  % end of proof
 \newenvironment{proof}{\par\noindent{\bf Proof\ }}{\hfill\BlackBox\\[2mm]}
-\newtheorem{example}{Example} 
+\newtheorem{example}{Example}
 \newtheorem{theorem}{Theorem}
-\newtheorem{lemma}[theorem]{Lemma} 
-\newtheorem{proposition}[theorem]{Proposition} 
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{definition}[theorem]{Definition}

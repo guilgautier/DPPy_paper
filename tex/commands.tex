@@ -68,7 +68,7 @@
 %%% bold, cal and bb Uppercase letters A..Z
 \foreach \x in {A,...,Z}
 	{%
-	\expandafter\xdef\csname bf\x \endcsname{\noexpand\ensuremath{\noexpand\bf{\x}}}
+	\expandafter\xdef\csname bf\x \endcsname{\noexpand\ensuremath{\noexpand\mathbf{\x}}}
 	\expandafter\xdef\csname cal\x \endcsname{\noexpand\ensuremath{\noexpand\mathcal{\x}}}
 	\expandafter\xdef\csname bb\x \endcsname{\noexpand\ensuremath{\noexpand\mathbb{\x}}}
 }

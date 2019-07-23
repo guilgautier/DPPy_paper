@@ -40,8 +40,8 @@
 \begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
     Determinantal point processes (DPPs) are specific probability distributions over clouds of points that are used as models and computational tools across physics, probability, statistics, and more recently machine learning.
     Sampling from DPPs is a challenge and therefore we present \DPPy, a Python toolbox that gathers known exact and approximate sampling algorithms.
-    The project is hosted on GitHub\!\footnote{\label{fn:github}\url{https://github.com/guilgautier/DPPy}}and equipped with an extensive documentation.
-    This documentation\!\footnote{\label{fn:docs}\url{https://dppy.readthedocs.io}}takes the form of a short survey of DPPs and relates each mathematical property with \DPPy\ objects.
+    The project is hosted on GitHub\!\footnote{\label{fn:github}\href{https://github.com/guilgautier/DPPy}{\textsf{github.com/guilgautier/DPPy}}}and equipped with an extensive documentation.
+    This documentation\!\footnote{\label{fn:docs}\href{https://dppy.readthedocs.io}{\textsf{dppy.readthedocs.io}}}takes the form of a short survey of DPPs and relates each mathematical property with \DPPy\ objects.
 \end{abstract}
 
 \begin{keywords}%
@@ -70,12 +70,12 @@
     The \DPPy\ project is currently being used by the community (see, e.g., \citealp{BuRaWi19,Kam18,Pou19,DeCaVa19,GaBaVa19})
     \setcounter{footnote}{3}
 
-    \DPPy\ is hosted on GitHub,\!\footnoteref{fn:github}we use \setcounter{footnote}{5}Travis\!\footnote{\url{https://travis-ci.com/guilgautier/DPPy}}for continuous integration, Coveralls\!\footnote{\url{https://coveralls.io/github/guilgautier/DPPy}}for test coverage.
-    ReadTheDocs \!\footnoteref{fn:docs}allows to provide an extensive documentation which collects the essential mathematical background and showcases the key properties of DPPs through \DPPy\ objects and associated methods.
+    \DPPy\ is hosted on GitHub,\!\footnoteref{fn:github}we use \setcounter{footnote}{5}Travis\!\footnote{\href{https://travis-ci.com/guilgautier/DPPy}{\textsf{travis-ci.com/guilgautier/DPPy}}}for continuous integration, Coveralls\!\footnote{\href{https://coveralls.io/github/guilgautier/DPPy}{\textsf{coveralls.io/github/guilgautier/DPPy}}}for test coverage.
+    Through ReadTheDocs\hspace{1pt}\footnoteref{fn:docs}we provide an extensive documentation which covers the essential mathematical background and showcases the key properties of DPPs through \DPPy\ objects and associated methods.
     \DPPy\ thus also serves as a tutorial.
-
-    Along the paper, words in magenta point to the documentation.
-    In \Secref{sec:definitions}, we introduce DPPs. In \Secref{sec:sampling} we briefly review the challenging task of sampling
+     Along the paper, words in magenta point to the documentation.
+    % In \Secref{sec:definitions}, we introduce DPPs.
+    % In \Secref{sec:sampling} we briefly review the challenging task of sampling
 
 % section introduction (end)
 
@@ -130,21 +130,23 @@
         In this context, the kernel function becomes an $M\times M$ matrix $\bfK$, and the correlation functions refer to inclusion probabilities.~DPPs are thus often defined as $\calX\sim \DPP(\bfK)$ if
         \begin{equation}
         \label{eq:inclusion_proba_finite}
-            \Proba{S \subset \calX} = \det {\bfK}_S,
+            \Proba{S \subset \calX} = \det \bfK_S,
                 \quad\forall S\subset \bbX,
         \end{equation}
         where ${\bfK}_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$.
         The kernel matrix $\bfK$ is commonly assumed real-symmetric, in which case the existence and uniqueness of the DPP in \Eqref{eq:inclusion_proba_finite} is equivalent to the condition that its eigenvalues lie in $[0,1]$.
         The result also holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem 3]{Sos00}.
         We note that there are also DPPs with nonsymmetric kernels \citep{BoDiFu10}.
+
         Oftentimes, ML practitioners favor a more flexible definition of the DPP in terms of a \emph{likelihood kernel} $\bfL$
         ($\Proba{S \subset \calX}\propto \det \bfL_S$) which only requires $\bfL\succeq 0$
         rather than a \emph{correlation kernel} $0\preceq \bfK \preceq I$.
-        However, the two kernels are linked by specific relations \href{https://dppy.readthedocs.io/en/latest/finite_dpps/properties.html#relation-between-correlation-and-likelihood-kernels}{relations}
+        Yet, the $\bfL$ parametrization makes \Eqref{eq:inclusion_proba_finite} less interpretable and does not cover important cases such as fixed size DPPs which are achievable using projection $\bfK$ kernels.
+        To counter the latter issue, \citet[Section 5]{KuTa12} introduced $k$-DPPs which can be understood as DPPs parametrized by a likelihood kernel, conditioned to have exactly $k$ elements.
+        However, $k$-DPPs are not DPPs in general.
 
         The main interest in DPPs in ML is that they can model diversity while being tractable.
-        When $\bfK$ is assumed real-symmetric, ${\bfK}_{ij}$ encodes the similarity between items $i$ and $j$, then the determinantal structure brings diversity.
-        Indeed, \Eqref{eq:inclusion_proba_finite} entails
+        The entries of $\bfK$ encode a notion of similarity between items and \Eqref{eq:inclusion_proba_finite} entails
         \begin{equation*}
         \label{eq:2point_correlation_function_inclusion_proba_finite_case}
           \Proba{\{i,j\} \subset \calX}
@@ -153,10 +155,12 @@
               \times \Proba{\{j\} \subset \calX}
                 - |{\bfK}_{ij}|^2,
         \end{equation*}
-        i.e., compared to independent sampling with the same marginals, the more similar the items $i, j$ the less likely they co-occur.
+        i.e., compared to independent sampling with the same marginals, the more similar items $i$ and $j$ the less likely they co-occur.
 
+\clearpage
         Most point processes that encode diversity are not tractable, in the sense that efficient algorithms to sample, marginalize, or compute normalization constants are not available.
-        DPPs are amenable to these tasks \citep{KuTa12,Gil14}, with polynomial complexity.
+        DPPs are amenable to these tasks \citep{KuTa12,Gil14}.
+        % , with polynomial complexity.
 
     % section definitions (end)
 
@@ -183,7 +187,7 @@
         In a nutshell, step \ref{enum:sampling_step1} selects a component of the mixture and step \ref{enum:sampling_step2} generates a sample from the corresponding projection DPP.
         \citet[Algorithm 18]{HKPV06} provide a generic way to sample from projection DPPs, which stems from two facts.
         First, \GG{conditionally on $N$ ?} a projection DPP with kernel $\tilde{K}$ is formed by exactly $N=\rank \tilde{K}$ points, $\mu$-almost surely.
-        Then, one can apply the chain rule to sample $(X_1,\dots,X_N)$ with probability distribution given by \Eqref{eq:joint_distribution}, and then discard the order the points were drawn to get a valid sample $\lrcb{X_{1}, \dots, X_{N}} \sim \DPP(\tilde{K})$.
+        Then, one can apply the chain rule to sample $(X_1,\dots,X_N)$ with probability distribution given by \Eqref{eq:joint_distribution}, and discard the sequential aspect of the procedure to get a valid sample $\lrcb{X_{1}, \dots, X_{N}} \sim \DPP(\tilde{K})$.
         \begin{equation}
         \label{eq:joint_distribution}\\
         \!
@@ -251,8 +255,7 @@
         % \end{align*}
 
         A few remarks are in order.
-        First, the LHS of \Eqref{eq:joint_distribution} is indeed an exchangeable probability distribution.
-        % , the $N!$ factor captures all possible permutations.
+        First, the LHS of \Eqref{eq:joint_distribution} is indeed an exchangeable probability distribution, the $N!$ factor captures all possible permutations.
         The successive ratios that appear in the RHS are the normalized conditional densities (w.r.t.\,$\mu$) which drive the chain rule.
         Observe that the respective normalizing constants are independent of the previous points.
         Second, the numerators of the RHS can be expressed as the ratio of two determinants and further expanded with Woodbury's formula.
