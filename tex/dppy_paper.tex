@@ -62,17 +62,18 @@
     In ML, DPPs mainly serve to model diverse sets of items, as in recommendation \citep{KaDeKo16, GaPaKo16} or text summarization \citep{DuBa18}.
     Consequently, MLers  use mostly finite DPPs, which are distributions over subsets of a finite \emph{ground set} of cardinality $M$, parametrized by an $M\times M$ kernel matrix $\bfK$.
     Routine inference tasks such as normalization, marginalization, or sampling have complexity $\calO(M^3)$ \citep{Gil14}.
-    Alike other kernel methods, when $M$ is large, $\calO(M^3)$ is a bottleneck.
+    Like other kernel methods, when $M$ is large, $\calO(M^3)$ is a bottleneck.
     % % see also \citet{TrBaAm18} for a survey on exact sampling.
     % Efficient approximate samplers have thus developed; from kernel approximation \citep{AKFT13} or MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
 
-    In terms of software, the R library \textsf{spatstat}\ \citep{BaTu05}, a general-purpose toolbox on spatial point processes, includes sampling and learning of continuous DPPs with stationary kernels, as described by \citet{LaMoRu15}. We propose \DPPy, a turnkey Python implementation of known general algorithms to sample \emph{finite} DPPs.
-    Algorithms for non-stationary continuous DPPs, for instance related to random covariance matrices or Monte Carlo methods are also of interest for MLers.
+    In terms of software, the R library \textsf{spatstat}\ \citep{BaTu05}, a general-purpose toolbox on spatial point processes, includes sampling and learning of continuous DPPs with stationary kernels, as described by \citet{LaMoRu15}.
+    Complementarily, we propose \DPPy, a turnkey Python implementation of known general algorithms to sample \emph{finite} DPPs.
+    We also include algorithms for non-stationary continuous DPPs, for instance related to random covariance matrices or Monte Carlo methods are also of interest for MLers.
 
-    The \DPPy\ project, hosted on GitHub,\!\footnoteref{fn:github} is already being used by the community (\citealp{BuRaWi19,Kam18,Pou19,DeCaVa19,GaBaVa19}).
+    The \DPPy\ project, hosted on GitHub,\!\footnoteref{fn:github} is already being used by the cross-disciplinary DPP community (\citealp{BuRaWi19,Kam18,Pou19,DeCaVa19,GaBaVa19}).
     % \citep[?!][]{BaHa16}
     We use \setcounter{footnote}{5}Travis\!\footnote{\href{https://travis-ci.com/guilgautier/DPPy}{\textsf{travis-ci.com/guilgautier/DPPy}}} for continuous integration and Coveralls\!\footnote{\href{https://coveralls.io/github/guilgautier/DPPy}{\textsf{coveralls.io/github/guilgautier/DPPy}}}for test coverage.
-    Through ReadTheDocs\hspace{1pt}\footnoteref{fn:docs}we provide an extensive documentation which covers the essential mathematical background and showcases the key properties of DPPs through \DPPy\ objects and associated methods.
+    Through ReadTheDocs\hspace{1pt}\footnoteref{fn:docs}we provide an extensive documentation, which covers the essential mathematical background and showcases the key properties of DPPs through \DPPy\ objects and associated methods.
     \DPPy\ thus also serves as a tutorial.
      % Along the paper, words in magenta point to the documentation.
     % In \Secref{sec:definitions}, we introduce DPPs.
@@ -88,7 +89,7 @@
     \section{Definitions} % (fold)
     \label{sec:definitions}
 
-        A point process $\calX$ on $\bbX$ is a random subset of points $\lrcb{X_1, \dots, X_N} \subset \bbX$, where the number of points $N$ is itself random.
+        A point process is a random subset of points $\calX=\lrcb{X_1, \dots, X_N} \subset \bbX$, where the number of points $N$ is itself random.
         We further add to the definition that $N$ should be almost surely finite and that all points in a sample are distinct.
         Given a reference measure $\mu$ on~$\bbX$, a point process is usually characterized by its $k$-correlation function $\rho_k$ for all $k$, where
         \begin{equation*}
@@ -127,7 +128,7 @@
               = \det \lrb{K(x_i, x_j)}_{i,j=1}^k,
             \quad \forall k\geq 1.
         \end{equation*}
-        In ML, most DPPs are taken from the finite setting where $\bbX = \lrcb{1,\dots,M}$ and $\mu=\sum_{i=1}^M \delta_i$.
+        In ML, most DPPs are in the finite setting where $\bbX = \lrcb{1,\dots,M}$ and $\mu=\sum_{i=1}^M \delta_i$.
         In this context, the kernel function becomes an $M\times M$ matrix $\bfK$, and the correlation functions refer to inclusion probabilities.~DPPs are thus often defined as $\calX\sim \DPP(\bfK)$ if
         \begin{equation}
         \label{eq:inclusion_proba_finite}
@@ -135,19 +136,31 @@
                 \quad\forall S\subset \bbX,
         \end{equation}
         where ${\bfK}_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$.
-        The kernel matrix $\bfK$ is commonly assumed real-symmetric, in which case the existence and uniqueness of the DPP in \Eqref{eq:inclusion_proba_finite} is equivalent to the condition that its eigenvalues lie in $[0,1]$.
+        The kernel matrix $\bfK$ is commonly assumed to be real-symmetric, in which case the existence and uniqueness of the DPP in \Eqref{eq:inclusion_proba_finite} is equivalent to the condition that the eigenvalues of $\bfK$ lie in $[0,1]$.
         The result also holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem 3]{Sos00}.
-        We note that there are also DPPs with nonsymmetric kernels \citep{BoDiFu10}.
+        We note that there are also DPPs with nonsymmetric kernels \citep{BoDiFu10,GBDK19}.
 
-        Oftentimes, ML practitioners favor a more flexible definition of the DPP in terms of a \emph{likelihood kernel} $\bfL$
-        ($\Proba{S \subset \calX}\propto \det \bfL_S$) which only requires $\bfL\succeq 0$
+        Oftentimes, ML practitioners favor a more flexible definition of a DPP in terms of a \emph{likelihood kernel} $\bfL$, which is only requires $\bfL\succeq 0$ so that
+        \begin{equation*}
+            \Proba{\calX=S}\propto \det \bfL_S,
+        \end{equation*}
         rather than a \emph{correlation kernel} $0\preceq \bfK \preceq I$.
         Yet, the $\bfL$ parametrization makes \Eqref{eq:inclusion_proba_finite} less interpretable and does not cover important cases such as fixed size DPPs which are achievable using projection $\bfK$ kernels.
         To counter the latter issue, \citet[Section 5]{KuTa12} introduced $k$-DPPs which can be understood as DPPs parametrized by a likelihood kernel, conditioned to have exactly $k$ elements.
         However, $k$-DPPs are not DPPs in general.
 
         The main interest in DPPs in ML is that they can model diversity while being tractable.
-        The entries of $\bfK$ encode a notion of similarity between items and \Eqref{eq:inclusion_proba_finite} entails
+        % The entries of $\bfK$ encode a notion of similarity between items and \Eqref{eq:inclusion_proba_finite} entails
+        % \begin{equation*}
+        % \label{eq:2point_correlation_function_inclusion_proba_finite_case}
+        %   \Proba{\{i,j\} \subset \calX}
+        %     = {\bfK}_{ii}{\bfK}_{jj}-{\bfK}_{ij}{\bfK}_{ji}
+        %     = \Proba{\{i\} \subset \calX}
+        %       \times \Proba{\{j\} \subset \calX}
+        %         - |{\bfK}_{ij}|^2,
+        % \end{equation*}
+        % i.e., compared to independent sampling with the same marginals, the more similar items $i$ and $j$ the less likely they co-occur.
+        Compared to independent sampling with the same marginals, \Eqref{eq:inclusion_proba_finite} entails
         \begin{equation*}
         \label{eq:2point_correlation_function_inclusion_proba_finite_case}
           \Proba{\{i,j\} \subset \calX}
@@ -156,7 +169,8 @@
               \times \Proba{\{j\} \subset \calX}
                 - |{\bfK}_{ij}|^2,
         \end{equation*}
-        i.e., compared to independent sampling with the same marginals, the more similar items $i$ and $j$ the less likely they co-occur.
+        so that, the larger $\bfK_{ij}$ less likely items $i$ and $j$ co-occur.
+        If $\bfK_{ij}$ models the similarity between items $i$ and $j$, DPPs are thus random diverse sets of elements.
 
         Most point processes that encode diversity are not tractable, in the sense that efficient algorithms to sample, marginalize, or compute normalization constants are not available.
         DPPs are amenable to these tasks \citep{KuTa12,Gil14}.
@@ -178,9 +192,7 @@
           \quad \text{with }
             \int_{\bbX} \phi_i(x) \phi_j(x) \mu(\diff x) = \delta_{ij}.
         \end{equation*}
-        In the finite case,
-        % \href{https://dppy.readthedocs.io/en/latest/finite_dpps/exact_sampling.html}{\textcolor{magenta}{finite case}},
-        the eigendecomposition of the kernel matrix $\bfK$ can always be computed.
+        Note that in the finite case, the spectral theorem is enough to eigendecompose $\bfK$.
         \citet[Theorem 7]{HKPV06} proved that sampling $\DPP(K)$ can be done in two steps:
         \begin{enumerate}
             \item draw $B_i\sim\Ber(\lambda_i)$ independently and denote $\lrcb{i_1,\dots,i_{N}} = \lrcb{i:B_i=1}$,\label{enum:sampling_step1}
@@ -214,7 +226,7 @@
             % \!
         \end{equation}
         can be discarded to get a valid sample $\lrcb{X_{1}, \dots, X_{N}} \sim \DPP(\tilde{K})$.
-        For each $x\in\bbX$ we associate a \emph{feature vector}
+        To each $x\in\bbX$ we associate a \emph{feature vector}
         $\Phi(x) \triangleq \lrp{\phi_{i_1}(x),\dots,\phi_{i_N}(x)}$,
         so that
         $\tilde{K}(x,y) = \Phi(x)^{\top} \Phi(y)$.
@@ -266,33 +278,40 @@
         They can be identified as the incremental posterior variances in Gaussian process regression with kernel $\tilde{K}$ \citep[Equation 2.26]{RaWi06}.
         Third, the chain rule expressed in \Eqref{eq:joint_distribution} has a strong Gram-Schmidt flavor since it actually comes from a recursive application of the base$\times$height formula.
         In the end, DPPs favor configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume, which is another way of understanding repulsiveness.
-
         The previous sampling scheme is exact and generic but, except for projection kernels, it requires the eigendecomposition of the underlying kernel.
-        In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has an average cost of $\calO(M\lrb{\Tr \bfK}^2)$
-        % which may still be problematic for large $M$,
-        \citep{Gil14,TrBaAm18}.
-        Alternative exact samplers exist among which, the natural bottom-up  Cholesky-based procedure of \citet{Pou19} and the  \citet{DeCaVa19} which offers interesting cost reduction in certain regimes.
-        In the continuous case, there is an additional cost of the rejection sampling routine required for sampling each conditional.
-        In applications where these costs are a bottleneck, users rely on approximate sampling.
-        Research has focused on two main directions: kernel approximation \citep{AKFT13} and MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
 
-        To conclude, some specific DPPs admit more efficient exact samplers that do not rely on \Eqref{eq:joint_distribution}, \eg uniform spanning trees \citep{PrWi98} or eigenvalues of random matrices.
-        For instance, a $\beta$-ensemble is a set of $N$ points $\{X_1,\dots,X_N\}\subset \bbR$ with probability distribution given by
+        In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has an average cost of $\calO(M\Expe{|\calX|}^2)$
+        % which may still be problematic for large $M$,
+        \citep[see, e.g.,][]{Gil14,TrBaAm18}.
+        Besides, there exist some alternative exact samplers.
+        \citet{Pou19} and \citet{LaGaDe18} use a $\calO(M^3)$ Cholesky-based chain rule on sets; each item in turn is decided to be excluded or included in the sample.
+        \citet{DeCaVa19} first sample an intermediate distribution and correct the bias by thinning the intermediate sample (with size smaller than $M$) using a carefully designed DPP.
+        In certain regimes, this procedure may be more practical with an overall
+        $\calO\lrp{M \operatorname{poly}(\Expe{|\calX|}) \operatorname{polylog}(M)}$ cost.
+
+        In the continuous case, sampling each conditional usually calls a rejection sampling routine with a tailored proposal.
+        In applications where these costs are a bottleneck, users rely on approximate sampling.
+        Research has focused mainly on kernel approximation \citep{AKFT13} and MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
+
+        Nonetheless specific DPPs admit more efficient exact samplers that do not rely on \Eqref{eq:joint_distribution}, \eg uniform spanning trees \citep{PrWi98} or eigenvalues of random matrices.
+        For instance, a $\beta$-ensemble is a set of $N$ points $\{X_1,\dots,X_N\}\subset \bbR$ with distribution
+        \setlength{\belowdisplayskip}{0pt} \setlength{\belowdisplayshortskip}{0pt}
+\setlength{\abovedisplayskip}{0pt} \setlength{\abovedisplayshortskip}{0pt}
         \begin{equation*}
         \label{eq:beta_ensemble_pdf}
         \frac{1}{Z_{N,\beta}}
-        \prod_{m< n}
-            \lrabs{x_m-x_n}^{\beta}
+        \prod_{p< n}
+            \lrabs{x_p-x_n}^{\beta}
         \prod_{n= 1}^N
             \omega(x_n)
-            \diff x_n,
+            \diff x_n, \quad \text{where } \beta>0.
         \end{equation*}
-        where $\beta>0$.
         For some choices of the weight function $\omega$, the $\beta$-ensemble can be sampled by computing the eigenvalues of simple tridiagonal \citep{DuEd02} or quindiagonal random matrices \citep{KiNe04}.
         In particular, ($\beta=2$)-ensembles correspond to projection DPPs \citep{Kon05}.
-        They are therefore examples of continuous DPPs that can be sampled exactly in $\calO(N^2)$, without rejection.
-        Some of these ensembles are of direct interest to MLers \eg the \emph{Laguerre} ensemble for which $\omega$ is a Gamma pdf, is associated to the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors.
-        It is worth mentioning that \DPPy\ implements a multivariate extension of the so-called \emph{Jacobi} ensemble that has become the spearhead of DPP-based Monte Carlo integration methods \citep{BaHa16,GaBaVa19,MaCoAm19}.
+        They are therefore examples of continuous DPPs that can be sampled exactly in $\calO(N^2)$ time, without rejection.
+        Some of these ensembles are of direct interest to MLers.
+        The \emph{Laguerre} ensemble, for instance, has $\omega$ be a Gamma pdf, and corresponds to the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors.
+        It is worth mentioning that \DPPy\ implements an exact sampler of the  multivariate extension of the \emph{Jacobi} ensemble which has been central in recent results on faster-than-Monte Carlo numerical integration \citep{BaHa16,GaBaVa19,MaCoAm19}.
 
     % section sampling (end)
 
@@ -303,10 +322,10 @@
 
     \lstset{language=mypython}
 
-    \DPPy\ handles Python objects that fit the natural definition of the corresponding DPPs, for more details we refer to the documentation\footnoteref{fn:docs}and the corresponding \href{https://github.com/guilgautier/DPPy/tree/master/notebooks}{Jupyter notebooks}, which showcase \DPPy\ objects.
-    For instance, a finite $\DPP(\bfK)$ can be defined as
-    \lstinline!FiniteDPP(kernel_type="correlation", **{"K": K})!\!.
-    Its two main methods, namely
+    \DPPy\ handles Python objects that fit the natural definition of the corresponding DPPs; see also the documentation\footnoteref{fn:docs}and the corresponding \href{https://github.com/guilgautier/DPPy/tree/master/notebooks}{Jupyter notebooks}, which showcase \DPPy\ objects.
+    \lstinline!FiniteDPP(kernel_type="correlation", **{"K": K})!\!
+    instantiates a finite $\DPP(\bfK)$.
+    Its two main methods,
     \lstinline{.sample_exact()} and
     \lstinline{.sample_mcmc()}
     implement the different exact samplers and current state-of-the-art MCMC samplers.
@@ -314,18 +333,38 @@
     \lstinline{.sample_exact_k_dpp()} and
     \lstinline{.sample_mcmc_k_dpp()} methods are available.
 
-    The Laguerre $\beta$-ensemble can be instantiated as
+    The Laguerre $\beta$-ensemble is instantiated as
     \lstinline{LaguerreEnsemble(beta=3.14).}
     It can be sampled using either the full matrix model (eigenvalues of random covariance matrix) when $\beta\in\lrcb{1,2,4}$ with
     \lstinline{.sample_full_model()}
     or the tridiagonal one for $\beta > 0$ with
     \lstinline{.sample_banded_model()}.
-    Displays are available via
-    \lstinline{.plot()} to plot the last realization and
+    Samples can be displayed via
+    \lstinline{.plot()} or
     \lstinline{.hist()} to construct the empirical distribution that converges to the Mar\v{c}enko-Pastur distribution.
     % \end{itemize}
 
-    \GG{Add some nice figures like MultivariateJacobi, Laguerre and kernel of UST ?}
+    \begin{figure*}[!hb]
+        % \vspace{-2em}
+        \centering
+        \subfigure[]{
+            \includegraphics[width=\threefig]{images/multivariate_jacobi_2D_1000points.pdf}
+            \label{fig:diversity}
+        }
+%            \includegraphics[width=\threefig]{../img/bolt_volumes.pdf}
+        % \qquad\qquad
+        \subfigure[]{
+            \includegraphics[width=\threefig]{images/LUE.pdf}
+            \label{fig:volume}
+        }
+        \subfigure[]{
+            \includegraphics[width=\threefig]{images/UST_kernel.pdf}
+            \label{fig:volume}
+        }
+        \vspace{-2em}
+        \caption{(a) A $N=1000$ sample of the 2D Jacobi ensemble (b) Histogram of the eigenvalue of the covariance matrix of $N=1000$ complex Gaussian vectors, rescaled to show the limiting Marčenko-Pastur distribution (c) Display of the $\bfK$ kernel associated to the uniform spanning tree distribution of a graph.}
+        \label{fig:bolt}
+    \end{figure*}
 
 % section the_dppy_toolbox (end)
 
@@ -340,7 +379,7 @@
 % Acknowledgements should go at the end, before appendices and references
 %\newpage
 %{\small
-\newpage
+\clearpage
 
 \acks{%
 We would like to thank \href{https://guillep.github.io/}{Guillermo Polito} for leading our reproducible research \href{https://github.com/CRIStAL-PADR/reproducible-research-SE-notes}{workgroup}, this project owes him a lot.
