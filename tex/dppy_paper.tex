@@ -140,13 +140,13 @@
         The result also holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem 3]{Sos00}.
         We note that there are also DPPs with nonsymmetric kernels \citep{BoDiFu10,GBDK19}.
 
-        Oftentimes, ML practitioners favor a more flexible definition of a DPP in terms of a \emph{likelihood kernel} $\bfL$, which is only requires $\bfL\succeq 0$ so that
+        Oftentimes, ML practitioners favor a more flexible definition of a DPP in terms of a \emph{likelihood kernel} $\bfL$, which only requires $\bfL\succeq 0$ so that
         \begin{equation*}
-            \Proba{\calX=S}\propto \det \bfL_S,
+            \Proba{\calX=S} = \frac{\det \bfL_S}{\det \lrb{I + \bfL}},
         \end{equation*}
         rather than a \emph{correlation kernel} $0\preceq \bfK \preceq I$.
         Yet, the $\bfL$ parametrization makes \Eqref{eq:inclusion_proba_finite} less interpretable and does not cover important cases such as fixed size DPPs which are achievable using projection $\bfK$ kernels.
-        To counter the latter issue, \citet[Section 5]{KuTa12} introduced $k$-DPPs which can be understood as DPPs parametrized by a likelihood kernel, conditioned to have exactly $k$ elements.
+        \citet[Section 5]{KuTa12} countered that with $k$-DPPs, which can be understood as DPPs parametrized by a likelihood kernel, conditioned to have exactly $k$ elements.
         However, $k$-DPPs are not DPPs in general.
 
         The main interest in DPPs in ML is that they can model diversity while being tractable.
@@ -169,8 +169,8 @@
               \times \Proba{\{j\} \subset \calX}
                 - |{\bfK}_{ij}|^2,
         \end{equation*}
-        so that, the larger $\bfK_{ij}$ less likely items $i$ and $j$ co-occur.
-        If $\bfK_{ij}$ models the similarity between items $i$ and $j$, DPPs are thus random diverse sets of elements.
+        so that, the larger $\lrabs{\bfK_{ij}}$ less likely items $i$ and $j$ co-occur.
+        If $\bfK_{ij}$ models the similarity between items $i$ and $j$, DPPs are thus random \emph{diverse} sets of elements.
 
         Most point processes that encode diversity are not tractable, in the sense that efficient algorithms to sample, marginalize, or compute normalization constants are not available.
         DPPs are amenable to these tasks \citep{KuTa12,Gil14}.
@@ -293,11 +293,13 @@
         In applications where these costs are a bottleneck, users rely on approximate sampling.
         Research has focused mainly on kernel approximation \citep{AKFT13} and MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
 
-        Nonetheless specific DPPs admit more efficient exact samplers that do not rely on \Eqref{eq:joint_distribution}, \eg uniform spanning trees \citep{PrWi98} or eigenvalues of random matrices.
-        For instance, a $\beta$-ensemble is a set of $N$ points $\{X_1,\dots,X_N\}\subset \bbR$ with distribution
-        \setlength{\belowdisplayskip}{0pt} \setlength{\belowdisplayshortskip}{0pt}
-\setlength{\abovedisplayskip}{0pt} \setlength{\abovedisplayshortskip}{0pt}
+        However, specific DPPs admit efficient exact samplers that do not rely on \Eqref{eq:joint_distribution}, e.g., uniform spanning trees \citep[UST,][Figure~\ref{fig:UST_kernel}]{PrWi98} or eigenvalues of random matrices.
+        For instance, a $\beta$-ensemble is a set of $N$ points of $\bbR$ with joint distribution
         \begin{equation*}
+        \setlength{\belowdisplayskip}{0pt}
+        \setlength{\belowdisplayshortskip}{0pt}
+        \setlength{\abovedisplayskip}{0pt}
+        \setlength{\abovedisplayshortskip}{0pt}
         \label{eq:beta_ensemble_pdf}
         \frac{1}{Z_{N,\beta}}
         \prod_{p< n}
@@ -310,8 +312,8 @@
         In particular, ($\beta=2$)-ensembles correspond to projection DPPs \citep{Kon05}.
         They are therefore examples of continuous DPPs that can be sampled exactly in $\calO(N^2)$ time, without rejection.
         Some of these ensembles are of direct interest to MLers.
-        The \emph{Laguerre} ensemble, for instance, has $\omega$ be a Gamma pdf, and corresponds to the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors.
-        It is worth mentioning that \DPPy\ implements an exact sampler of the  multivariate extension of the \emph{Jacobi} ensemble which has been central in recent results on faster-than-Monte Carlo numerical integration \citep{BaHa16,GaBaVa19,MaCoAm19}.
+        The \emph{Laguerre} ensemble, for instance, has $\omega$ be a Gamma pdf, and corresponds to the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors, see Figure\ref{fig:LUE}.
+        Finally, we mention that \DPPy\ implements an exact sampler of the  multivariate extension of the \emph{Jacobi} ensemble which has been central in recent results on faster-than-Monte Carlo numerical integration \citep{BaHa16,GaBaVa19,MaCoAm19}.
 
     % section sampling (end)
 
@@ -323,7 +325,7 @@
     \lstset{language=mypython}
 
     \DPPy\ handles Python objects that fit the natural definition of the corresponding DPPs; see also the documentation\footnoteref{fn:docs}and the corresponding \href{https://github.com/guilgautier/DPPy/tree/master/notebooks}{Jupyter notebooks}, which showcase \DPPy\ objects.
-    \lstinline!FiniteDPP(kernel_type="correlation", **{"K": K})!\!
+    For example, \lstinline!FiniteDPP(kernel_type="correlation", **{"K": K})!\!
     instantiates a finite $\DPP(\bfK)$.
     Its two main methods,
     \lstinline{.sample_exact()} and
@@ -333,46 +335,46 @@
     \lstinline{.sample_exact_k_dpp()} and
     \lstinline{.sample_mcmc_k_dpp()} methods are available.
 
-    The Laguerre $\beta$-ensemble is instantiated as
-    \lstinline{LaguerreEnsemble(beta=3.14).}
+    A Laguerre $\beta$-ensemble is instantiated as
+    \lstinline{LaguerreEnsemble(beta=2).}
     It can be sampled using either the full matrix model (eigenvalues of random covariance matrix) when $\beta\in\lrcb{1,2,4}$ with
     \lstinline{.sample_full_model()}
-    or the tridiagonal one for $\beta > 0$ with
-    \lstinline{.sample_banded_model()}.
+    or the tridiagonal one with
+    \lstinline{.sample_banded_model()}, for $\beta > 0$.
     Samples can be displayed via
     \lstinline{.plot()} or
-    \lstinline{.hist()} to construct the empirical distribution that converges to the Mar\v{c}enko-Pastur distribution.
-    % \end{itemize}
+    \lstinline{.hist()} to construct the empirical distribution that converges to the Mar\v{c}enko-Pastur distribution, see Figure~\ref{fig:LUE}.
+
+    \DPPy\ can readily serve as research and teaching support.
+    \DPPy\ is also ready for other contributors to add content and enlarge its scope, \eg with procedures for learning kernels.
 
     \begin{figure*}[!hb]
-        % \vspace{-2em}
+        \vspace{-1em}
         \centering
-        \subfigure[]{
-            \includegraphics[width=\threefig]{images/multivariate_jacobi_2D_1000points.pdf}
-            \label{fig:diversity}
+        \subfigure[2D Jacobi ensemble]{
+            \includegraphics[height=10.5em]{images/multivariate_jacobi_2D_1000points.pdf}
+            \label{fig:2D_jacobi_sample}
         }
-%            \includegraphics[width=\threefig]{../img/bolt_volumes.pdf}
+%            \includegraphics[height=10.5em]{../img/bolt_volumes.pdf}
         % \qquad\qquad
-        \subfigure[]{
-            \includegraphics[width=\threefig]{images/LUE.pdf}
-            \label{fig:volume}
+        \subfigure[$\beta=2$-Laguerre ensemble]{
+            \includegraphics[height=10.5em]{images/LUE.pdf}
+            \label{fig:LUE}
         }
-        \subfigure[]{
-            \includegraphics[width=\threefig]{images/UST_kernel.pdf}
-            \label{fig:volume}
+        \subfigure[$\bfK$ kernel of UST]{
+            \includegraphics[height=10.5em]{images/UST_kernel.pdf}
+            \label{fig:UST_kernel}
         }
-        \vspace{-2em}
-        \caption{(a) A $N=1000$ sample of the 2D Jacobi ensemble (b) Histogram of the eigenvalue of the covariance matrix of $N=1000$ complex Gaussian vectors, rescaled to show the limiting Marčenko-Pastur distribution (c) Display of the $\bfK$ kernel associated to the uniform spanning tree distribution of a graph.}
-        \label{fig:bolt}
+        \vspace{-1em}
+        \caption{Some displays available in \DPPy}
+        \label{fig:DPPy_figs}
+        \vspace{-10em}
     \end{figure*}
 
 % section the_dppy_toolbox (end)
 
 % \section{Conclusion and future work} % (fold)
 % \label{sec:conclusion_and_future_work}
-
-    \DPPy\ can readily serve as research and teaching support.
-    \DPPy\ is also ready for other contributors to add content and enlarge its scope, \eg with procedures for learning kernels.
 
 % section conclusion_and_future_work (end)
 
