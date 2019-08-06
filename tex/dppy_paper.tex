@@ -72,7 +72,7 @@
 
     The \DPPy\ project, hosted on GitHub,\!\footnoteref{fn:github}is already being used by the cross-disciplinary DPP community (\citealp{BuRaWi19,Kam18,Pou19,DeCaVa19,GaBaVa19}).
     % \citep[?!][]{BaHa16}
-    We use \setcounter{footnote}{5}Travis\!\footnote{\href{https://travis-ci.com/guilgautier/DPPy}{\textsf{travis-ci.com/guilgautier/DPPy}}} for continuous integration and Coveralls\!\footnote{\href{https://coveralls.io/github/guilgautier/DPPy}{\textsf{coveralls.io/github/guilgautier/DPPy}}}for test coverage.
+    We use \setcounter{footnote}{5}Travis\!\footnote{\href{https://travis-ci.com/guilgautier/DPPy}{\textsf{travis-ci.com/guilgautier/DPPy}}}for continuous integration and Coveralls\!\footnote{\href{https://coveralls.io/github/guilgautier/DPPy}{\textsf{coveralls.io/github/guilgautier/DPPy}}}for test coverage.
     Through ReadTheDocs\hspace{1pt}\footnoteref{fn:docs}we provide an extensive documentation, which covers the essential mathematical background and showcases the key properties of DPPs through \DPPy\ objects and associated methods.
     \DPPy\ thus also serves as a tutorial.
      % Along the paper, words in magenta point to the documentation.
@@ -147,7 +147,7 @@
         rather than a \emph{correlation kernel} $0\preceq \bfK \preceq I$.
         Yet, the $\bfL$ parametrization makes \Eqref{eq:inclusion_proba_finite} less interpretable and does not cover important cases such as fixed size DPPs which are achievable using projection $\bfK$ kernels.
         \citet[Section\,5]{KuTa12} countered that with $k$-DPPs, which can be understood as DPPs parametrized by a likelihood kernel, conditioned to have exactly $k$ elements.
-        However, in general, $k$-DPPs are not DPPs .
+        However, in general, $k$-DPPs are not DPPs.
 
         The main interest in DPPs in ML is that they model diversity while being tractable.
         % The entries of $\bfK$ encode a notion of similarity between items and \Eqref{eq:inclusion_proba_finite} entails
@@ -197,14 +197,14 @@
             \int_{\bbX} \phi_i(x) \phi_j(x) \mu(\diff x) = \delta_{ij}.
         \end{equation*}
         Note that, in the finite case, the spectral theorem is enough to eigendecompose $\bfK$.
-        \citet[Theorem\,7]{HKPV06} proved that sampling $\DPP(K)$ can be done in two steps:
+        \citeauthor{HKPV06}\,\citeyearpar[Theorem\,7]{HKPV06} proved that sampling $\DPP(K)$ can be done in two steps:
         \begin{enumerate}
             \item draw $B_i\sim\Ber(\lambda_i)$ independently and denote $\lrcb{i_1,\dots,i_{N}} = \lrcb{i:B_i=1}$,\label{enum:sampling_step1}
             \item sample from the DPP with kernel $\tilde{K}(x,y) = \sum_{n=1}^{N}\phi_{i_n}(x) \phi_{i_n}(y)$.\label{enum:sampling_step2}
         \end{enumerate}
         In other words, all DPPs are mixtures of \emph{projection} DPPs, that are parametrized by an orthogonal projection kernel.
         In a nutshell, Step\,\ref{enum:sampling_step1} selects a component of the mixture and Step\,\ref{enum:sampling_step2} generates a sample of the projection $\DPP(\tilde{K})$.
-        \citet[Algorithm 18]{HKPV06} provide a generic projection DPP sampler that we now describe briefly.
+        \citeauthor{HKPV06}\,\citeyearpar[Algorithm\,18]{HKPV06} provide a generic projection DPP sampler that we briefly describe.
         First, the projection DPP with kernel $\tilde{K}$ has exactly $N=\rank \tilde{K}$ points, $\mu$-almost surely.
         Then, the sequential aspect of the chain rule applied to sample $(X_1,\dots,X_N)$ with probability distribution
         \begin{equation}
@@ -284,15 +284,15 @@
         In the end, DPPs favor configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume, which is another way of understanding repulsiveness.
         The previous sampling scheme is exact and generic but, except for projection kernels, it requires the eigendecomposition of the underlying kernel.
 
-        In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, but then the procedure has an average cost of $\calO(M\Expe{|\calX|}^2)$
+        In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, then the complexity of drawing exact samples is of order $\calO(M\Expe{|\calX|}^2)$
         % which may still be problematic for large $M$,
         \citep[see, e.g.,][]{Gil14,TrBaAm18}.
         Besides, there exist some alternative exact samplers.
         \citet{Pou19} and \citet{LaGaDe18} use a $\calO(M^3)$ Cholesky-based chain rule on sets; each item in turn is decided to be excluded or included in the sample.
         \citet{DeCaVa19} first sample an intermediate distribution and correct the bias by thinning the intermediate sample (with size smaller than\,$M$) using a carefully designed DPP.
         In certain regimes, this procedure may be more practical with an overall
-        $\calO\lrp{M \operatorname{poly}(\Expe{|\calX|}) \operatorname{polylog}(M)}$ cost.
-        In the continuous case, sampling each conditional usually calls a rejection sampling routine with a tailored proposal.
+        $\calO(M\operatorname{poly}(\Expe{|\calX|})\operatorname{polylog}(M))$ cost.
+        In the continuous case, sampling exactly each conditional that appear in the right hand side of \Eqref{eq:joint_distribution} usually makes use of a rejection sampling mechanism with a tailored proposal.
 
         In applications where these costs are a bottleneck, users rely on approximate sampling.
         Research has focused mainly on kernel approximation \citep{AKFT13} and MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
