@@ -66,11 +66,11 @@
     % % see also \citet{TrBaAm18} for a survey on exact sampling.
     % Efficient approximate samplers have thus developed; from kernel approximation \citep{AKFT13} or MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
 
-    In terms of software, the R library \textsf{spatstat}\ \citep{BaTu05}, a general-purpose toolbox on spatial point processes, includes sampling and learning of continuous DPPs with stationary kernels, as described by \citet{LaMoRu15}.
+    In terms of software, the R library \textsf{spatstat} \citep{BaTu05}, a general-purpose toolbox on spatial point processes, includes sampling and learning of continuous DPPs with stationary kernels, as described by \citet{LaMoRu15}.
     Complementarily, we propose \DPPy, a turnkey Python implementation of known general algorithms to sample \emph{finite} DPPs.
-    We also include algorithms for non-stationary continuous DPPs, for instance related to random covariance matrices or Monte Carlo methods are also of interest for MLers.
+    We also include algorithms for non-stationary continuous DPPs, e.g., related to random covariance matrices or Monte Carlo methods that are also of interest for MLers.
 
-    The \DPPy\ project, hosted on GitHub,\!\footnoteref{fn:github} is already being used by the cross-disciplinary DPP community (\citealp{BuRaWi19,Kam18,Pou19,DeCaVa19,GaBaVa19}).
+    The \DPPy\ project, hosted on GitHub,\!\footnoteref{fn:github}is already being used by the cross-disciplinary DPP community (\citealp{BuRaWi19,Kam18,Pou19,DeCaVa19,GaBaVa19}).
     % \citep[?!][]{BaHa16}
     We use \setcounter{footnote}{5}Travis\!\footnote{\href{https://travis-ci.com/guilgautier/DPPy}{\textsf{travis-ci.com/guilgautier/DPPy}}} for continuous integration and Coveralls\!\footnote{\href{https://coveralls.io/github/guilgautier/DPPy}{\textsf{coveralls.io/github/guilgautier/DPPy}}}for test coverage.
     Through ReadTheDocs\hspace{1pt}\footnoteref{fn:docs}we provide an extensive documentation, which covers the essential mathematical background and showcases the key properties of DPPs through \DPPy\ objects and associated methods.
@@ -103,7 +103,7 @@
             = \rho_k\lrp{x_1,\dots,x_k}
                 \prod_{i=1}^k \mu(\diff x_i),
         \end{equation*}
-        see \citet[Section 4]{MoWa04}.
+        see \citet[Section\,4]{MoWa04}.
         The functions $\rho_k$ describe the interaction among points in $\calX$ by quantifying co-occurrence of points at a set of locations.
         % Considering $\mu$ as the reference measure, the $k$-correlation functions are defined as
         % \begin{equation}
@@ -137,19 +137,19 @@
         \end{equation}
         where ${\bfK}_S$ denotes the submatrix of $\bfK$ formed by the rows and columns indexed by $S$.
         The kernel matrix $\bfK$ is commonly assumed to be real-symmetric, in which case the existence and uniqueness of the DPP in \Eqref{eq:inclusion_proba_finite} is equivalent to the condition that the eigenvalues of $\bfK$ lie in $[0,1]$.
-        The result also holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem 3]{Sos00}.
+        The result also holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem\,3]{Sos00}.
         We note that there are also DPPs with nonsymmetric kernels \citep{BoDiFu10,GBDK19}.
 
         Oftentimes, ML practitioners favor a more flexible definition of a DPP in terms of a \emph{likelihood kernel} $\bfL$, which only requires $\bfL\succeq 0$ so that
         \begin{equation*}
-            \Proba{\calX=S} = \frac{\det \bfL_S}{\det \lrb{I + \bfL}},
+            \Proba{\calX=S} = \frac{\det \bfL_S}{\det \lrb{I + \bfL}}\CommaBin
         \end{equation*}
         rather than a \emph{correlation kernel} $0\preceq \bfK \preceq I$.
         Yet, the $\bfL$ parametrization makes \Eqref{eq:inclusion_proba_finite} less interpretable and does not cover important cases such as fixed size DPPs which are achievable using projection $\bfK$ kernels.
-        \citet[Section 5]{KuTa12} countered that with $k$-DPPs, which can be understood as DPPs parametrized by a likelihood kernel, conditioned to have exactly $k$ elements.
-        However, $k$-DPPs are not DPPs in general.
+        \citet[Section\,5]{KuTa12} countered that with $k$-DPPs, which can be understood as DPPs parametrized by a likelihood kernel, conditioned to have exactly $k$ elements.
+        However, in general, $k$-DPPs are not DPPs .
 
-        The main interest in DPPs in ML is that they can model diversity while being tractable.
+        The main interest in DPPs in ML is that they model diversity while being tractable.
         % The entries of $\bfK$ encode a notion of similarity between items and \Eqref{eq:inclusion_proba_finite} entails
         % \begin{equation*}
         % \label{eq:2point_correlation_function_inclusion_proba_finite_case}
@@ -173,7 +173,7 @@
         If $\bfK_{ij}$ models the similarity between items $i$ and $j$, DPPs are thus random \emph{diverse} sets of elements.
 
         Most point processes that encode diversity are not tractable, in the sense that efficient algorithms to sample, marginalize, or compute normalization constants are not available.
-        DPPs are amenable to these tasks \citep{KuTa12,Gil14}.
+        However, DPPs are amenable to these tasks \citep{Gil14}.
         Since the current focus of \DPPy\ is on sampling DPPs, we develop this aspect in the next section.
         % , with polynomial complexity.
 
@@ -182,8 +182,12 @@
     \section{Sampling determinantal point processes} % (fold)
     \label{sec:sampling}
 
-        We assume henceforth that $K$ is real-symmetric and satisfies suitable conditions \cite[Theorem 3]{Sos00} so that its spectral decomposition is available
+        We assume henceforth that $K$ is real-symmetric and satisfies suitable conditions \cite[Theorem\,3]{Sos00} so that its spectral decomposition is available
         \begin{equation*}
+        \setlength{\belowdisplayskip}{0pt}
+        \setlength{\belowdisplayshortskip}{0pt}
+        \setlength{\abovedisplayskip}{0pt}
+        \setlength{\abovedisplayshortskip}{0pt}
         \label{eq:eigdec_kernel}
         K(x,y)
         \triangleq
@@ -192,14 +196,14 @@
           \quad \text{with }
             \int_{\bbX} \phi_i(x) \phi_j(x) \mu(\diff x) = \delta_{ij}.
         \end{equation*}
-        Note that in the finite case, the spectral theorem is enough to eigendecompose $\bfK$.
-        \citet[Theorem 7]{HKPV06} proved that sampling $\DPP(K)$ can be done in two steps:
+        Note that, in the finite case, the spectral theorem is enough to eigendecompose $\bfK$.
+        \citet[Theorem\,7]{HKPV06} proved that sampling $\DPP(K)$ can be done in two steps:
         \begin{enumerate}
             \item draw $B_i\sim\Ber(\lambda_i)$ independently and denote $\lrcb{i_1,\dots,i_{N}} = \lrcb{i:B_i=1}$,\label{enum:sampling_step1}
             \item sample from the DPP with kernel $\tilde{K}(x,y) = \sum_{n=1}^{N}\phi_{i_n}(x) \phi_{i_n}(y)$.\label{enum:sampling_step2}
         \end{enumerate}
         In other words, all DPPs are mixtures of \emph{projection} DPPs, that are parametrized by an orthogonal projection kernel.
-        In a nutshell, step \ref{enum:sampling_step1} selects a component of the mixture and step \ref{enum:sampling_step2} generates a sample of the projection $\DPP(\tilde{K})$.
+        In a nutshell, Step\,\ref{enum:sampling_step1} selects a component of the mixture and Step\,\ref{enum:sampling_step2} generates a sample of the projection $\DPP(\tilde{K})$.
         \citet[Algorithm 18]{HKPV06} provide a generic projection DPP sampler that we now describe briefly.
         First, the projection DPP with kernel $\tilde{K}$ has exactly $N=\rank \tilde{K}$ points, $\mu$-almost surely.
         Then, the sequential aspect of the chain rule applied to sample $(X_1,\dots,X_N)$ with probability distribution
@@ -285,11 +289,11 @@
         \citep[see, e.g.,][]{Gil14,TrBaAm18}.
         Besides, there exist some alternative exact samplers.
         \citet{Pou19} and \citet{LaGaDe18} use a $\calO(M^3)$ Cholesky-based chain rule on sets; each item in turn is decided to be excluded or included in the sample.
-        \citet{DeCaVa19} first sample an intermediate distribution and correct the bias by thinning the intermediate sample (with size smaller than $M$) using a carefully designed DPP.
+        \citet{DeCaVa19} first sample an intermediate distribution and correct the bias by thinning the intermediate sample (with size smaller than\,$M$) using a carefully designed DPP.
         In certain regimes, this procedure may be more practical with an overall
         $\calO\lrp{M \operatorname{poly}(\Expe{|\calX|}) \operatorname{polylog}(M)}$ cost.
-
         In the continuous case, sampling each conditional usually calls a rejection sampling routine with a tailored proposal.
+
         In applications where these costs are a bottleneck, users rely on approximate sampling.
         Research has focused mainly on kernel approximation \citep{AKFT13} and MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
 
@@ -313,7 +317,7 @@
         They are therefore examples of continuous DPPs that can be sampled exactly in $\calO(N^2)$ time, without rejection.
         Some of these ensembles are of direct interest to MLers.
         The \emph{Laguerre} ensemble, for instance, has $\omega$ be a Gamma pdf, and corresponds to the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors, see Figure\ref{fig:LUE}.
-        Finally, we mention that \DPPy\ implements an exact sampler of the  multivariate extension of the \emph{Jacobi} ensemble which has been central in recent results on faster-than-Monte Carlo numerical integration \citep{BaHa16,GaBaVa19,MaCoAm19}.
+        Finally, we mention that \DPPy\ also features an exact sampler of the  multivariate extension of the \emph{Jacobi} ensemble which has been central in recent results on faster-than-Monte Carlo numerical integration \citep{BaHa16,GaBaVa19,MaCoAm19}.
 
     % section sampling (end)
 
@@ -349,7 +353,7 @@
     \DPPy\ is also ready for other contributors to add content and enlarge its scope, \eg with procedures for learning kernels.
 
     \begin{figure*}[!hb]
-        \vspace{-1em}
+        \vspace{-0.5em}
         \centering
         \subfigure[2D Jacobi ensemble]{
             \includegraphics[height=10.5em]{images/multivariate_jacobi_2D_1000points.pdf}
@@ -365,7 +369,7 @@
             \includegraphics[height=10.5em]{images/UST_kernel.pdf}
             \label{fig:UST_kernel}
         }
-        \vspace{-1em}
+        \vspace{-0.75em}
         \caption{Some displays available in \DPPy}
         \label{fig:DPPy_figs}
         \vspace{-10em}
