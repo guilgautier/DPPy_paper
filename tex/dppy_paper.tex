@@ -173,11 +173,8 @@
         If $\bfK_{ij}$ models the similarity between items $i$ and $j$, DPPs are thus random \emph{diverse} sets of elements.
 
         Most point processes that encode diversity are not tractable, in the sense that efficient algorithms to sample, marginalize, or compute normalization constants are not available.
-        However, DPPs are amenable to these tasks \citep{Gil14}.
-        The nonobvious task of sampling reason that hinders the widespread
-        % use of DPPs in the community.
-
-        % , with polynomial complexity.
+        However, DPPs are amenable to these tasks with polynomial complexity \citep{Gil14}.
+        Next, we present the challenging task of sampling, which is the core of \DPPy.
 
     % section definitions (end)
 
@@ -294,9 +291,9 @@
         \mycitet{DeCaVa19} first sample an intermediate distribution and correct the bias by thinning the intermediate sample (with size smaller than\,$M$) using a carefully designed DPP.
         In certain regimes, this procedure may be more practical with an overall
         $\calO(M\operatorname{poly}(\Expe{|\calX|})\operatorname{polylog}(M))$ cost.
-        In the continuous case, sampling exactly each conditional that appear in the right hand side of \Eqref{eq:joint_distribution} usually makes use of a rejection sampling mechanism with a tailored proposal.
+        In the continuous case, sampling exactly each conditional that appear in the right hand side of \Eqref{eq:joint_distribution} can by done by a rejection sampling mechanism with a tailored proposal.
 
-        In applications where these costs are a bottleneck, users rely on approximate sampling.
+        In applications where the costs related to exact sampling are a bottleneck, users rely on approximate sampling.
         Research has focused mainly on kernel approximation \citep{AKFT13} and MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
 
         However, specific DPPs admit efficient exact samplers that do not rely on \Eqref{eq:joint_distribution}, e.g., uniform spanning trees \citep[UST,][Figure~\ref{fig:UST_kernel}]{PrWi98} or eigenvalues of random matrices.
