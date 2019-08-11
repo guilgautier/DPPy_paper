@@ -1,13 +1,17 @@
 # DPPy_paper
 
-[![Build Status](https://travis-ci.org/guilgautier/DPPy_paper.svg?branch=arXiv-v1)](https://travis-ci.org/guilgautier/DPPy_paper)
+[![Build Status](https://travis-ci.com/guilgautier/DPPy.svg?branch=master)](https://travis-ci.com/guilgautier/DPPy)
+[![Documentation Status](https://readthedocs.org/projects/dppy/badge/?version=latest)](https://dppy.readthedocs.io/en/latest/?badge=latest)
+[![Coverage Status](https://coveralls.io/repos/github/guilgautier/DPPy/badge.svg?branch=master)](https://coveralls.io/github/guilgautier/DPPy?branch=master)
 
 This is the companion paper associated with the [DPPy](https://github.com/guilgautier/DPPy) Python library, itself supported by an extensive [documentation](https://dppy.readthedocs.io/en/latest/).
 
-**In this `master` branch, you can find the current state of the draft of the companion paper!
-Here is the [arXiv](http://arxiv.org/abs/1809.07258) version of the paper.**
+We wrote this companion paper to [DPPy](https://github.com/guilgautier/DPPy), for latter submission to the [MLOSS](http://www.jmlr.org/mloss/) track of JMLR.
 
-This paper together with [DPPy](https://github.com/guilgautier/DPPy) are fully reproducible.
+The companion paper is available on:
+
+- [arXiv](http://arxiv.org/abs/1809.07258) (maybe not upto date)
+- [here on GitHub](https://github.com/guilgautier/DPPy_paper) for the lastest version
 
 ## Build the PDF
 
@@ -22,15 +26,12 @@ Then, you need a full LaTeX installation, like [TeXlive](https://www.tug.org/tex
 pdflatex dppy_paper.tex
 ```
 
+If you use this package, please consider citing it with this piece of
+BibTeX:
+
 ### How to cite this work?
 
-We wrote this companion paper to [DPPy](https://github.com/guilgautier/DPPy), for latter submission to the [MLOSS](http://www.jmlr.org/mloss/) track of JMLR.
-
-The companion paper is available on:
-- [arXiv](http://arxiv.org/abs/1809.07258) or see the [`arxiv`](https://github.com/guilgautier/DPPy_paper/tree/arxiv) branch
-- [GitHub](https://github.com/guilgautier/DPPy_paper)
-
-If you use this package, please consider citing it with this piece of BibTeX:
+If you use the [DPPy](https://github.com/guilgautier/DPPy) package, please consider citing it with this piece of BibTeX:
 
 ```bibtex
 @article{GaBaVa18,
@@ -43,7 +44,7 @@ If you use this package, please consider citing it with this piece of BibTeX:
     keywords = {Computer Science - Machine Learning, Computer Science - Mathematical Software, Statistics - Machine Learning},
     url = {http://arxiv.org/abs/1809.07258},
     year = {2018},
-    note = {Code at https://GitHub.com/guilgautier/DPPy/ ; Documentation at http://DPPy.ReadTheDocs.io/}
+    note = {Code at http://github.com/guilgautier/DPPy/ Documentation at http://dppy.readthedocs.io/}
 }
 ```
 

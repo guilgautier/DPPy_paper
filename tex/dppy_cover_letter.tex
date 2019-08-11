@@ -1,0 +1,92 @@
+\documentclass[twoside,11pt]{article}
+
+% Any additional packages needed should be included after jmlr2e.
+% Note that jmlr2e.sty includes epsfig, amssymb, natbib and graphicx,
+% and defines many common macros, such as 'proof' and 'example'.
+%
+% It also sets the bibliographystyle to plainnat; for more information on
+% natbib citation styles, see the natbib documentation, a copy of which
+% is archived at http://www.jmlr.org/format/natbib.pdf
+
+\input{packages}
+\input{commands}
+
+\setlength\parindent{0pt} % Unindent paragraphs
+\setlength{\parskip}{2.5mm}
+
+% Heading arguments are {volume}{year}{pages}{date submitted}{date published}{paper id}{author-full-names}
+
+\jmlrheading{xx}{2018}{xx-xx}{9/18}{xx/xx}{gabava18}{Guillaume Gautier, R\'emi Bardenet, Michal Valko and Guillermo Polito}
+
+% Short headings should be running head and authors last names
+
+\ShortHeadings{\DPPy}{Gautier, Bardenet, Valko and Polito}
+\firstpageno{1}
+
+\begin{document}
+
+\title{\DPPy: Sampling DPPs with Python \\[1pt]
+\textit{\normalsize Cover letter}}
+
+\author{\name Guillaume Gautier
+            \email g.gautier@inria.fr \\
+       \name R\'emi Bardenet
+            \email remi.bardenet@gmail.com \\
+       \name Michal Valko
+            \email valkom@google.com\\
+       \name Guillermo Polito
+            \email guillermo.polito@univ-lille.fr}
+
+\editor{}
+
+\maketitle
+
+% \title{\DPPy: Sampling DPPs with Python\\[5pt]
+% \textit{\normalsize Cover letter}}
+
+% \author{\name Guillaume Gautier \email g.gautier@inria.fr \\
+%        \name R\'emi Bardenet \\
+%        \name Michal Valko
+% }
+
+% \maketitle
+
+\vspace{-4em}
+
+\textbf{Keywords:}
+% \begin{keywords}%
+    determinantal point processes,
+    sampling,
+    MCMC,
+    random matrices,
+    Python
+% \end{keywords}
+
+\vspace{1em}
+
+\pagenumbering{gobble} % Remove page numbering
+\setcounter{footnote}{3}
+
+Dear Editorial Board,\\
+
+We submit the \DPPy\ Python library to the machine learning open source software (MLOSS) section of the Journal of Machine Learning Research.
+\DPPy\ is the acronym for Determinantal Point Processes (DPPs) with Python.
+
+\DPPy\ tackles the challenging task of sampling DPPs with a turnkey implementation of a wide diversity of exact and approximate algorithms known so far to sample finite DPPs.
+We also include algorithms for non-stationary continuous DPPs, e.g., related to random covariance matrices or Monte Carlo methods that are also of interest for MLers.
+
+The \DPPy\ project is hosted on GitHub\!\footnote{\footGitHubDPPy}and supported by an extensive documentation\!\footnote{\footReadTheDocs} which provides the essential mathematical background and illustrates the key properties of DPPs through \DPPy\ objects and their methods.
+\setcounter{footnote}{5}Travis\!\footnote{\footTravis}is used for continuous integration to ensure that \DPPy\ runs at least on Linux with Python 3.6+.
+\textbf{Since the last submission, the coverage rate has increased from 14\% to 90\%, see the Coveralls\!\footnote{\footCoveralls}page}.
+
+For better reproducibility, \DPPy\ does not rely on any proprietary software and is released under the MIT license.
+Moreover, the companion paper\!\footnote{\footGitHubDPPyPaper}together with the present cover letter are also available on GitHub and fully reproducible.
+
+We declare that this work is neither published nor submitted to any journal or conference.
+All authors agree to the reviewing process of the Journal of Machine Learning Research.
+
+Thank you for your consideration.
+
+\textbf{Version to be reviewed}: \DPPy\ \href{https://github.com/guilgautier/DPPy/releases/tag/v0.2.0}{v0.2.0}
+
+\end{document}
