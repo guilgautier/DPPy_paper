@@ -11,12 +11,15 @@
 \input{packages}
 \input{commands}
 
+\usepackage{lastpage}
+
 % Heading arguments are {volume}{year}{pages}{date submitted}{date published}{paper id}{author-full-names}
 
-\jmlrheading{xx}{2019}{xx-xx}{8/12}{xx/xx}{gabava18}{Gautier,
-                                                     Guillermo Polito,
-                                                     Rémi Bardenet,
-                                                     and Michal Valko}
+\jmlrheading{20}{2019}{1-\pageref{LastPage}}{3/19; Revised
+8/19}{10/19}{19-179}{Gautier,
+                     Guillermo Polito,
+                     Rémi Bardenet,
+                     and Michal Valko}
 
 % Short headings should be running head and authors last names
 
@@ -43,7 +46,7 @@
         \addr $^\ddag$DeepMind Paris, 14 Rue de Londres, 75009  Paris, France
 }
 
-\editor{}
+\editor{Andreas Mueller}
 
 \maketitle
 
