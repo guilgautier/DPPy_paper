@@ -1,5 +1,5 @@
 %% File: `icml2017.bst'
-%% A modification of `plainnl.bst' for use with natbib package 
+%% A modification of `plainnl.bst' for use with natbib package
 %%
 %% Copyright 2010 Hal Daum\'e III
 %% Modified by J. Fürnkranz
@@ -94,6 +94,13 @@ FUNCTION {format.arxiv}
   if$
 }
 
+FUNCTION {emphasize}
+{ duplicate$ empty$
+    { pop$ "" }
+    { "\emph{" swap$ * "}" * }
+  if$
+}
+
 FUNCTION {format.btitle}
 { title empty$
     { "" }
@@ -102,7 +109,7 @@ FUNCTION {format.btitle}
           { title "t" change.case$ emphasize}
           { "\href{" url * "}{" * title "t" change.case$ emphasize * "}" * }
           if$
-      }        
+      }
         { "\href{http://dx.doi.org/" doi * "}{" * title "t" change.case$ emphasize * "}" * }
       if$
     }
@@ -235,12 +242,12 @@ FUNCTION {field.or.null}
   if$
 }
 
-FUNCTION {emphasize}
-{ duplicate$ empty$
-    { pop$ "" }
-    { "\emph{" swap$ * "}" * }
-  if$
-}
+% FUNCTION {emphasize}
+% { duplicate$ empty$
+%     { pop$ "" }
+%     { "\emph{" swap$ * "}" * }
+%   if$
+% }
 
 INTEGERS { nameptr namesleft numnames }
 
@@ -460,9 +467,9 @@ FUNCTION {format.date}
   extra.label *
 }
 
-FUNCTION {format.btitle}
-{ title emphasize
-}
+% FUNCTION {format.btitle}
+% { title emphasize
+% }
 
 FUNCTION {tie.or.space.connect}
 { duplicate$ text.length$ #3 <

@@ -8,10 +8,24 @@
 % natbib citation styles, see the natbib documentation, a copy of which
 % is archived at http://www.jmlr.org/format/natbib.pdf
 
+\RequirePackage{etoolbox}
+\patchcmd{\bibliographystyle}{#1}{icml2017}{}{}
+
 \input{packages}
 \input{commands}
-
 \usepackage{lastpage}
+
+% Reshape footnotes without changing jmlr2e.sty
+\renewcommand{\footnoterule}{
+\vspace{1.5em}
+\hrule width 0.8725\textwidth
+\vspace{1.5pt}}
+
+\makeatletter%
+\long\def\@makefntext#1{\@setpar{\@@par\@tempdima \hsize
+             \advance\@tempdima-15pt\parshape \@ne 15pt \@tempdima}\par
+             \parindent 2em\noindent \hbox to \z@{\hss{\@thefnmark} \hfil}#1}
+\makeatother
 
 % Heading arguments are {volume}{year}{pages}{date submitted}{date published}{paper id}{author-full-names}
 
@@ -31,7 +45,9 @@
 
 \begin{document}
 
-\title{\DPPy: Sampling DPPs with Python}
+\title{
+\vspace{-1.6em}
+\DPPy: \textcolor{red}{Sampling DPPs or DPP Sampling} with Python}
 
 \author{\name Guillaume Gautier$^{\dagger*}$
             \email g.gautier@inria.fr\\
@@ -39,23 +55,23 @@
             \email guillermo.polito@univ-lille.fr\\
         \name R\'emi Bardenet$^\dagger$
             \email remi.bardenet@gmail.com\\
-        \name Michal Valko$^{*\ddag}$
+        \name Michal Valko$^{\ddag*\dagger}$
             \email valkom@deepmind.com\\
         \addr $^\dagger$Univ.\,Lille, CNRS, Centrale Lille, UMR 9189\,--\,CRIStAL,  59651 Villeneuve d'Ascq, France\\
         \addr $^*$Inria Lille-Nord Europe, 40 avenue Halley 59650 Villeneuve    d'Ascq, France\\
         \addr $^\ddag$DeepMind Paris, 14 Rue de Londres, 75009  Paris, France
+        \vspace{-1.2em}
 }
 
-\editor{Andreas Mueller}
+\editor{Andreas Mueller\vspace{-1.6em}}
 
 \maketitle
 
-\vspace{-3em}
 \setcounter{footnote}{3}
 \begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
     Determinantal point processes (DPPs) are specific probability distributions over clouds of points that are used as models and computational tools across physics, probability, statistics, and more recently machine learning.
     Sampling from DPPs is a challenge and therefore we present \DPPy, a Python toolbox that gathers known exact and approximate sampling algorithms for both finite and continuous DPPs.
-    The project is hosted on GitHub\!\footnote{\label{fn:github}\footGitHubDPPy}and equipped with an extensive documentation.\!\!\footnote{\label{fn:docs}\footReadTheDocs}
+    The project is hosted on GitHub\!\footnote{\label{fn:github}\footGitHubDPPy}\,and equipped with an extensive documentation.\hspace{-2pt}\footnote{\label{fn:docs}\footReadTheDocs}
     % This documentation\!\footnote{\label{fn:docs}\href{https://dppy.readthedocs.io}{\textsf{dppy.readthedocs.io}}}takes the form of a short survey of DPPs and relates each mathematical property with \DPPy\ objects.
 \end{abstract}
 
@@ -68,7 +84,6 @@
 \end{keywords}
 
 \vspace{-1em}
-
 \section{Introduction} % (fold)
 \label{sec:introduction}
 
@@ -86,10 +101,10 @@
     Complementarily, we propose \DPPy, a turnkey Python implementation of known general algorithms to sample \emph{finite} DPPs.
     We also include algorithms for non-stationary continuous DPPs, e.g., related to random covariance matrices or Monte Carlo methods that are also of interest for MLers.
 
-    The \DPPy\ project, hosted on GitHub,\!\footnoteref{fn:github}is already being used by the cross-disciplinary DPP community (\citealp{BuRaWi19,Kam18,Pou19,DeCaVa19,GaBaVa19}).
+    The \DPPy\ project, hosted on GitHub,\!\footnoteref{fn:github}\,is already being used by the cross-disciplinary DPP community (\citealp{BuRaWi19,Kam18,Pou19,DeCaVa19,GaBaVa19}).
     % \citep[?!][]{BaHa16}
-    We use Travis\!\footnote{\footTravis}for continuous integration and Coveralls\!\footnote{\footCoveralls}for test coverage.
-    Through ReadTheDocs\footnoteref{fn:docs}we provide an extensive documentation, which covers the essential mathematical background and showcases the key properties of DPPs through \DPPy\ objects and associated methods.
+    We use Travis\hspace{-1pt}\footnote{\footTravis}\,for continuous integration and Coveralls\hspace{-1pt}\footnote{\footCoveralls}\,for test coverage.
+    Through ReadTheDocs\footnoteref{fn:docs}\,we provide an extensive documentation, which covers the essential mathematical background and showcases the key properties of DPPs through \DPPy\ objects and associated methods.
     \DPPy\ thus also serves as a tutorial.
      % Along the paper, words in magenta point to the documentation.
     % In \Secref{sec:definitions}, we introduce DPPs.
@@ -197,7 +212,7 @@
     \section{Sampling determinantal point processes} % (fold)
     \label{sec:sampling}
 
-        We assume henceforth that $K$ is real-symmetric and satisfies suitable conditions \citet[][Theorem\,3]{Sos00} so that its spectral decomposition is available
+        We assume henceforth that $K$ is real-symmetric and satisfies suitable conditions \citep[][Theorem\,3]{Sos00} so that its spectral decomposition is available
         \begin{equation*}
         \setlength{\belowdisplayskip}{0pt}
         \setlength{\belowdisplayshortskip}{0pt}
@@ -294,7 +309,7 @@
         Second, the successive ratios that appear in the RHS are the normalized conditional densities (w.r.t.\,$\mu$) that drive the chain rule.
         The associated normalizing constants are independent of the previous points.
         The numerators can be written as the ratio of two determinants and further expanded with Woodbury's formula.
-        They can be identified as the incremental posterior variances in Gaussian process regression with kernel $\tilde{K}$ \citep[Equation 2.26]{RaWi06}.
+        They can be identified as the incremental posterior variances in Gaussian process regression with kernel $\tilde{K}$ \citep[Equation\,2.26]{RaWi06}.
         Third, the chain rule expressed in \Eqref{eq:joint_distribution} has a strong Gram-Schmidt flavor since it actually comes from a recursive application of the base$\times$height formula.
         In the end, DPPs favor configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume, which is another way of understanding repulsiveness.
         The previous sampling scheme is exact and generic but, except for projection kernels, it requires the eigendecomposition of the underlying kernel.
@@ -312,7 +327,7 @@
         In applications where the costs related to exact sampling are a bottleneck, users rely on approximate sampling.
         Research has focused mainly on kernel approximation \citep{AKFT13} and MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
 
-        However, specific DPPs admit efficient exact samplers that do not rely on \Eqref{eq:joint_distribution}, e.g., uniform spanning trees \citep[UST,][Figure~\ref{fig:UST_kernel}]{PrWi98} or eigenvalues of random matrices.
+        However, specific DPPs admit efficient exact samplers that do not rely on \Eqref{eq:joint_distribution}, e.g., uniform spanning trees \citep[UST,][\Figref{fig:UST_kernel}]{PrWi98} or eigenvalues of random matrices.
         For instance, a $\beta$-ensemble is a set of $N$ points of $\bbR$ with joint distribution
         \begin{equation*}
         \setlength{\belowdisplayskip}{0pt}
@@ -331,7 +346,7 @@
         In particular, ($\beta=2$)-ensembles correspond to projection DPPs \citep{Kon05}.
         They are therefore examples of continuous DPPs that can be sampled exactly in $\calO(N^2)$ time, without rejection.
         Some of these ensembles are of direct interest to MLers.
-        The \emph{Laguerre} ensemble, for instance, has $\omega$ be a Gamma pdf, and corresponds to the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors, see Figure\ref{fig:LUE}.
+        The \emph{Laguerre} ensemble, for instance, has $\omega$ be a Gamma pdf, and corresponds to the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors, see \Figref{fig:LUE}.
         Finally, we mention that \DPPy\ also features an exact sampler of the  multivariate extension of the \emph{Jacobi} ensemble which has been central in recent results on faster-than-Monte Carlo numerical integration \citep{BaHa16,GaBaVa19,MaCoAm19}.
 
     % section sampling (end)
@@ -343,7 +358,7 @@
 
     \lstset{language=mypython}
 
-    \DPPy\ handles Python objects that fit the natural definition of the corresponding DPPs; see also the documentation\footnoteref{fn:docs}and the corresponding \href{https://github.com/guilgautier/DPPy/tree/master/notebooks}{Jupyter notebooks}, which showcase \DPPy\ objects.
+    \DPPy\ handles Python objects that fit the natural definition of the corresponding DPPs; see also the documentation\footnoteref{fn:docs}\,and the corresponding \href{https://github.com/guilgautier/DPPy/tree/master/notebooks}{Jupyter notebooks}, which showcase \DPPy\ objects.
     For example, \lstinline!FiniteDPP(kernel_type="correlation", **{"K": K})!\!
     instantiates a finite $\DPP(\bfK)$.
     Its two main methods,
@@ -362,29 +377,29 @@
     \lstinline{.sample_banded_model()}, for $\beta > 0$.
     Samples can be displayed via
     \lstinline{.plot()} or
-    \lstinline{.hist()} to construct the empirical distribution that converges to the Mar\v{c}enko-Pastur distribution, see Figure~\ref{fig:LUE}.
+    \lstinline{.hist()} to construct the empirical distribution that converges to the Mar\v{c}enko-Pastur distribution, see \Figref{fig:LUE}.
 
     \DPPy\ can readily serve as research and teaching support.
     \DPPy\ is also ready for other contributors to add content and enlarge its scope, \eg with procedures for learning kernels.
 
     \begin{figure*}[!hb]
-        \vspace{-0.5em}
+        \vspace{-8pt}
         \centering
         \subfigure[2D Jacobi ensemble]{
-            \includegraphics[height=10.5em]{multivariate_jacobi_2D_1000points.pdf}
+            \includegraphics[height=10.7em]{multivariate_jacobi_2D_1000points.pdf}
             \label{fig:2D_jacobi_sample}
         }
-%            \includegraphics[height=10.5em]{../img/bolt_volumes.pdf}
+%            \includegraphics[height=10.7em]{../img/bolt_volumes.pdf}
         % \qquad\qquad
         \subfigure[$\beta=2$-Laguerre ensemble]{
-            \includegraphics[height=10.5em]{LUE.pdf}
+            \includegraphics[height=10.7em]{LUE.pdf}
             \label{fig:LUE}
         }
         \subfigure[$\bfK$ kernel of UST]{
-            \includegraphics[height=10.5em]{UST_kernel.pdf}
+            \includegraphics[height=10.7em]{UST_kernel.pdf}
             \label{fig:UST_kernel}
         }
-        \vspace{-0.75em}
+        \vspace{-12pt}
         \caption{Some displays available in \DPPy}
         \label{fig:DPPy_figs}
         \vspace{-10em}
@@ -407,6 +422,7 @@
 We acknowledge funding by European CHIST-ERA project DELTA, the French Ministry of Higher Education and Research, the Nord-Pas-de-Calais Regional Council, Inria and Otto-von-Guericke-Universit\"at Magdeburg associated-team north-European project Allocate, and French National Research Agency project BoB (n.ANR-16-CE23-0003).
 }
 
+\todo{Update ICML workshop papers (GaBaVa19 and DeCaVa19) to NeurIPS}
 % Manual newpage inserted to improve the layout of sample file - not
 % needed in general before the appendices/bibliography.
 
