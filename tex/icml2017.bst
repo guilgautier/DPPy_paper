@@ -101,16 +101,17 @@ FUNCTION {emphasize}
   if$
 }
 
+% change.case$ emphasize => change.case$
 FUNCTION {format.btitle}
 { title empty$
     { "" }
     { doi empty$
       { url empty$
-          { title "t" change.case$ emphasize}
-          { "\href{" url * "}{" * title "t" change.case$ emphasize * "}" * }
+          { title "t" change.case$}
+          { "\href{" url * "}{" * title "t" change.case$ * "}" * }
           if$
       }
-        { "\href{http://dx.doi.org/" doi * "}{" * title "t" change.case$ emphasize * "}" * }
+        { "\href{http://dx.doi.org/" doi * "}{" * title "t" change.case$ * "}" * }
       if$
     }
   if$
