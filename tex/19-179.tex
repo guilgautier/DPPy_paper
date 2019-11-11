@@ -90,7 +90,7 @@
 \label{sec:introduction}
 
     Determinantal point processes (DPPs) are distributions over configurations of points that encode diversity through a kernel function $K$.
-    They were introduced by \citet{Mac75} as models for beams of fermions, and they have since found applications in fields as diverse as probability \citep{Sos00, Kon05, HKPV06}, statistical physics \citep{PaBe11}, Monte Carlo methods \citep{BaHa16}, spatial statistics \citep{LaMoRu15}, and machine learning \citep[ML,][]{KuTa12}.
+    They were introduced by \citet{Mac75} as models for beams of fermions, and they have since found applications in fields as diverse as probability \citep{Sos00, Kon05, HKPV06}, statistical physics \citep{PaBe11}, Monte Carlo methods \citep{BaHa19}, spatial statistics \citep{LaMoRu15}, and machine learning \citep[ML,][]{KuTa12}.
 
     In ML, DPPs mainly serve to model diverse sets of items, as in recommendation \citep{KaDeKo16, GaPaKo16} or text summarization \citep{DuBa18}.
     Consequently, MLers  use mostly finite DPPs, which are distributions over subsets of a finite \emph{ground set} of cardinality $M$, parametrized by an $M\times M$ kernel matrix $\bfK$.
@@ -104,7 +104,7 @@
     We also include algorithms for non-stationary continuous DPPs, e.g., related to random covariance matrices or Monte Carlo methods that are also of interest for MLers.
 
     The \DPPy\ project, hosted on GitHub,\!\footnoteref{fn:github}\,is already being used by the cross-disciplinary DPP community (\citealp{BuRaWi19,Kam18,Pou19,DeCaVa19,GaBaVa19}).
-    % \citep[?!][]{BaHa16}
+    % \citep[?!][]{BaHa19}
     We use Travis\hspace{-1pt}\footnote{\footTravis}\,for continuous integration and Coveralls\hspace{-1pt}\footnote{\footCoveralls}\,for test coverage.
     Through ReadTheDocs\footnoteref{fn:docs}\,we provide an extensive documentation, which covers the essential mathematical background and showcases the key properties of DPPs through \DPPy\ objects and associated methods.
     \DPPy\ thus also serves as a tutorial.
@@ -349,7 +349,7 @@
         They are therefore examples of continuous DPPs that can be sampled exactly in $\calO(N^2)$ time, without rejection.
         Some of these ensembles are of direct interest to MLers.
         The \emph{Laguerre} ensemble, for instance, has $\omega$ be a Gamma pdf, and corresponds to the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors, see \Figref{fig:LUE}.
-        Finally, we mention that \DPPy\ also features an exact sampler of the  multivariate extension of the \emph{Jacobi} ensemble which has been central in recent results on faster-than-Monte Carlo numerical integration \citep{BaHa16,GaBaVa19,MaCoAm19}.
+        Finally, we mention that \DPPy\ also features an exact sampler of the  multivariate extension of the \emph{Jacobi} ensemble which has been central in recent results on faster-than-Monte Carlo numerical integration \citep{BaHa19,GaBaVa19,MaCoAm19}.
 
     % section sampling (end)
 
