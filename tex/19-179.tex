@@ -73,8 +73,8 @@
 \begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
     Determinantal point processes (DPPs) are specific probability distributions over clouds of points that are used as models and computational tools across physics, probability, statistics, and more recently machine learning.
     Sampling from DPPs is a challenge and therefore we present \DPPy, a Python toolbox that gathers known exact and approximate sampling algorithms for both finite and continuous DPPs.
-    The project is hosted on GitHub\!\footnote{\label{fn:github}\footGitHubDPPy}\,and equipped with an extensive documentation.\hspace{-2pt}\footnote{\label{fn:docs}\footReadTheDocs}
-    % This documentation\!\footnote{\label{fn:docs}\href{https://dppy.readthedocs.io}{\textsf{dppy.readthedocs.io}}}takes the form of a short survey of DPPs and relates each mathematical property with \DPPy\ objects.
+    The project is hosted on GitHub\!\footnote{\label{fn:github}\footGitHubDPPy}\,and equipped with an extensive documentation.\!\footnote{\label{fn:docs}\footReadTheDocs}
+    % This documentation\!\footnote{\label{fn:docs}\href{https://dppy.readthedocs.io}{\textsf{dppy.readthedocs.io}}}takes the form of a short survey of DPPs and relates each mathematical property with \DPPy objects.
 \end{abstract}
 
 \begin{keywords}%
@@ -103,11 +103,11 @@
     Complementarily, we propose \DPPy, a turnkey Python implementation of known general algorithms to sample \emph{finite} DPPs.
     We also include algorithms for non-stationary continuous DPPs, e.g., related to random covariance matrices or Monte Carlo methods that are also of interest for MLers.
 
-    The \DPPy\ project, hosted on GitHub,\!\footnoteref{fn:github}\,is already being used by the cross-disciplinary DPP community (\citealp{BuRaWi19,Kam18,Pou19,DeCaVa19,GaBaVa19}).
+    The \DPPy project, hosted on GitHub,\footnoteref{fn:github}\,is already being used by the cross-disciplinary DPP community (\citealp{BuRaWi19,Kam18,Pou19,DeCaVa19,GaBaVa19}).
     % \citep[?!][]{BaHa19}
     We use Travis\hspace{-1pt}\footnote{\footTravis}\,for continuous integration and Coveralls\hspace{-1pt}\footnote{\footCoveralls}\,for test coverage.
-    Through ReadTheDocs\footnoteref{fn:docs}\,we provide an extensive documentation, which covers the essential mathematical background and showcases the key properties of DPPs through \DPPy\ objects and associated methods.
-    \DPPy\ thus also serves as a tutorial.
+    Through ReadTheDocs\,\footnoteref{fn:docs}\,we provide an extensive documentation, which covers the essential mathematical background and showcases the key properties of DPPs through \DPPy objects and associated methods.
+    \DPPy thus also serves as a tutorial.
      % Along the paper, words in magenta point to the documentation.
     % In \Secref{sec:definitions}, we introduce DPPs.
     % In \Secref{sec:sampling} we briefly review the challenging task of sampling
@@ -200,9 +200,9 @@
             = {\bfK}_{ii}{\bfK}_{jj}-{\bfK}_{ij}{\bfK}_{ji}
             = \Proba{\{i\} \subset \calX}
               \times \Proba{\{j\} \subset \calX}
-                - |{\bfK}_{ij}|^2,
+                - {\bfK}_{ij}^2,
         \end{equation*}
-        so that, the larger $\lrabs{\bfK_{ij}}$ less likely items $i$ and $j$ co-occur.
+        so that, the larger $\bfK_{ij}$ less likely items $i$ and $j$ co-occur.
         If $\bfK_{ij}$ models the similarity between items $i$ and $j$, DPPs are thus random \emph{diverse} sets of elements.
 
         Most point processes that encode diversity are not tractable, in the sense that efficient algorithms to sample, marginalize, or compute normalization constants are not available.
@@ -349,18 +349,18 @@
         They are therefore examples of continuous DPPs that can be sampled exactly in $\calO(N^2)$ time, without rejection.
         Some of these ensembles are of direct interest to MLers.
         The \emph{Laguerre} ensemble, for instance, has $\omega$ be a Gamma pdf, and corresponds to the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors, see \Figref{fig:LUE}.
-        Finally, we mention that \DPPy\ also features an exact sampler of the  multivariate extension of the \emph{Jacobi} ensemble which has been central in recent results on faster-than-Monte Carlo numerical integration \citep{BaHa19,GaBaVa19,MaCoAm19}.
+        Finally, we mention that \DPPy also features an exact sampler of the  multivariate extension of the \emph{Jacobi} ensemble which has been central in recent results on faster-than-Monte Carlo numerical integration \citep{BaHa19,GaBaVa19,MaCoAm19}.
 
     % section sampling (end)
 
 % section determinantal_point_processes (end)
 
-\section{The \DPPy\ toolbox} % (fold)
+\section{The \DPPy toolbox} % (fold)
 \label{sec:the_dppy_toolbox}
 
     \lstset{language=mypython}
 
-    \DPPy\ handles Python objects that fit the natural definition of the corresponding DPPs; see also the documentation\footnoteref{fn:docs}\,and the corresponding \href{https://github.com/guilgautier/DPPy/tree/master/notebooks}{Jupyter notebooks}, which showcase \DPPy\ objects.
+    \DPPy handles Python objects that fit the natural definition of the corresponding DPPs; see also the documentation\,\footnoteref{fn:docs}\,and the corresponding \href{https://github.com/guilgautier/DPPy/tree/master/notebooks}{Jupyter notebooks}, which showcase \DPPy objects.
     For example, \lstinline!FiniteDPP(kernel_type="correlation", **{"K": K})!\!
     instantiates a finite $\DPP(\bfK)$.
     Its two main methods,
@@ -381,8 +381,8 @@
     \lstinline{.plot()} or
     \lstinline{.hist()} to construct the empirical distribution that converges to the Mar\v{c}enko-Pastur distribution, see \Figref{fig:LUE}.
 
-    \DPPy\ can readily serve as research and teaching support.
-    \DPPy\ is also ready for other contributors to add content and enlarge its scope, \eg with procedures for learning kernels.
+    \DPPy can readily serve as research and teaching support.
+    \DPPy is also ready for other contributors to add content and enlarge its scope, \eg with procedures for learning kernels.
 
     \begin{figure*}[!hb]
         \vspace{-8pt}

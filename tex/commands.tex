@@ -1,8 +1,7 @@
 % !TEX root = 19-179.tex
 % Specific to this .tex
 % DPP
-\newcommand{\DPPy}{\textsf{DPPy}}
-\newcommand\DPP{\operatorname{DPP}}
+
 
 \newcommand*{\Secref}[1]{Section\,\ref{#1}}
 \newcommand*{\Eqref}[1]{Equation\,\ref{#1}}
@@ -53,21 +52,25 @@
 \@addtoreset{footnote}{page}
 \makeatother
 
+\usepackage{xspace}
+\newcommand{\DPPy}{\textsf{DPPy}\xspace}
+\newcommand\DPP{\operatorname{DPP}}
+
 \renewcommand{\thefootnote}{
     \ifcase\value{footnote}
         \or{1}
         \or{2}
         \or{3}
-        \or{\color{black}\!\faGithub}
-        \or{\color{black}\!\faBook}
-        \or{\color{black}\!\faGears}
-        \or{\color{black}\!\faIndent}
-        \or{\color{black}\!\faNewspaperO}
+        \or{\color{black}{\!\faGithub}\xspace}
+        \or{\color{black}{\!\faBook}\xspace}
+        \or{\color{black}{\!\faGears}\xspace}
+        \or{\color{black}{\!\faIndent}\xspace}
+        \or{\color{black}{\!\faNewspaperO}\xspace}
     \fi}
 
 % Cross ref a foonote
 \makeatletter
-\newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\,\@footnotemark}
+\newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
 \makeatother
 
 \addtolength{\skip\footins}{-3pc plus 5pt}
