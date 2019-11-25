@@ -92,8 +92,8 @@
     Determinantal point processes (DPPs) are distributions over configurations of points that encode diversity through a kernel function $K$.
     They were introduced by \citet{Mac75} as models for beams of fermions, and they have since found applications in fields as diverse as probability \citep{Sos00, Kon05, HKPV06}, statistical physics \citep{PaBe11}, Monte Carlo methods \citep{BaHa19}, spatial statistics \citep{LaMoRu15}, and machine learning \citep[ML,][]{KuTa12}.
 
-    In ML, DPPs mainly serve to model diverse sets of items, as in recommendation \citep{KaDeKo16, GaPaKo16} or text summarization \citep{DuBa18}.
-    Consequently, MLers  use mostly finite DPPs, which are distributions over subsets of a finite \emph{ground set} of cardinality $M$, parametrized by an $M\times M$ kernel matrix $\bfK$.
+    In ML, DPPs are mainly used as models for diverse sets of items, as in recommendation \citep{KaDeKo16, GaPaKo16} or text summarization \citep{DuBa18}.
+    Consequently, MLers mostly use finite DPPs, which are distributions over subsets of a finite \emph{ground set} of cardinality $M$, parametrized by an $M\times M$ kernel matrix $\bfK$.
     Routine inference tasks such as normalization, marginalization, or sampling have complexity $\calO(M^3)$ \citep{Gil14}.
     Like other kernel methods, when $M$ is large, $\calO(M^3)$ is a bottleneck.
     % % see also \citet{TrBaAm18} for a survey on exact sampling.
@@ -101,13 +101,13 @@
 
     In terms of software, the R library \textsf{spatstat} of \citet{BaTu05}, a general-purpose toolbox on spatial point processes, includes sampling and learning of continuous DPPs with stationary kernels, as described by \mycitet{LaMoRu15}.
     Complementarily, we propose \DPPy, a turnkey Python implementation of known general algorithms to sample \emph{finite} DPPs.
-    We also include algorithms for non-stationary continuous DPPs, e.g., related to random covariance matrices or Monte Carlo methods that are also of interest for MLers.
+    We also include algorithms for non-stationary continuous DPPs, e.g., related to random covariance matrices or Monte Carlo methods, which are also of interest for MLers.
 
     The \DPPy project, hosted on GitHub,\footnoteref{fn:github}\,is already being used by the cross-disciplinary DPP community (\citealp{BuRaWi19,Kam18,Pou19,DeCaVa19,GaBaVa19}).
     % \citep[?!][]{BaHa19}
     We use Travis\hspace{-1pt}\footnote{\footTravis}\,for continuous integration and Coveralls\hspace{-1pt}\footnote{\footCoveralls}\,for test coverage.
     Through ReadTheDocs\,\footnoteref{fn:docs}\,we provide an extensive documentation, which covers the essential mathematical background and showcases the key properties of DPPs through \DPPy objects and associated methods.
-    \DPPy thus also serves as a tutorial.
+    \DPPy thus also serves as a tutorial on DPPs.
      % Along the paper, words in magenta point to the documentation.
     % In \Secref{sec:definitions}, we introduce DPPs.
     % In \Secref{sec:sampling} we briefly review the challenging task of sampling
@@ -124,7 +124,7 @@
 
         A point process is a random subset of points $\calX=\lrcb{X_1, \dots, X_N} \subset \bbX$, where the number of points $N$ is itself random.
         We further add to the definition that $N$ should be almost surely finite and that all points in a sample are distinct.
-        Given a reference measure $\mu$ on~$\bbX$, a point process is usually characterized by its $k$-correlation function $\rho_k$ for all $k$, where
+        Given a reference measure $\mu$ on~$\bbX$, a point process is usually characterized by giving its $k$-correlation functions $\rho_k$ for all $k$, where
         \begin{equation*}
         \label{eq:correlation_function_intuition}
             \Proba{
@@ -173,13 +173,13 @@
         The result also holds for general Hermitian kernel functions $K$ with additional assumptions \cite[Theorem\,3]{Sos00}.
         We note that there are also DPPs with nonsymmetric kernels \citep{BoDiFu10,GBDK19}.
 
-        Oftentimes, ML practitioners favor a more flexible definition of a DPP in terms of a \emph{likelihood kernel} $\bfL$, which only requires $\bfL\succeq 0$ so that
-        \begin{equation*}
-            \Proba{\calX=S} = \frac{\det \bfL_S}{\det \lrb{I + \bfL}}\CommaBin
-        \end{equation*}
-        rather than a \emph{correlation kernel} $0\preceq \bfK \preceq I$.
-        Yet, the $\bfL$ parametrization makes \Eqref{eq:inclusion_proba_finite} less interpretable and does not cover important cases such as fixed size DPPs which are achievable using projection $\bfK$ kernels.
-        \citet[][Section\,5]{KuTa12} countered that with $k$-DPPs, which can be understood as DPPs parametrized by a likelihood kernel, conditioned to have exactly $k$ elements.
+        Oftentimes, ML practitioners favor a more flexible definition of a DPP in terms of a \emph{likelihood kernel} $\bfL$, which only requires $\bfL\succeq 0$,
+        \begin{equation}
+            \Proba{\calX=S} = \frac{\det \bfL_S}{\det \lrb{I + \bfL}}.
+        \end{equation}
+        This avoids defining a \emph{correlation kernel} $0\preceq \bfK \preceq I$.
+        Yet, the $\bfL$ parametrization makes \Eqref{eq:inclusion_proba_finite} less interpretable and does not cover important cases such as fixed-size DPPs, which correspond to projection kernels $\bfK$.
+        \citet[][Section\,5]{KuTa12} countered that with $k$-DPPs, which can be understood as DPPs parametrized by a likelihood kernel, further conditioned to have exactly $k$ elements.
         However, in general, $k$-DPPs are not DPPs.
 
         The main interest in DPPs in ML is that they model diversity while being tractable.
@@ -194,27 +194,27 @@
         % \end{equation*}
         % i.e., compared to independent sampling with the same marginals, the more similar items $i$ and $j$ the less likely they co-occur.
         Compared to independent sampling with the same marginals, \Eqref{eq:inclusion_proba_finite} entails
-        \begin{equation*}
+        \begin{equation}
         \label{eq:2point_correlation_function_inclusion_proba_finite_case}
           \Proba{\{i,j\} \subset \calX}
             = {\bfK}_{ii}{\bfK}_{jj}-{\bfK}_{ij}{\bfK}_{ji}
             = \Proba{\{i\} \subset \calX}
               \times \Proba{\{j\} \subset \calX}
-                - {\bfK}_{ij}^2,
-        \end{equation*}
-        so that, the larger $\bfK_{ij}$ less likely items $i$ and $j$ co-occur.
+                - {\bfK}_{ij}^2.
+        \end{equation}
+        In particular, the larger $\bfK_{ij}$, the less likely items $i$ and $j$ co-occur.
         If $\bfK_{ij}$ models the similarity between items $i$ and $j$, DPPs are thus random \emph{diverse} sets of elements.
 
         Most point processes that encode diversity are not tractable, in the sense that efficient algorithms to sample, marginalize, or compute normalization constants are not available.
         However, DPPs are amenable to these tasks with polynomial complexity \citep{Gil14}.
-        Next, we present the challenging task of sampling, which is the core of \DPPy.
+        Next, we focus on the sampling task, which is the core of \DPPy.
 
     % section definitions (end)
 
     \section{Sampling determinantal point processes} % (fold)
     \label{sec:sampling}
 
-        We assume henceforth that $K$ is real-symmetric and satisfies suitable conditions \citep[][Theorem\,3]{Sos00} so that its spectral decomposition is available
+        We henceforth assume that $K$ is real-symmetric and satisfies suitable conditions \citep[][Theorem\,3]{Sos00}, so that its spectral decomposition is available
         \begin{equation*}
         \setlength{\belowdisplayskip}{0pt}
         \setlength{\belowdisplayshortskip}{0pt}
@@ -222,7 +222,7 @@
         \setlength{\abovedisplayshortskip}{0pt}
         \label{eq:eigdec_kernel}
         K(x,y)
-        \triangleq
+        =
           \suml_{i=1}^{\infty}
             \lambda_i \phi_i(x) \phi_i(y),
           \quad \text{with }
@@ -234,7 +234,7 @@
             \item draw $B_i\sim\Ber(\lambda_i)$ independently and denote $\lrcb{i_1,\dots,i_{N}} = \lrcb{i:B_i=1}$,\label{enum:sampling_step1}
             \item sample from the DPP with kernel $\tilde{K}(x,y) = \sum_{n=1}^{N}\phi_{i_n}(x) \phi_{i_n}(y)$.\label{enum:sampling_step2}
         \end{enumerate}
-        In other words, all DPPs are mixtures of \emph{projection} DPPs, that are parametrized by an orthogonal projection kernel.
+        In other words, all DPPs are mixtures of \emph{projection} DPPs, i.e., DPPs parametrized by an orthogonal projection kernel.
         In a nutshell, Step\,\ref{enum:sampling_step1} selects a component of the mixture and Step\,\ref{enum:sampling_step2} generates a sample of the projection $\DPP(\tilde{K})$.
         \mycitet[][Algorithm\,18]{HKPV06} provide a generic projection DPP sampler that we briefly describe.
         First, the projection DPP with kernel $\tilde{K}$ has exactly $N=\rank \tilde{K}$ points, $\mu$-almost surely.
@@ -316,7 +316,7 @@
         In the end, DPPs favor configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume, which is another way of understanding repulsiveness.
         The previous sampling scheme is exact and generic but, except for projection kernels, it requires the eigendecomposition of the underlying kernel.
 
-        In the finite setting, this corresponds to an initial $\calO(M^3)$ cost, then the complexity of drawing exact samples is of order $\calO(M\Expe{|\calX|}^2)$
+        In the finite setting, this corresponds to an initial $\calO(M^3)$ eigendecomposition cost, followed by an average complexity of order $\calO(M\Expe{|\calX|}^2)$ \rb{Why not specify $\calO(M Tr(K)^2)$? See also below in the vost of Derezinski et al.}
         % which may still be problematic for large $M$,
         \citep[see, e.g.,][]{Gil14,TrBaAm18}.
         Besides, there exist some alternative exact samplers.
@@ -324,9 +324,9 @@
         \mycitet{DeCaVa19} first sample an intermediate distribution and correct the bias by thinning the intermediate sample (with size smaller than\,$M$) using a carefully designed DPP.
         In certain regimes, this procedure may be more practical with an overall
         $\calO(M\operatorname{poly}(\Expe{|\calX|})\operatorname{polylog}(M))$ cost.
-        In the continuous case, sampling exactly each conditional that appears in the right hand side of \Eqref{eq:joint_distribution} can by done by a rejection sampling mechanism with a tailored proposal.
+        In the continuous case, sampling exactly each conditional that appears in the right-hand side of \Eqref{eq:joint_distribution} can be done using rejection sampling with a tailored proposal. \rb{Cite your NeurIPS paper?}
 
-        In applications where the costs related to exact sampling are a bottleneck, users rely on approximate sampling.
+        In applications where the cost of exact sampling becomes a bottleneck, users rely on approximate sampling.
         Research has focused mainly on kernel approximation \citep{AKFT13} and MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
 
         However, specific DPPs admit efficient exact samplers that do not rely on \Eqref{eq:joint_distribution}, e.g., uniform spanning trees \citep[UST,][\Figref{fig:UST_kernel}]{PrWi98} or eigenvalues of random matrices.
@@ -349,7 +349,7 @@
         They are therefore examples of continuous DPPs that can be sampled exactly in $\calO(N^2)$ time, without rejection.
         Some of these ensembles are of direct interest to MLers.
         The \emph{Laguerre} ensemble, for instance, has $\omega$ be a Gamma pdf, and corresponds to the eigenvalues of the empirical covariance matrix of \iid Gaussian vectors, see \Figref{fig:LUE}.
-        Finally, we mention that \DPPy also features an exact sampler of the  multivariate extension of the \emph{Jacobi} ensemble which has been central in recent results on faster-than-Monte Carlo numerical integration \citep{BaHa19,GaBaVa19,MaCoAm19}.
+        Finally, we mention that \DPPy also features an exact sampler of the  multivariate extension of the \emph{Jacobi} ensemble, which has been central in recent results on faster-than-Monte Carlo numerical integration \citep{BaHa19,GaBaVa19,MaCoAm19}.
 
     % section sampling (end)
 
@@ -373,10 +373,10 @@
 
     A Laguerre $\beta$-ensemble is instantiated as
     \lstinline{LaguerreEnsemble(beta=2).}
-    It can be sampled using either the full matrix model (eigenvalues of random covariance matrix) when $\beta\in\lrcb{1,2,4}$ with
-    \lstinline{.sample_full_model()}
-    or the tridiagonal one with
-    \lstinline{.sample_banded_model()}, for $\beta > 0$.
+    When $\beta\in\lrcb{1,2,4}$, it can be sampled either with
+    \lstinline{.sample_full_model()}, as the eigenvalues of a random covariance matrix,
+    or, more efficiently and for any $\beta>0$, using a tridiagonal matrix with
+    \lstinline{.sample_banded_model()}.
     Samples can be displayed via
     \lstinline{.plot()} or
     \lstinline{.hist()} to construct the empirical distribution that converges to the Mar\v{c}enko-Pastur distribution, see \Figref{fig:LUE}.
