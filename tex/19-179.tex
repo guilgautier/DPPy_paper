@@ -114,11 +114,6 @@
 
 % section introduction (end)
 
-% \section{Determinantal point processes} % (fold)
-% \label{sec:determinantal_point_processes}
-
-%     We introduce DPPs and the main sampling algorithm; see \citet{HKPV06} for details.
-
     \section{Definitions} % (fold)
     \label{sec:definitions}
 
@@ -316,7 +311,8 @@
         In the end, DPPs favor configuration of points whose feature vectors $\Phi(x_1),\dots, \Phi(x_N)$ span a large volume, which is another way of understanding repulsiveness.
         The previous sampling scheme is exact and generic but, except for projection kernels, it requires the eigendecomposition of the underlying kernel.
 
-        In the finite setting, this corresponds to an initial $\calO(M^3)$ eigendecomposition cost, followed by an average complexity of order $\calO(M\Expe{|\calX|}^2)$ \rb{Why not specify $\calO(M Tr(K)^2)$? See also below in the vost of Derezinski et al.}
+        In the finite setting, this corresponds to an initial $\calO(M^3)$ eigendecomposition cost, followed by an average complexity of order $\calO(M\Expe{|\calX|}^2)$
+        % \rb{Why not specify $\calO(M Tr(K)^2)$? See also below in the vost of Derezinski et al.} I find it more explicit to read E[|X|] than Tr K, especially for MLers who usually take L and not K.
         % which may still be problematic for large $M$,
         \citep[see, e.g.,][]{Gil14,TrBaAm18}.
         Besides, there exist some alternative exact samplers.
@@ -324,7 +320,7 @@
         \mycitet{DeCaVa19} first sample an intermediate distribution and correct the bias by thinning the intermediate sample (with size smaller than\,$M$) using a carefully designed DPP.
         In certain regimes, this procedure may be more practical with an overall
         $\calO(M\operatorname{poly}(\Expe{|\calX|})\operatorname{polylog}(M))$ cost.
-        In the continuous case, sampling exactly each conditional that appears in the right-hand side of \Eqref{eq:joint_distribution} can be done using rejection sampling with a tailored proposal. \rb{Cite your NeurIPS paper?}
+        In the continuous case, sampling exactly each conditional that appears in the right-hand side of \Eqref{eq:joint_distribution} can be done using rejection sampling with a tailored proposal, see, e.g., \citet{GaBaVa19}.
 
         In applications where the cost of exact sampling becomes a bottleneck, users rely on approximate sampling.
         Research has focused mainly on kernel approximation \citep{AKFT13} and MCMC samplers \citep{AnGhRe16, LiJeSr16c, GaBaVa17}.
